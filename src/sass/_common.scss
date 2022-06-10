@@ -1,1 +1,89 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+@import './example';
+@import './components/card';
+@import './components/container';
+@import './components/footer';
+@import './components/header';
+@import './components/home';
+@import './components/modal';
+@import './components/modal_students';
+@import './components/my_library';
+@import './components/pagination';
+@import './components/refs';
+@import './components/theme-switch';
+@import './components/top-button';
+
+body {
+  font-family: $main-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: toRem($main-font-size);
+  line-height: toLineHeight(16, 12);
+  color: $text-black-color;
+  &.light-theme {
+    color: $text-black-color;
+  }
+  &.dark-theme {
+    background-color: #121212;
+    color: rgb(255, 255, 255, 0.9);
+    &.dark-theme footer {
+      background-color: inherit;
+    }
+  }
+}
+
+.body__container {
+  max-width: 100%;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  &::before,
+  &::after {
+    box-sizing: border-box;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+img,
+svg {
+  display: block;
+  height: auto;
+}
+img {
+  max-width: 100%;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  background-color: inherit;
+  border: transparent;
+}
