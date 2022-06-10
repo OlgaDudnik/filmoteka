@@ -1,2 +1,19 @@
-@import './common';
-@import './example';
+/*
+ * The main styles file.
+ * All parshals are importing here.
+ */
+
+//base
+@import './base/body';
+@import './base/reset';
+
+//components
+@import './components/container';
+
+//layout
+@import './layuot/header';
+@import './layuot/footer';
+
+//utils
+@import './utils/is-hidden';
+@import './utils/common';
