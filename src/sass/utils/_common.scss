@@ -12,6 +12,17 @@
 @import './components/theme-switch';
 @import './components/button';
 
+@import './is-hidden';
+@import './variables';
+
+//base
+@import './../base/body';
+@import './../base/reset';
+
+//layout
+@import './../layuot/header';
+@import './../layuot/footer';
+
 body {
   font-family: $main-font;
   font-style: normal;
