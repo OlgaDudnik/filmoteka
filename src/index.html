@@ -10,19 +10,28 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./sass/index.scss" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./sass/_common.scss" />
   </head>
   <body class="body__container body__background">
-    <include src="./partials/header.html"></include>
+    <header>
+      <include src="./partials/header.html"></include>
+    </header>
 
     <main>
       <include src="./partials/collection.html"></include>
       <include src="./partials/pagination.html"></include>
+      <include src="./partials/modal.html"></include>
+      <include src="./partials/button.html"></include>
+      <include src="./partials/loader.html"></include>
     </main>
 
-    <include src="./partials/loader.html"></include>
-    <include src="./partials/footer.html"></include>
-    <include src="./partials/modal.html"></include>
-    <include src="./partials/button.html"></include>
+    <footer>
+      <include src="./partials/footer.html"></include>
+    </footer>
 
     <script type="module" src="./index.js"></script>
   </body>
