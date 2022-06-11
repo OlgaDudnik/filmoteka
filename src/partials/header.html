@@ -1,19 +1,21 @@
-<header class="header">
-    <div class="container">
+
+    <div class="header-container container">
+        <navigation class="nav">
         <button class="logo">
-            <svg class="logo__icon" width="24" height="24">
+            <svg class="logo-icon" width="24" height="24">
                 <use href="/src/images/filmoteca.svg#icon-filmoteca" > </use>
             </svg>
-            <span class="logo__text">Filmoteca</span>
+            <span class="logo-text">Filmoteka</span>
         </button>
-    </div>
-    <navigation>
-        <ul>
-            <li><button>HOME</button></li>
-            <li><button>MY LIBRARY</button></li>
-        </ul>
-    </navigation>
-    <form action="">
-        <input type="text">
+        
+            <ul class="nav-list">
+                <li class="nav-list-item"><button id="home" class="nav-btn">home</button></li>
+                <li class="nav-list-item"><button id="library" class="nav-btn">my library</button></li>
+            </ul>
+        </navigation>
+    
+    <form action="" class="header-form">
+        <input type="text" class="header-search-input">
     </form>
-</header>
+</div>
+    
