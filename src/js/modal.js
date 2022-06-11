@@ -1,5 +1,5 @@
 const backdrop = document.querySelector('.backdrop');
-const onCloseBtn = document.querySelector('.modal__button');
+const onCloseBtn = document.querySelector('.modal__button-close');
 const onModalBtn = document.querySelector('.onModalBtn');
 
 onModalBtn.addEventListener('click', onOpenModal);
