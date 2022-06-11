@@ -1,4 +1,4 @@
-@import '~node_modules/modern-normalize/modern-normalize.css';
+@import '../../node_modules/modern-normalize/modern-normalize.css';
 @import './components/card';
 @import './components/container';
 @import './components/footer';
@@ -20,8 +20,6 @@
 //layout
 body {
   font-family: $main-font;
-  font-style: normal;
-  font-weight: normal;
   color: $text-black-color;
 
   &.light-theme {

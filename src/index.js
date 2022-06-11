@@ -9,4 +9,4 @@ import './js/pagination';
 import './sass/utils/_variables.scss';
 // import './sass/_common.scss';
 import './sass/components/_modal.scss';
-import './js/pagination';
+
