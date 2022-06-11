@@ -10,32 +10,28 @@
 @import './components/pagination';
 @import './components/refs';
 @import './components/theme-switch';
-@import './components/button';
-
-@import './is-hidden';
-@import './variables';
-
+@import './components/top-button';
+// utils
+@import './utils/is-hidden';
+@import './utils/variables';
 //base
-@import './../base/body';
-@import './../base/reset';
-
+@import './base/body';
+@import './base/reset';
 //layout
-@import './../layuot/header';
-@import './../layuot/footer';
-
 body {
   font-family: $main-font;
   font-style: normal;
   font-weight: normal;
-  font-size: toRem($main-font-size);
-  line-height: toLineHeight(16, 12);
   color: $text-black-color;
+
   &.light-theme {
     color: $text-black-color;
   }
+
   &.dark-theme {
     background-color: #121212;
     color: rgb(255, 255, 255, 0.9);
+
     &.dark-theme footer {
       background-color: inherit;
     }
@@ -53,7 +49,6 @@ body {
   margin: -1px;
   border: 0;
   padding: 0;
-
   white-space: nowrap;
   clip-path: inset(100%);
   clip: rect(0 0 0 0);
@@ -64,6 +59,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
   &::before,
   &::after {
     box-sizing: border-box;
@@ -85,6 +81,7 @@ svg {
   display: block;
   height: auto;
 }
+
 img {
   max-width: 100%;
 }
