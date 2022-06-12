@@ -15,6 +15,7 @@ function onOpenModal(e) {
 
 function onCloseModal() {
   backdrop.classList.remove('mount');
+  document.body.classList.remove('overflow');
   document.removeEventListener('keydown', modalCloseEsc);
   document.removeEventListener('click', modalCloseClickBackdrop);
   onCloseBtn.removeEventListener('click', onCloseModal);
