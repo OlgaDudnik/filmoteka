@@ -4,7 +4,9 @@ const onModalBtn = document.querySelector('.onModalBtn');
 
 onModalBtn.addEventListener('click', onOpenModal);
 
-function onOpenModal() {
+function onOpenModal(e) {
+  console.log(e.target.src);
+  document.body.classList.add('overflow');
   backdrop.classList.add('mount');
   document.addEventListener('keydown', modalCloseEsc);
   backdrop.addEventListener('click', modalCloseClickBackdrop);
