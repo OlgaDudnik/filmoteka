@@ -1,3 +1,7 @@
+// utils
+@import './utils/is-hidden';
+@import './utils/variables';
+
 @import '../../node_modules/modern-normalize/modern-normalize.css';
 @import './components/card';
 @import './components/container';
@@ -10,14 +14,13 @@
 @import './components/pagination';
 @import './components/refs';
 @import './components/theme-switch';
-@import './components/top-button';
-// utils
-@import './utils/is-hidden';
-@import './utils/variables';
+@import './components/button';
+
 //base
 @import './base/body';
 @import './base/reset';
 //layout
+
 body {
   font-family: $main-font;
   color: $text-black-color;
