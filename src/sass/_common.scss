@@ -1,12 +1,9 @@
 // utils
 @import './utils/is-hidden';
 @import './utils/variables';
+@import './utils/normalize';
 
 @import '../../node_modules/modern-normalize/modern-normalize.css';
-// utils
-@import './utils/variables';
-@import './utils/normalize';
-@import './utils/is-hidden';
 
 //base
 @import './base/reset';
@@ -23,16 +20,6 @@
 @import './components/theme-switch';
 @import './components/button';
 @import './components/top-button';
-<<<<<<< HEAD
-// utils
-@import './utils/is-hidden';
-@import './utils/variables';
-//base
-@import './base/reset';
-=======
-
->>>>>>> 8512a3fd80d63ff0b7f1ea5bde27ae60e44421e5
-//layout
 
 body {
   font-family: $main-font;
