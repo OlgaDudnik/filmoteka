@@ -1,10 +1,11 @@
 {
   "name": "parcel-project-template",
-  "version": "2.0.0",
+  "version": "1.1.0",
   "description": "",
+  "main": "index.js",
   "homepage": "https://OlgaDudnik.github.io/filmoteka",
   "scripts": {
-    "start": "parcel src/*.html",
+    "dev": "parcel src/*.html",
     "build": "parcel build src/*.html --public-url /filmoteka/"
   },
   "repository": {
@@ -17,16 +18,11 @@
   "bugs": {
     "url": "https://github.com/goitacademy/parcel-project-template/issues"
   },
-  "dependencies": {
-    "handlebars": "^4.7.7",
-    "modern-normalize": "^1.1.0"
-  },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.6.0",
-    "parcel": "^2.6.0",
-    "parcel-reporter-clean-dist": "^1.0.4",
-    "parcel-transformer-hbs": "^1.0.4",
-    "posthtml-include": "^1.7.4"
-  },
-  "browserslist": "> 0.5%, last 2 versions, not dead"
+    "parcel-bundler": "^1.12.5",
+    "parcel-plugin-handlebars-precompile": "^1.0.2",
+    "parcel-plugin-nuke-dist": "^1.0.1",
+    "posthtml-include": "^1.6.2",
+    "sass": "^1.32.8"
+  }
 }
