@@ -1,3 +1,9 @@
+import renderCard from "../templates/card.hbs";
+import { refs } from "./refs.js";
+
+
+const LOCALSTORAGE_KEY = "current-film";
+
 export default class FetchMovie {
     constructor() {
         this.searchQuery = '';
@@ -44,6 +50,19 @@ export default class FetchMovie {
         } catch (error) {
             error;
         }
+    }
+
+    renderMovieList() {
+        const movieList = refs.buttonHeaderHome;
+        const parsedStorage = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)).results;
+
+        movieList.innerHTML = renderCard(parsedStorage);
+    }
+    saveLocaleStorage(films) {
+        localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(films));
+    }
+    getLocaleStorage() {
+        return JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
     }
 
     incrementPage() {
