@@ -1,5 +1,6 @@
-const STORAGE_KEY1 = 'state-of-watched-movies';
-const STORAGE_KEY2 = 'state-of-queue';
+
+export const STORAGE_KEY1 = 'state-of-watched-movies';
+export const STORAGE_KEY2 = 'state-of-queue';
 
 const backdrop = document.querySelector('.backdrop');
 const onCloseBtn = document.querySelector('.modal__button-close');
@@ -7,7 +8,10 @@ const onModalBtn = document.querySelector('.onModalBtn');
 const watchedBtn = document.querySelector('#watched');
 const queueBtn = document.querySelector('#queue');
 
-// modal close - open  ******************************
+
+watchedBtn.addEventListener('click', onAddToWatched);
+queueBtn.addEventListener('click', onAddToQueue);
+
 
 onModalBtn.addEventListener('click', onOpenModal);
 
@@ -49,24 +53,28 @@ function modalCloseClickBackdrop(e) {
 const id = 'film';
 
 function onAddToWatched() {
-  const storageState = JSON.parse(localStorage.getItem(STORAGE_KEY1)) || [];
 
+  const watchedList = [];
+  const storageState = localStorage.getItem(STORAGE_KEY1);
+
+  if (storageState) {
+    watchedList.push(...JSON.parse(storageState));
+  }
   if (storageState?.includes(id)) {
-    const filterSroregeState = storageState.filter(el => el !== id);
-
-    localStorage.setItem(STORAGE_KEY1, JSON.stringify(filterSroregeState));
-    watchedBtn.classList.remove('modal__button--active');
     return;
   }
-
-  watchedBtn.classList.add('modal__button--active');
-
-  storageState.push(id);
-  localStorage.setItem(STORAGE_KEY1, JSON.stringify(storageState));
+  watchedList.push(id);
+  const records = JSON.stringify(Object.values(watchedList));
+  return localStorage.setItem(STORAGE_KEY1, records);
 }
 
 function onAddToQueue() {
-  const storageState = JSON.parse(localStorage.getItem(STORAGE_KEY2)) || [];
+  const queueList = [];
+  const storageState = localStorage.getItem(STORAGE_KEY2);
+
+  if (storageState) {
+    queueList.push(...JSON.parse(storageState));
+  }
 
   if (storageState?.includes(id)) {
     const filterSroregeState = storageState.filter(el => el !== id);
@@ -75,9 +83,9 @@ function onAddToQueue() {
     queueBtn.classList.remove('modal__button--active');
     return;
   }
+ bugfix/FT-03
+  queueList.push(id);
+  const records = JSON.stringify(Object.values(queueList));
+  return localStorage.setItem(STORAGE_KEY2, records);
 
-  queueBtn.classList.add('modal__button--active');
-
-  storageState.push(id);
-  localStorage.setItem(STORAGE_KEY2, JSON.stringify(storageState));
 }
