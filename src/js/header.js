@@ -1,6 +1,6 @@
 import { refs } from './refs';
 import { markupButton } from './button';
-import MyLibrary from './mylibrary';
+import { renderMyLibraryList } from './mylibrary';
 
 //-----------------------------------------------------------
 
@@ -10,10 +10,6 @@ refs.buttonHeaderHome.classList.add('nav-btn--underline');
 
 refs.buttonHeaderHome.addEventListener('click', onOpenHomePage);
 refs.buttonHeaderLibrary.addEventListener('click', onOpenLibraryPage);
-
-//-----------------------------------------------------------
-
-const myLibrary = new MyLibrary('STORAGE_KEY1', 'STORAGE_KEY2');
 
 //-----------------------------------------------------------
 
@@ -34,11 +30,7 @@ function onOpenLibraryPage() {
     .querySelector('[data-action="queue"]')
     .classList.add('button--rightLocation');
 
-  if (myLibrary.getMyLibrary().length) {
-    console.log('отрисовываем все фильмы библиотеки');
-  } else {
-    console.log('Ваша библиотека пуста');
-  }
+  renderMyLibraryList();
 
   refs.buttonQueue = document.querySelector('[data-action="queue"]');
   refs.buttonWatched = document.querySelector('[data-action="watched"]');
