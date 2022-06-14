@@ -196,9 +196,11 @@
       width: 110px;
     }
   }
-  &__button:active {
+  &__button--active {
     background-color: $accentColor;
     color: $text-white-color;
+    box-shadow: 0px 8px 43px rgba(0, 0, 0, 0.1),
+      inset 0px 0px 6px 6px rgba(0, 0, 0, 0.1);
   }
   &__button:first-child {
     margin-right: 15px;
