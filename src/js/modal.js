@@ -1,4 +1,3 @@
-
 export const STORAGE_KEY1 = 'state-of-watched-movies';
 export const STORAGE_KEY2 = 'state-of-queue';
 
@@ -8,10 +7,8 @@ const onModalBtn = document.querySelector('.onModalBtn');
 const watchedBtn = document.querySelector('#watched');
 const queueBtn = document.querySelector('#queue');
 
-
 watchedBtn.addEventListener('click', onAddToWatched);
 queueBtn.addEventListener('click', onAddToQueue);
-
 
 onModalBtn.addEventListener('click', onOpenModal);
 
@@ -83,9 +80,8 @@ function onAddToQueue() {
     queueBtn.classList.remove('modal__button--active');
     return;
   }
- bugfix/FT-03
+
   queueList.push(id);
   const records = JSON.stringify(Object.values(queueList));
   return localStorage.setItem(STORAGE_KEY2, records);
-
 }
