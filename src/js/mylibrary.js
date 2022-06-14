@@ -1,9 +1,13 @@
-export default class MyLibrary {
+import { STORAGE_KEY1 } from './modal';
+import { STORAGE_KEY2 } from './modal';
+//-----------------------------------------------------------
+
+class MyLibrary {
   constructor(watchedKey, queueKey) {
     this.watchedKey = watchedKey;
     this.queueKey = queueKey;
   }
-  getWatchedFilms() {
+  getWatchedFilmsId() {
     try {
       const watchedFilms = localStorage.getItem(this.watchedKey);
       return watchedFilms === null ? undefined : JSON.parse(watchedFilms);
@@ -11,7 +15,7 @@ export default class MyLibrary {
       console.error('Get state error: ', error.message);
     }
   }
-  getQueueFilms() {
+  getQueueFilmsId() {
     try {
       const queueFilms = localStorage.getItem(this.queueKey);
       return queueFilms === null ? undefined : JSON.parse(queueFilms);
@@ -19,16 +23,26 @@ export default class MyLibrary {
       console.error('Get state error: ', error.message);
     }
   }
-  getMyLibrary() {
+  getMyLibraryId() {
     const myLibrary = [];
-    const watchedFilms = this.getWatchedFilms();
-    const queueFilms = this.getQueueFilms();
+    const watchedFilms = this.getWatchedFilmsId();
+    const queueFilms = this.getQueueFilmsId();
 
     if (watchedFilms || queueFilms) {
-      console.dir(myLibrary.push(watchedFilms, queueFilms));
       myLibrary.push(watchedFilms, queueFilms);
+      console.log(myLibrary);
     }
-
     return myLibrary;
+  }
+}
+//-----------------------------------------------------------
+
+export function renderMyLibrary() {
+  const myLibrary = new MyLibrary(STORAGE_KEY1, STORAGE_KEY2);
+
+  if (myLibrary.getMyLibraryId().length) {
+    console.log('отрисовываем все фильмы библиотеки');
+  } else {
+    console.log('Ваша библиотека пуста');
   }
 }
