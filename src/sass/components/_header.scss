@@ -85,10 +85,23 @@
   height: 3px;
   width: 100%;
   background-color: $accent-darker-color;
+};
+.header-form{
+  position: relative;
 }
+
 .header-search-input {
-  background-color: inherit;
-  min-width: 280px;
+  font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    border-radius: 5px;
+  
+    color: #FFFFFF;
+    background-color: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  
+    min-width: 280px;
+    height: 40px;
   @media screen and (min-width: 768px) {
     min-width: 336px;
   }
