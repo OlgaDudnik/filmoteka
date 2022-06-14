@@ -1,4 +1,5 @@
 export const refs = {
+
     //шапка
     header: document.querySelector('.header'),
     buttonHeaderHome: document.querySelector('#button-home'),
@@ -7,6 +8,17 @@ export const refs = {
     buttonQueue: '',
     buttonWatched: '',
     collection: document.querySelector('.card__colection'),
+    buttonHeaderHome: document.querySelector('#home'),
+    buttonHeaderLibrary: document.querySelector('#library'),
+    headerForm: document.querySelector('.header-form'),
+    watchedBtn: document.querySelector('#watched'),
+    queueBtn: document.querySelector('#queue'),
     //библиотека
     myLibraryContainer: document.querySelector('.library .container'),
-};
+
+  
+
+
+
+
+
