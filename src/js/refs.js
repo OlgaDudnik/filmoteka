@@ -13,6 +13,8 @@ export const refs = {
   watchedBtn: document.querySelector('#watched'),
   queueBtn: document.querySelector('#queue'),
 
+  
+  
   //библиотека
   myLibraryContainer: document.querySelector('.library .container'),
 };
