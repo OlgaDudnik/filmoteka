@@ -4,6 +4,6 @@ export const refs = {
     buttonHeaderLibrary: document.querySelector('#button-library'),
     headerForm: document.querySelector('.header-form'),
     searchBtn: document.querySelector('.search-btn'),
-    buttonQueue: '',
-    buttonWatched: '',
+    watchedBtn: document.querySelector('#watched'),
+    queueBtn: document.querySelector('#queue'),
 };
