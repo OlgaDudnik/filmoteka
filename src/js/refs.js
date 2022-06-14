@@ -1,4 +1,5 @@
 export const refs = {
+
   //шапка
   header: document.querySelector('.header'),
   buttonHeaderHome: document.querySelector('#home'),
@@ -10,3 +11,4 @@ export const refs = {
   //библиотека
   myLibraryContainer: document.querySelector('.library .container'),
 };
+
