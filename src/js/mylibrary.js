@@ -13,6 +13,7 @@ class MyLibrary {
     this.watchedKey = watchedKey;
     this.queueKey = queueKey;
   }
+
   getWatchedFilmsId() {
     try {
       const watchedFilms = localStorage.getItem(this.watchedKey);
@@ -21,6 +22,7 @@ class MyLibrary {
       console.error('Get state error: ', error.message);
     }
   }
+
   getQueueFilmsId() {
     try {
       const queueFilms = localStorage.getItem(this.queueKey);
@@ -29,6 +31,7 @@ class MyLibrary {
       console.error('Get state error: ', error.message);
     }
   }
+
   getMyLibraryId() {
     const myLibrary = [];
     const watchedFilms = this.getWatchedFilmsId();
@@ -44,35 +47,19 @@ class MyLibrary {
     return myLibrary;
   }
 }
+
 //-----------------------------------------------------------
 
 export function renderMyLibraryList() {
   const myLibrary = new MyLibrary(STORAGE_KEY1, STORAGE_KEY2);
 
   if (myLibrary.getMyLibraryId().length) {
-    //fechLibraryMovie.query = myLibrary.getMyLibraryId()[0];
-    //fechLibraryMovie.fetchFilms();
-    const idLibraryFilms = myLibrary.getMyLibraryId().join(',');
-    refs.myLibraryContainer.innerHTML = `<span class="user-message"></span>`;
-
-    const message = `There will be movies id ${idLibraryFilms} from the user"s library !!!`;
-
-    const arrMessage = message.split('');
-    let i = 0;
-    const intervalId = setInterval(showLetter, 150);
-
-    function showLetter() {
-      if (i === arrMessage.length) {
-        clearInterval(intervalId);
-        return;
-      }
-
-      refs.myLibraryContainer.firstChild.textContent += arrMessage[i];
-      i += 1;
-    }
-    //console.log('отрисовываем все фильмы библиотеки');
+    fechLibraryMovie.query = myLibrary.getMyLibraryId()[0];
+    fechLibraryMovie.fetchFilms();
+    console.log(fechLibraryMovie.fetchFilms());
+    console.log('отрисовываем все фильмы библиотеки');
   } else {
-    refs.myLibraryContainer.innerHTML = `<span class="user-message"></span>`;
+    refs.myLibraryContainer.innerHTML = `<span class='user-message'></span>`;
 
     const message = 'Your library is empty!!!';
 
