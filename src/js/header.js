@@ -1,6 +1,6 @@
 import { refs } from './refs';
 import { markupButton } from './button';
-import { renderMyLibrary } from './mylibrary';
+import { renderMyLibraryList } from './mylibrary';
 
 //-----------------------------------------------------------
 
@@ -30,7 +30,7 @@ function onOpenLibraryPage() {
     .querySelector('[data-action="queue"]')
     .classList.add('button--rightLocation');
 
-  renderMyLibrary();
+  renderMyLibraryList();
 
   refs.buttonQueue = document.querySelector('[data-action="queue"]');
   refs.buttonWatched = document.querySelector('[data-action="watched"]');
