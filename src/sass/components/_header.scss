@@ -92,7 +92,13 @@
   @media screen and (min-width: 768px) {
     min-width: 336px;
   }
-}
+};
+
+.search-btn {
+  position: absolute;
+  top: 25%;
+  right: 5px
+};
 
 // header fo library page
 .header-library {
