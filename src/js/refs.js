@@ -6,5 +6,4 @@ export const refs = {
     searchBtn: document.querySelector('.search-btn'),
     buttonQueue: '',
     buttonWatched: '',
-    collection: document.querySelector('.card__colection'),
 };
