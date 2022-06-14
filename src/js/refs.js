@@ -12,6 +12,7 @@ export const refs = {
   headerForm: document.querySelector('.header-form'),
   watchedBtn: document.querySelector('#watched'),
   queueBtn: document.querySelector('#queue'),
+
   //библиотека
   myLibraryContainer: document.querySelector('.library .container'),
 };
