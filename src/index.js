@@ -6,3 +6,6 @@ import './js/modal';
 import './js/modal_students';
 import './js/api.fetch';
 import './js/pagination';
+import './js/refs';
+import './js/mylibrary';
+import './js/render';
