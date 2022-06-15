@@ -1,4 +1,3 @@
-// 0eaaf2516690b5ff52877c678f040000
 // const IMAGE_PATH_ENDPOINT = 'https://image.tmdb.org/t/p/w500';
 
 const ENDPOINT = 'https://api.themoviedb.org/3/';
