@@ -35,7 +35,7 @@ export default class FetchMovie {
   async fetchFilmsById() {
     try {
       const searchFilms = await fetch(
-        `https://api.themoviedb.org/3/movie/${this.id}?api_key=${this.key}&page=${this.page}`
+        `${this.URL}/movie/${this.id}?api_key=${this.key}`
       );
       return await searchFilms.json();
     } catch (error) {
