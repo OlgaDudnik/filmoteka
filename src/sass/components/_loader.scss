@@ -1,0 +1,57 @@
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.loader__icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  fill: $accentColor;
+  // width: 100px;
+  // height: 100px;
+  animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.done {
+  opacity: 0;
+  visibility: hidden;
+}
+
+// .loader {
+//   border-radius: 50px;
+//   border: 5px solid $primaryDarkColor;
+//   border-top-color: $accentColor;
+//   position: absolute;
+//   z-index: 100;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   width: 80px;
+//   height: 80px;
+//   animation: spin 2s infinite linear;
+// }
+
+// .percent {
+//   color: $accent-darker-color;
+//   font-size: 25px;
+//   position: absolute;
+//   z-index: 102;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
