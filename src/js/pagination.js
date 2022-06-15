@@ -5,15 +5,18 @@ const API_KEY = '0eaaf2516690b5ff52877c678f040000';
 const URL = 'https://api.themoviedb.org/3/movie?api_key=0eaaf2516690b5ff52877c678f040000&language=en&page=1';
 let page = 1;
 const list = document.querySelector('ul.pagination__list');
-const backArrow = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-    '<path d="M12.6666 8H3.33325" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-    '<path d="M7.99992 12.6667L3.33325 8.00004L7.99992 3.33337" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-    '</svg>';
-const forwardArrow = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-    '<path d="M3.33341 8H12.6667" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-    '<path d="M8.00008 12.6667L12.6667 8.00004L8.00008 3.33337" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-    '</svg>';
+//------------------------------------------------------ SVG --------------------------------------------------------------------------------//
 
+const backArrow = `<svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'> 
+    <path d='M12.6666 8H3.33325' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/>
+    <path d='M7.99992 12.6667L3.33325 8.00004L7.99992 3.33337' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/>
+    </svg>`;
+const forwardArrow = `<svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <path d='M3.33341 8H12.6667' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/>
+    <path d='M8.00008 12.6667L12.6667 8.00004L8.00008 3.33337' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/>
+    </svg>`;
+
+//-------------------------------------------------------------------------------------------------------------------------------------------//
 
 function renderPagination(totalPages, page) {
     let liItems = '';
@@ -27,7 +30,7 @@ function renderPagination(totalPages, page) {
     list.innerHTML = liItems;
 }
 
-// renderPagination(500, 5);
+renderPagination(500, 5);
 
 
 // делает неактивными кнопки-стрелки на первой и последней  странице
