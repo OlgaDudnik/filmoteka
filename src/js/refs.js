@@ -1,6 +1,7 @@
 export const refs = {
   //шапка
   header: document.querySelector('.header'),
+  logoBtn: document.querySelector('.logo'),
   //buttonHeaderHome: document.querySelector('#button-home'),
   //buttonHeaderLibrary: document.querySelector('#button-library'),
   headerForm: document.querySelector('.header-form'),
