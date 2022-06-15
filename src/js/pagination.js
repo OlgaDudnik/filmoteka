@@ -30,7 +30,7 @@ function renderPagination(totalPages, page) {
     list.innerHTML = liItems;
 }
 
-renderPagination(500, 5);
+// renderPagination(500, 5);
 
 
 // делает неактивными кнопки-стрелки на первой и последней  странице
