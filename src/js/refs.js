@@ -7,7 +7,7 @@ export const refs = {
   headerForm: document.querySelector('.header-form'),
   buttonQueue: '',
   buttonWatched: '',
-  collection: document.querySelector('.card__colection'),
+  collection: document.querySelector('.gallery-container_grid'),
   buttonHeaderHome: document.querySelector('#home'),
   buttonHeaderLibrary: document.querySelector('#library'),
   headerForm: document.querySelector('.header-form'),
