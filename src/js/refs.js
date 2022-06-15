@@ -15,4 +15,5 @@ export const refs = {
   queueBtn: document.querySelector('#queue'),
   //библиотека
   myLibraryContainer: document.querySelector('.library .container'),
+  myLibraryList: document.querySelector('.library__list'),
 };

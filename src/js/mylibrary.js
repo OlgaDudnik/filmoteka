@@ -1,11 +1,8 @@
 import { STORAGE_KEY1 } from './modal';
 import { STORAGE_KEY2 } from './modal';
 import FetchMovie from './api.fetch';
+import renderCard from '../templates/card.hbs';
 import { refs } from './refs';
-//-----------------------------------------------------------
-
-const fechLibraryMovie = new FetchMovie();
-
 //-----------------------------------------------------------
 
 class MyLibrary {
@@ -43,21 +40,40 @@ class MyLibrary {
     if (queueFilms) {
       myLibrary.push(queueFilms);
     }
-    console.log(myLibrary);
     return myLibrary;
   }
 }
 
 //-----------------------------------------------------------
 
-export function renderMyLibraryList() {
+export async function renderMyLibraryList() {
   const myLibrary = new MyLibrary(STORAGE_KEY1, STORAGE_KEY2);
+  const fechLibraryMovie = new FetchMovie();
 
   if (myLibrary.getMyLibraryId().length) {
-    fechLibraryMovie.query = myLibrary.getMyLibraryId()[0];
-    fechLibraryMovie.fetchFilms();
-    console.log(fechLibraryMovie.fetchFilms());
-    console.log('отрисовываем все фильмы библиотеки');
+    const query = [343611, 973608, 136418];
+    try {
+      fechLibraryMovie.idFilm = query[2];
+      const { poster_path, title, genres, release_date } =
+        await fechLibraryMovie.fetchFilmsById();
+      refs.myLibraryList.insertAdjacentHTML(
+        'beforeend',
+        renderCard({ poster_path, title, genres, release_date })
+      );
+
+      //   query.map(film => {
+      //     fechLibraryMovie.idFilm = film;
+      //     return ({ poster_path, title, genres, release_date } =
+      //       await fechLibraryMovie.fetchFilmsForId());
+
+      //     //console.log({ poster_path, title, genres, release_date })
+      //   });
+      //   refs.myLibraryList.insertAdjacentHTML('beforeend', renderCard(query));
+
+      console.log('отрисовываем все фильмы библиотеки');
+    } catch (error) {
+      console.log(error.message);
+    }
   } else {
     refs.myLibraryContainer.innerHTML = `<span class='user-message'></span>`;
 
