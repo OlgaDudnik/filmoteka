@@ -75,7 +75,7 @@ export async function renderMyLibraryList() {
       console.log(error.message);
     }
   } else {
-    refs.myLibraryContainer.innerHTML = `<span class='user-message'></span>`;
+    refs.myLibraryContainer.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
 
     const message = 'Your library is empty!!!';
 
@@ -89,7 +89,9 @@ export async function renderMyLibraryList() {
         return;
       }
 
-      refs.myLibraryContainer.firstChild.textContent += arrMessage[i];
+      refs.myLibraryContainer.querySelector(
+        '.empty-library .user-message'
+      ).textContent += arrMessage[i];
       i += 1;
     }
   }
