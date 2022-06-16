@@ -79,8 +79,8 @@ function onOpenLibraryPage() {
 
 function onOpenQueueFilms() {
 
-  const cardCollection = document.querySelector('.card__collection');
-  
+  // const cardCollection = document.querySelector('.library__list');
+  const cardCollection = document.querySelector('.card__colection');
   refs.buttonQueue.classList.add('button--active');
   refs.buttonWatched.classList.remove('button--active');
   
@@ -88,8 +88,10 @@ function onOpenQueueFilms() {
   if (!queueData) {
     queueData = [];
   };
-  cardCollection.innerHTML = '';
-  renderAddedMoviesMarkup(queueData)
+ 
+  refs.myLibraryList.innerHTML = "";
+  cardCollection.innerHTML = "";
+  renderAddedMoviesMarkup(queueData);
   console.log('Рендер фильмов, поставленных в очередь');
 };
 
@@ -122,8 +124,8 @@ refs.buttonHeaderHome.addEventListener('click', onHandleClick);
 
 // -------Render MarkUp For Added Movies
 
-function renderAddedMoviesMarkup({ results }) {
-  const cardCollection = document.querySelector('.card__collection');
+function renderAddedMoviesMarkup( results ) {
+  const cardCollection = document.querySelector('.library__list');
   const markup = results
     .map(({ id, poster_path, vote_average, title, release_date }) => {
       return `
@@ -135,7 +137,8 @@ function renderAddedMoviesMarkup({ results }) {
    <p class="card__text">
       <span></span> | <span>${release_date}</span><span class="card__rating">${vote_average}</span>
    </p>
-</li>`
+</li>
+`
     })
     .join('');
 cardCollection.insertAdjacentHTML('beforeend', markup); 

@@ -1,5 +1,6 @@
 import renderCard from '../templates/card.hbs';
 import { refs } from './refs.js';
+import { showSpiner, hideSpiner } from './loader';
 
 const LOCALSTORAGE_KEY = 'current-film';
 
@@ -23,9 +24,14 @@ export default class FetchMovie {
     // Получение фильмов
     async fetchFilms() {
         try {
+            showSpiner();
+
             const searchFilms = await fetch(
-                `${this.URL}search/movie?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false&query=${this.searchQuery}`,
+                `${this.URL}search/movie?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false&query=${this.searchQuery}`
             );
+
+            hideSpiner();
+
             return await searchFilms.json();
         } catch (error) {
             console.log(error);
@@ -36,7 +42,7 @@ export default class FetchMovie {
     async fetchFilmsById() {
         try {
             const searchFilms = await fetch(
-                `https://api.themoviedb.org/3/movie/${this.id}?api_key=${this.key}&page=${this.page}`,
+                `https://api.themoviedb.org/3/movie/${this.id}?api_key=${this.key}&page=${this.page}`
             );
             return await searchFilms.json();
         } catch (error) {
@@ -48,7 +54,7 @@ export default class FetchMovie {
     async fetchGenres() {
         try {
             const searchGenres = await fetch(
-                `${this.URL}genre/movie/list?api_ley=${this.key}&language=en-US`,
+                `${this.URL}genre/movie/list?api_ley=${this.key}&language=en-US`
             );
             return await searchGenres.json();
         } catch (error) {
@@ -61,7 +67,7 @@ export default class FetchMovie {
     async fetchPopularFilms() {
         try {
             const searchFilms = await fetch(
-                `${this.URL}movie/popular?api_key=${this.key}&language=en-US&page=${this.page}`,
+                `${this.URL}movie/popular?api_key=${this.key}&language=en-US&page=${this.page}`
             );
             return await searchFilms.json();
         } catch (error) {
@@ -73,8 +79,10 @@ export default class FetchMovie {
 
     async fetchTopRatedFilms() {
         try {
-            const searchFilms = await fetch(`${this.URL}movie/top_rated?api_key=${this.key}&language=en-US&page=${this.page}`);
-            return (await searchFilms.json());
+            const searchFilms = await fetch(
+                `${this.URL}movie/top_rated?api_key=${this.key}&language=en-US&page=${this.page}`
+            );
+            return await searchFilms.json();
         } catch (error) {
             error;
         }
@@ -84,8 +92,10 @@ export default class FetchMovie {
 
     async fetchTrailers(id) {
         try {
-            const searchTrailer = await fetch(`${this.URL}movie/${id}/videos?api_key=${this.key}&language=en-US`);
-            return (await searchTrailer.json());
+            const searchTrailer = await fetch(
+                `${this.URL}movie/${id}/videos?api_key=${this.key}&language=en-US`
+            );
+            return await searchTrailer.json();
         } catch (error) {
             error;
         }
@@ -95,8 +105,10 @@ export default class FetchMovie {
 
     async fetchPeople() {
         try {
-            const searchPeople = await fetch(`${this.URL}search/person?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`);
-            return (await searchPeople.json());
+            const searchPeople = await fetch(
+                `${this.URL}search/person?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`
+            );
+            return await searchPeople.json();
         } catch (error) {
             error;
         }
@@ -106,8 +118,10 @@ export default class FetchMovie {
 
     async fetchTelecast() {
         try {
-            const searchTelecast = await fetch(`${this.URL}search/tv?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`);
-            return (await searchTelecast.json());
+            const searchTelecast = await fetch(
+                `${this.URL}search/tv?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`
+            );
+            return await searchTelecast.json();
         } catch (error) {
             error;
         }
@@ -116,8 +130,8 @@ export default class FetchMovie {
     renderMovieList() {
         const movieList = refs.collection;
         const parsedStorage = JSON.parse(
-            localStorage.getItem(LOCALSTORAGE_KEY),
-        ).result;
+            localStorage.getItem(LOCALSTORAGE_KEY)
+        ).results;
 
         movieList.innerHTML = renderCard(parsedStorage);
     }

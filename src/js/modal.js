@@ -1,3 +1,4 @@
+
 import card from '../templates/modal-card.hbs';
 import FetchMovie from './api.fetch';
 import { refs } from './refs';
@@ -96,3 +97,4 @@ function onAddToQueue() {
   storageState.push(film);
   localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(storageState));
 }
+
