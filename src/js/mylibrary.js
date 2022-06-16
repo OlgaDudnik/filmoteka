@@ -12,6 +12,8 @@ export default class MyLibrary {
   constructor() {
     this.watchedKey = keys.STORAGE_KEY1;
     this.queueKey = keys.STORAGE_KEY2;
+    this.message = 'Your library is empty!!!';
+    this.interval = 0;
   }
 
   getWatchedFilmsId() {
@@ -48,7 +50,6 @@ export default class MyLibrary {
 
   renderLibrary() {
     if (this.getMyLibraryId().length) {
-      console.log('render library');
       const query = [343611, 973608, 136418];
 
       query.map(id => {
@@ -61,27 +62,33 @@ export default class MyLibrary {
       });
     } else {
       refs.myLibraryContainer.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
-
-      const message = 'Your library is empty!!!';
-
-      const arrMessage = message.split('');
-      let i = 0;
-      const intervalId = setInterval(showLetter, 150);
-
-      function showLetter() {
-        if (i === arrMessage.length) {
-          clearInterval(intervalId);
-          return;
-        }
-
-        refs.myLibraryContainer.querySelector(
-          '.empty-library .user-message'
-        ).textContent += arrMessage[i];
-        i += 1;
-      }
+      this.showMessage();
     }
   }
+
   clearRenderLibrary() {
     refs.myLibraryContainer.innerHTML = `<ul class="library__list" id="library"></ul>`;
+  }
+
+  showMessage() {
+    const arrMessage = this.message.split('');
+    let i = 0;
+    this.interval = setInterval(showLetter, 150);
+
+    function showLetter() {
+      if (i === arrMessage.length) {
+        clearInterval(this.interval);
+        return;
+      }
+
+      refs.myLibraryContainer.querySelector(
+        '.empty-library .user-message'
+      ).textContent += arrMessage[i];
+      i += 1;
+    }
+  }
+  clearInterval() {
+    clearInterval(this.interval);
+    console.log(this.interval);
   }
 }
