@@ -52,6 +52,50 @@ export default class FetchMovie {
         }
     }
 
+    // Получение фильмов по рейтингу
+
+    async fetchTopRatedFilms() {
+        try {
+            const searchFilms = await fetch(`${this.URL}movie/top_rated?api_key=${this.key}&language=en-US&page=${this.page}`);
+            return (await searchFilms.json());
+        } catch (error) {
+            error;
+        }
+    }
+
+    // Получение трейлеров
+
+    async fetchTrailers(id) {
+        try {
+            const searchTrailer = await fetch(`${this.URL}movie/${id}/videos?api_key=${this.key}&language=en-US`);
+            return (await searchTrailer.json());
+        } catch (error) {
+            error;
+        }
+    }
+
+    // Получение актеров
+
+    async fetchPeople() {
+        try {
+            const searchPeople = await fetch(`${this.URL}search/person?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`);
+            return (await searchPeople.json());
+        } catch (error) {
+            error;
+        }
+    }
+
+    // Получение телепередач
+
+    async fetchTelecast() {
+        try {
+            const searchTelecast = await fetch(`${this.URL}search/tv?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`);
+            return (await searchTelecast.json());
+        } catch (error) {
+            error;
+        }
+    }
+
     renderMovieList() {
         const movieList = refs.collection;
         const parsedStorage = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)).results;
