@@ -1,116 +1,123 @@
 import renderCard from '../templates/card.hbs';
 import { refs } from './refs.js';
+import { showSpiner, hideSpiner } from './loader';
 
 const LOCALSTORAGE_KEY = 'current-film';
 
 export default class FetchMovie {
-    constructor() {
-        this.searchQuery = '';
-        this.page = 1;
-        this.URL = 'https://api.themoviedb.org/3/';
-        this.key = '0eaaf2516690b5ff52877c678f040000';
-        this.id = '';
+  constructor() {
+    this.searchQuery = '';
+    this.page = 1;
+    this.URL = 'https://api.themoviedb.org/3/';
+    this.key = '0eaaf2516690b5ff52877c678f040000';
+    this.id = '';
+  }
+
+  get pageNum() {
+    return this.page;
+  }
+
+  set pageNum(newPage) {
+    this.page = newPage;
+  }
+
+  // Получение фильмов
+  async fetchFilms() {
+    try {
+      showSpiner();
+
+      const searchFilms = await fetch(
+        `${this.URL}search/movie?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false&query=${this.searchQuery}`
+      );
+
+      hideSpiner();
+
+      return await searchFilms.json();
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    get pageNum() {
-        return this.page;
+  //Получение фильма по id
+  async fetchFilmsById() {
+    try {
+      const searchFilms = await fetch(
+        `https://api.themoviedb.org/3/movie/${this.id}?api_key=${this.key}&page=${this.page}`
+      );
+
+      return await searchFilms.json();
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    set pageNum(newPage) {
-        this.page = newPage;
+  // Получение жанров
+  async fetchGenres() {
+    try {
+      const searchGenres = await fetch(
+        `${this.URL}genre/movie/list?api_ley=${this.key}&language=en-US`
+      );
+      return await searchGenres.json();
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    // Получение фильмов
-    async fetchFilms() {
-        try {
-            const searchFilms = await fetch(
-                `${this.URL}search/movie?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false&query=${this.searchQuery}`,
-            );
-            return await searchFilms.json();
-        } catch (error) {
-            console.log(error);
-        }
+  // Получение популярных фильмов
+
+  async fetchPopularFilms() {
+    try {
+      const searchFilms = await fetch(
+        `${this.URL}movie/popular?api_key=${this.key}&language=en-US&page=${this.page}`
+      );
+      return await searchFilms.json();
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    //Получение фильма по id
-    async fetchFilmsById() {
-        try {
-            const searchFilms = await fetch(
-                `https://api.themoviedb.org/3/movie/${this.id}?api_key=${this.key}&page=${this.page}`,
-            );
-            return await searchFilms.json();
-        } catch (error) {
-            console.log(error);
-        }
-    }
+  renderMovieList() {
+    const movieList = refs.collection;
+    const parsedStorage = JSON.parse(
+      localStorage.getItem(LOCALSTORAGE_KEY)
+    ).result;
 
-    // Получение жанров
-    async fetchGenres() {
-        try {
-            const searchGenres = await fetch(
-                `${this.URL}genre/movie/list?api_ley=${this.key}&language=en-US`,
-            );
-            return await searchGenres.json();
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    movieList.innerHTML = renderCard(parsedStorage);
+  }
 
-    // Получение популярных фильмов
+  saveLocaleStorage(films) {
+    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(films));
+  }
 
-    async fetchPopularFilms() {
-        try {
-            const searchFilms = await fetch(
-                `${this.URL}movie/popular?api_key=${this.key}&language=en-US&page=${this.page}`,
-            );
-            return await searchFilms.json();
-        } catch (error) {
-            console.log(error);
-        }
-    }
+  getLocaleStorage() {
+    return JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+  }
 
-    renderMovieList() {
-        const movieList = refs.collection;
-        const parsedStorage = JSON.parse(
-            localStorage.getItem(LOCALSTORAGE_KEY),
-        ).result;
+  incrementPage() {
+    this.page += 1;
+  }
 
-        movieList.innerHTML = renderCard(parsedStorage);
-    }
+  decrementPage() {
+    this.page -= 1;
+  }
 
-    saveLocaleStorage(films) {
-        localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(films));
-    }
+  resetPage() {
+    this.page = 1;
+  }
 
-    getLocaleStorage() {
-        return JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
-    }
+  get query() {
+    return this.searchQuery;
+  }
 
-    incrementPage() {
-        this.page += 1;
-    }
+  set query(newQuery) {
+    this.searchQuery = newQuery;
+  }
 
-    decrementPage() {
-        this.page -= 1;
-    }
+  get idFilm() {
+    return this.id;
+  }
 
-    resetPage() {
-        this.page = 1;
-    }
-
-    get query() {
-        return this.searchQuery;
-    }
-
-    set query(newQuery) {
-        this.searchQuery = newQuery;
-    }
-
-    get idFilm() {
-        return this.id;
-    }
-
-    set idFilm(newid) {
-        this.id = newid;
-    }
+  set idFilm(newid) {
+    this.id = newid;
+  }
 }

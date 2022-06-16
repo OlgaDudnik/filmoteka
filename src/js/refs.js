@@ -16,4 +16,6 @@ export const refs = {
   //library
   myLibraryContainer: document.querySelector('.library .container'),
   myLibraryList: document.querySelector('.library__list'),
+  // loader
+  loader: document.querySelector('.loader'),
 };
