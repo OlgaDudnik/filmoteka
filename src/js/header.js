@@ -24,6 +24,19 @@ function onOpenHomePage() {
   refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
 
   refs.paginationContainer.classList.remove('is-hidden');
+  refs.headerForm.classList.remove('is-hidden');
+
+  refs.headerForm.innerHTML = `<input
+      type="text"
+      class="header-search-input"
+      name="searchQuery"
+      placeholder="Поиск фильма"
+    />
+    <button type="submit" class="search-btn">
+      <svg class="icon-search" width="24" height="24">
+        <use href="/src/images/header-main/search.svg#icon-search"></use>
+      </svg>
+    </button>`;
 
   myLibrary.clearRenderLibrary();
   myLibrary.clearInterval();
