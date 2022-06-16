@@ -1,3 +1,4 @@
+
 import { STORAGE_KEY1 } from './modal';
 import { STORAGE_KEY2 } from './modal';
 import FetchMovie from './api.fetch';

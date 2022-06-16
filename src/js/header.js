@@ -3,6 +3,8 @@ import { markupButton } from './button';
 import MyLibrary from './mylibrary';
 import FetchMovie from './api.fetch';
 import renderCard from '../templates/card.hbs';
+import onAddToQueue from './modal';
+import { keys } from './storage_key';
 
 //-----------------------------------------------------------
 
@@ -76,11 +78,20 @@ function onOpenLibraryPage() {
 //-----------------------------------------------------------
 
 function onOpenQueueFilms() {
+
+  const cardCollection = document.querySelector('.card__collection');
+  
   refs.buttonQueue.classList.add('button--active');
   refs.buttonWatched.classList.remove('button--active');
-
+  
+  const queueData = JSON.parse(localStorage.getItem(keys.STORAGE_KEY2));
+  if (!queueData) {
+    queueData = [];
+  };
+  cardCollection.innerHTML = '';
+  renderAddedMoviesMarkup(queueData)
   console.log('Рендер фильмов, поставленных в очередь');
-}
+};
 
 function onOpenWatchedFilms() {
   refs.buttonWatched.classList.add('button--active');
@@ -107,3 +118,25 @@ function onHandleClick() {
 
 refs.logoBtn.addEventListener('click', onHandleClick);
 refs.buttonHeaderHome.addEventListener('click', onHandleClick);
+
+
+// -------Render MarkUp For Added Movies
+
+function renderAddedMoviesMarkup({ results }) {
+  const cardCollection = document.querySelector('.card__collection');
+  const markup = results
+    .map(({ id, poster_path, vote_average, title, release_date }) => {
+      return `
+      <li class="card" data-action="${id}">
+   <div class="card__img">
+      <img class="onModalBtn" src="${poster_path}" alt="${title} " width="100%" data-id="${id}">
+   </div>
+   <h2 class="card__title">${title}</h2>
+   <p class="card__text">
+      <span></span> | <span>${release_date}</span><span class="card__rating">${vote_average}</span>
+   </p>
+</li>`
+    })
+    .join('');
+cardCollection.insertAdjacentHTML('beforeend', markup); 
+}

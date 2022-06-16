@@ -83,7 +83,7 @@ function onAddToQueue() {
     refs.queueBtn.classList.remove('modal__button--active');
     return;
   }
-
+console.log(storageState)
   refs.queueBtn.classList.add('modal__button--active');
 
   storageState.push(id);
