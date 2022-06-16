@@ -1,91 +1,91 @@
-export const STORAGE_KEY1 = 'state-of-watched-movies';
-export const STORAGE_KEY2 = 'state-of-queue';
-import { refs } from './refs';
-import { keys } from './storage_key';
+// export const STORAGE_KEY1 = 'state-of-watched-movies';
+// export const STORAGE_KEY2 = 'state-of-queue';
+// import { refs } from './refs';
+// import { keys } from './storage_key';
 
-const backdrop = document.querySelector('.backdrop');
-const onCloseBtn = document.querySelector('.modal__button-close');
-const onModalBtn = document.querySelector('.onModalBtn');
-const watchedBtn = document.querySelector('#watched');
-const queueBtn = document.querySelector('#queue');
+// const backdrop = document.querySelector('.backdrop');
+// const onCloseBtn = document.querySelector('.modal__button-close');
+// const onModalBtn = document.querySelector('.onModalBtn');
+// const watchedBtn = document.querySelector('#watched');
+// const queueBtn = document.querySelector('#queue');
 
-watchedBtn.addEventListener('click', onAddToWatched);
-queueBtn.addEventListener('click', onAddToQueue);
+// watchedBtn.addEventListener('click', onAddToWatched);
+// queueBtn.addEventListener('click', onAddToQueue);
 
 
-// modal close - open  ******************************
+// // modal close - open  ******************************
 
-onModalBtn.addEventListener('click', onOpenModal);
+// onModalBtn.addEventListener('click', onOpenModal);
 
-function onOpenModal(e) {
-  console.log(e.target.src);
-  document.body.classList.add('overflow');
-  backdrop.classList.add('mount');
-  document.addEventListener('keydown', modalCloseEsc);
-  backdrop.addEventListener('click', modalCloseClickBackdrop);
-  onCloseBtn.addEventListener('click', onCloseModal);
-  refs.watchedBtn.addEventListener('click', onAddToWatched);
-  refs.queueBtn.addEventListener('click', onAddToQueue);
-}
+// function onOpenModal(e) {
+//   console.log(e.target.src);
+//   document.body.classList.add('overflow');
+//   backdrop.classList.add('mount');
+//   document.addEventListener('keydown', modalCloseEsc);
+//   backdrop.addEventListener('click', modalCloseClickBackdrop);
+//   onCloseBtn.addEventListener('click', onCloseModal);
+//   refs.watchedBtn.addEventListener('click', onAddToWatched);
+//   refs.queueBtn.addEventListener('click', onAddToQueue);
+// }
 
-function onCloseModal() {
-  backdrop.classList.remove('mount');
-  document.body.classList.remove('overflow');
-  document.removeEventListener('keydown', modalCloseEsc);
-  document.removeEventListener('click', modalCloseClickBackdrop);
-  onCloseBtn.removeEventListener('click', onCloseModal);
-  refs.watchedBtn.removeEventListener('click', onAddToQueue);
-  refs.queueBtn.removeEventListener('click', onAddToQueue);
-}
+// function onCloseModal() {
+//   backdrop.classList.remove('mount');
+//   document.body.classList.remove('overflow');
+//   document.removeEventListener('keydown', modalCloseEsc);
+//   document.removeEventListener('click', modalCloseClickBackdrop);
+//   onCloseBtn.removeEventListener('click', onCloseModal);
+//   refs.watchedBtn.removeEventListener('click', onAddToQueue);
+//   refs.queueBtn.removeEventListener('click', onAddToQueue);
+// }
 
-function modalCloseEsc(e) {
-  if (e.code === 'Escape') {
-    onCloseModal();
-  }
-}
+// function modalCloseEsc(e) {
+//   if (e.code === 'Escape') {
+//     onCloseModal();
+//   }
+// }
 
-function modalCloseClickBackdrop(e) {
-  if (e.target.nodeName === 'BACKDROP') {
-    onCloseModal();
-  }
-}
+// function modalCloseClickBackdrop(e) {
+//   if (e.target.nodeName === 'BACKDROP') {
+//     onCloseModal();
+//   }
+// }
 
-// localStorage *******************************
+// // localStorage *******************************
 
-const id = 'film';
+// const id = 'film';
 
-function onAddToWatched() {
-  const storageState =
-    JSON.parse(localStorage.getItem(keys.STORAGE_KEY1)) || [];
+// function onAddToWatched() {
+//   const storageState =
+//     JSON.parse(localStorage.getItem(keys.STORAGE_KEY1)) || [];
 
-  if (storageState?.includes(id)) {
-    const filterSroregeState = storageState.filter(el => el !== id);
+//   if (storageState?.includes(id)) {
+//     const filterSroregeState = storageState.filter(el => el !== id);
 
-    localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(filterSroregeState));
-    refs.watchedBtn.classList.remove('modal__button--active');
-    return;
-  }
+//     localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(filterSroregeState));
+//     refs.watchedBtn.classList.remove('modal__button--active');
+//     return;
+//   }
 
-  refs.watchedBtn.classList.add('modal__button--active');
+//   refs.watchedBtn.classList.add('modal__button--active');
 
-  storageState.push(id);
-  localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(storageState));
-}
+//   storageState.push(id);
+//   localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(storageState));
+// }
 
-function onAddToQueue() {
-  const storageState =
-    JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
+// function onAddToQueue() {
+//   const storageState =
+//     JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
 
-  if (storageState?.includes(id)) {
-    const filterSroregeState = storageState.filter(el => el !== id);
+//   if (storageState?.includes(id)) {
+//     const filterSroregeState = storageState.filter(el => el !== id);
 
-    localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(filterSroregeState));
-    refs.queueBtn.classList.remove('modal__button--active');
-    return;
-  }
-console.log(storageState)
-  refs.queueBtn.classList.add('modal__button--active');
+//     localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(filterSroregeState));
+//     refs.queueBtn.classList.remove('modal__button--active');
+//     return;
+//   }
+// console.log(storageState)
+//   refs.queueBtn.classList.add('modal__button--active');
 
-  storageState.push(id);
-  localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(storageState));
-}
+//   storageState.push(id);
+//   localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(storageState));
+// }
