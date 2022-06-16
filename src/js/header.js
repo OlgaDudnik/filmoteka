@@ -3,6 +3,8 @@ import { markupButton } from './button';
 import { renderMyLibraryList } from './mylibrary';
 import FetchMovie from './api.fetch';
 import renderCard from '../templates/card.hbs';
+import onAddToQueue from './modal';
+import { keys } from './storage_key';
 
 //-----------------------------------------------------------
 const getMovies = new FetchMovie();
@@ -46,12 +48,17 @@ function onOpenLibraryPage() {
 //-----------------------------------------------------------
 
 function onOpenQueueFilms() {
-  const containerEl = document.querySelector('.container_card');
+
+  const moviesContainer = document.querySelector('.container_card');
+  
   refs.buttonQueue.classList.add('button--active');
   refs.buttonWatched.classList.remove('button--active');
   
-   containerEl.innerHTML = '';
-    containerEl
+  const queueData = JSON.parse(localStorage.getItem(keys.STORAGE_KEY2));
+  if (!queueData) {
+    queueData = [];
+  };
+  moviesContainer.innerHTML = '';
   console.log('Рендер фильмов, поставленных в очередь');
 }
 
