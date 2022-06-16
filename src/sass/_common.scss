@@ -4,7 +4,7 @@
 @import './utils/normalize';
 
 @import '../../node_modules/modern-normalize/modern-normalize.css';
-@import '../../node_modules/animate.css/animate.css';
+// @import '../../node_modules/animate.css/animate.css';
 
 //base
 @import './base/reset';
@@ -22,6 +22,7 @@
 @import './components/button';
 @import './components/top-button';
 @import './components/loader';
+@import './components/accordion';
 
 body {
   font-family: $main-font;
