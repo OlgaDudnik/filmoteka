@@ -117,7 +117,7 @@ export default class FetchMovie {
         const movieList = refs.collection;
         const parsedStorage = JSON.parse(
             localStorage.getItem(LOCALSTORAGE_KEY),
-        ).results;
+        ).result;
 
         movieList.innerHTML = renderCard(parsedStorage);
     }
