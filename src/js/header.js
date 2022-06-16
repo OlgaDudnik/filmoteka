@@ -18,16 +18,15 @@ refs.buttonHeaderHome.classList.add('nav-btn--underline');
 refs.buttonHeaderLibrary.addEventListener('click', onOpenLibraryPage);
 
 //-----------------------------------------------------------
-
 function onOpenHomePage() {
   refs.header.classList.remove('header-library');
   refs.buttonHeaderHome.classList.add('nav-btn--underline');
   refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
 
   refs.paginationContainer.classList.remove('is-hidden');
-  //refs.collection.classList.remove('is-hidden');
 
   myLibrary.clearRenderLibrary();
+  myLibrary.clearInterval();
 }
 
 function onOpenLibraryPage() {
@@ -42,7 +41,7 @@ function onOpenLibraryPage() {
     .querySelector('[data-action="queue"]')
     .classList.add('button--rightLocation');
 
-  if (myLibrary.getMyLibraryId.length === 0) {
+  if (myLibrary.getMyLibraryId().length === 0) {
     refs.headerForm.classList.add('is-hidden');
     refs.paginationContainer.classList.add('is-hidden');
   } else {
@@ -50,8 +49,9 @@ function onOpenLibraryPage() {
     refs.paginationContainer.classList.remove('is-hidden');
   }
 
+  myLibrary.clearInterval();
   myLibrary.renderLibrary();
-  //refs.collection.classList.add('is-hidden');
+  //refs.collection.innerHTML = ``;
 
   refs.buttonQueue = document.querySelector('[data-action="queue"]');
   refs.buttonWatched = document.querySelector('[data-action="watched"]');
