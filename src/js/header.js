@@ -1,13 +1,16 @@
 import { refs } from './refs';
 import { markupButton } from './button';
-import { renderMyLibraryList } from './mylibrary';
+import MyLibrary from './mylibrary';
 import FetchMovie from './api.fetch';
 import renderCard from '../templates/card.hbs';
 import onAddToQueue from './modal';
 import { keys } from './storage_key';
 
 //-----------------------------------------------------------
+
 const getMovies = new FetchMovie();
+const myLibrary = new MyLibrary();
+
 //-----------------------------------------------------------
 
 refs.buttonHeaderHome.classList.add('nav-btn--underline');
@@ -22,7 +25,13 @@ function onOpenHomePage() {
   refs.header.classList.remove('header-library');
   refs.buttonHeaderHome.classList.add('nav-btn--underline');
   refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
+
+  refs.paginationContainer.classList.remove('is-hidden');
+  //refs.collection.classList.remove('is-hidden');
+
+  myLibrary.clearRenderLibrary();
 }
+
 function onOpenLibraryPage() {
   refs.header.classList.add('header-library');
   refs.buttonHeaderLibrary.classList.add('nav-btn--underline');
@@ -35,7 +44,16 @@ function onOpenLibraryPage() {
     .querySelector('[data-action="queue"]')
     .classList.add('button--rightLocation');
 
-  renderMyLibraryList();
+  if (myLibrary.getMyLibraryId.length === 0) {
+    refs.headerForm.classList.add('is-hidden');
+    refs.paginationContainer.classList.add('is-hidden');
+  } else {
+    refs.headerForm.classList.remove('is-hidden');
+    refs.paginationContainer.classList.remove('is-hidden');
+  }
+
+  myLibrary.renderLibrary();
+  //refs.collection.classList.add('is-hidden');
 
   refs.buttonQueue = document.querySelector('[data-action="queue"]');
   refs.buttonWatched = document.querySelector('[data-action="watched"]');
