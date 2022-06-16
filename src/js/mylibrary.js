@@ -4,7 +4,11 @@ import renderCard from '../templates/card-by-id.hbs';
 import { refs } from './refs';
 //-----------------------------------------------------------
 
-class MyLibrary {
+const fechLibraryMovie = new FetchMovie();
+
+//-----------------------------------------------------------
+
+export default class MyLibrary {
   constructor() {
     this.watchedKey = keys.STORAGE_KEY1;
     this.queueKey = keys.STORAGE_KEY2;
@@ -41,42 +45,43 @@ class MyLibrary {
     }
     return myLibrary;
   }
-}
 
-//-----------------------------------------------------------
+  renderLibrary() {
+    if (this.getMyLibraryId().length) {
+      console.log('render library');
+      const query = [343611, 973608, 136418];
 
-export function renderMyLibraryList() {
-  const myLibrary = new MyLibrary();
-  const fechLibraryMovie = new FetchMovie();
-
-  if (myLibrary.getMyLibraryId().length) {
-    const query = [343611, 973608, 136418];
-
-    query.map(id => {
-      fechLibraryMovie.idFilm = id;
-      fechLibraryMovie.fetchFilmsById().then(film => {
-        refs.myLibraryList.insertAdjacentHTML('beforeend', renderCard(film));
+      query.map(id => {
+        fechLibraryMovie.idFilm = id;
+        fechLibraryMovie.fetchFilmsById().then(film => {
+          document
+            .querySelector('.library__list')
+            .insertAdjacentHTML('beforeend', renderCard(film));
+        });
       });
-    });
-  } else {
-    refs.myLibraryContainer.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
+    } else {
+      refs.myLibraryContainer.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
 
-    const message = 'Your library is empty!!!';
+      const message = 'Your library is empty!!!';
 
-    const arrMessage = message.split('');
-    let i = 0;
-    const intervalId = setInterval(showLetter, 150);
+      const arrMessage = message.split('');
+      let i = 0;
+      const intervalId = setInterval(showLetter, 150);
 
-    function showLetter() {
-      if (i === arrMessage.length) {
-        clearInterval(intervalId);
-        return;
+      function showLetter() {
+        if (i === arrMessage.length) {
+          clearInterval(intervalId);
+          return;
+        }
+
+        refs.myLibraryContainer.querySelector(
+          '.empty-library .user-message'
+        ).textContent += arrMessage[i];
+        i += 1;
       }
-
-      refs.myLibraryContainer.querySelector(
-        '.empty-library .user-message'
-      ).textContent += arrMessage[i];
-      i += 1;
     }
+  }
+  clearRenderLibrary() {
+    refs.myLibraryContainer.innerHTML = `<ul class="library__list" id="library"></ul>`;
   }
 }

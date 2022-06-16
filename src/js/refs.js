@@ -1,9 +1,7 @@
 export const refs = {
-  //шапка
+  //headrer
   header: document.querySelector('.header'),
   logoBtn: document.querySelector('.logo'),
-  //buttonHeaderHome: document.querySelector('#button-home'),
-  //buttonHeaderLibrary: document.querySelector('#button-library'),
   headerForm: document.querySelector('.header-form'),
   buttonQueue: '',
   buttonWatched: '',
@@ -13,7 +11,9 @@ export const refs = {
   headerForm: document.querySelector('.header-form'),
   watchedBtn: document.querySelector('#watched'),
   queueBtn: document.querySelector('#queue'),
-  //библиотека
+  //pagination
+  paginationContainer: document.querySelector('.pagination__list'),
+  //library
   myLibraryContainer: document.querySelector('.library .container'),
   myLibraryList: document.querySelector('.library__list'),
 };
