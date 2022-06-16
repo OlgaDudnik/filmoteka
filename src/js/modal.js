@@ -71,9 +71,8 @@ function onAddToWatched() {
   localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(storageState));
 }
 
-function onAddToQueue() {
+export default function onAddToQueue() {
   const storageState = JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
-
   if (storageState?.includes(id)) {
     const filterSroregeState = storageState.filter(el => el !== id);
 

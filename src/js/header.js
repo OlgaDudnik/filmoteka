@@ -1,7 +1,9 @@
 import { refs } from './refs';
 import { markupButton } from './button';
 import { renderMyLibraryList } from './mylibrary';
-
+import FetchMovie from './api.fetch';
+import onAddToQueue from './modal';
+import onAddToWatched from './modal';
 //-----------------------------------------------------------
 
 refs.buttonHeaderHome.classList.add('nav-btn--underline');
@@ -42,9 +44,12 @@ function onOpenLibraryPage() {
 //-----------------------------------------------------------
 
 function onOpenQueueFilms() {
+  const containerEl = document.querySelector('.container_card');
   refs.buttonQueue.classList.add('button--active');
   refs.buttonWatched.classList.remove('button--active');
-
+  
+   containerEl.innerHTML = '';
+    containerEl
   console.log('Рендер фильмов, поставленных в очередь');
 }
 
