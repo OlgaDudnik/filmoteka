@@ -1,9 +1,17 @@
+export const STORAGE_KEY1 = 'state-of-watched-movies';
+export const STORAGE_KEY2 = 'state-of-queue';
 import { refs } from './refs';
 import { keys } from './storage_key';
 
 const backdrop = document.querySelector('.backdrop');
 const onCloseBtn = document.querySelector('.modal__button-close');
 const onModalBtn = document.querySelector('.onModalBtn');
+const watchedBtn = document.querySelector('#watched');
+const queueBtn = document.querySelector('#queue');
+
+watchedBtn.addEventListener('click', onAddToWatched);
+queueBtn.addEventListener('click', onAddToQueue);
+
 
 // modal close - open  ******************************
 

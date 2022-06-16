@@ -4,6 +4,7 @@
 @import './utils/normalize';
 
 @import '../../node_modules/modern-normalize/modern-normalize.css';
+@import '../../node_modules/animate.css/animate.css';
 
 //base
 @import './base/reset';
@@ -20,6 +21,7 @@
 @import './components/theme-switch';
 @import './components/button';
 @import './components/top-button';
+@import './components/loader';
 
 body {
   font-family: $main-font;

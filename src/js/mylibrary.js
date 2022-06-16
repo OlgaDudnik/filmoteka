@@ -1,17 +1,13 @@
-import { STORAGE_KEY1 } from './modal';
-import { STORAGE_KEY2 } from './modal';
+import { keys } from './storage_key';
 import FetchMovie from './api.fetch';
+import renderCard from '../templates/card-by-id.hbs';
 import { refs } from './refs';
 //-----------------------------------------------------------
 
-const fechLibraryMovie = new FetchMovie();
-
-//-----------------------------------------------------------
-
 class MyLibrary {
-  constructor(watchedKey, queueKey) {
-    this.watchedKey = watchedKey;
-    this.queueKey = queueKey;
+  constructor() {
+    this.watchedKey = keys.STORAGE_KEY1;
+    this.queueKey = keys.STORAGE_KEY2;
   }
 
   getWatchedFilmsId() {
@@ -43,7 +39,6 @@ class MyLibrary {
     if (queueFilms) {
       myLibrary.push(queueFilms);
     }
-    console.log(myLibrary);
     return myLibrary;
   }
 }
@@ -51,15 +46,20 @@ class MyLibrary {
 //-----------------------------------------------------------
 
 export function renderMyLibraryList() {
-  const myLibrary = new MyLibrary(STORAGE_KEY1, STORAGE_KEY2);
+  const myLibrary = new MyLibrary();
+  const fechLibraryMovie = new FetchMovie();
 
   if (myLibrary.getMyLibraryId().length) {
-    fechLibraryMovie.query = myLibrary.getMyLibraryId()[0];
-    fechLibraryMovie.fetchFilms();
-    console.log(fechLibraryMovie.fetchFilms());
-    console.log('отрисовываем все фильмы библиотеки');
+    const query = [343611, 973608, 136418];
+
+    query.map(id => {
+      fechLibraryMovie.idFilm = id;
+      fechLibraryMovie.fetchFilmsById().then(film => {
+        refs.myLibraryList.insertAdjacentHTML('beforeend', renderCard(film));
+      });
+    });
   } else {
-    refs.myLibraryContainer.innerHTML = `<span class='user-message'></span>`;
+    refs.myLibraryContainer.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
 
     const message = 'Your library is empty!!!';
 
@@ -73,7 +73,9 @@ export function renderMyLibraryList() {
         return;
       }
 
-      refs.myLibraryContainer.firstChild.textContent += arrMessage[i];
+      refs.myLibraryContainer.querySelector(
+        '.empty-library .user-message'
+      ).textContent += arrMessage[i];
       i += 1;
     }
   }

@@ -1,14 +1,17 @@
 import { refs } from './refs';
 import { markupButton } from './button';
 import { renderMyLibraryList } from './mylibrary';
+import FetchMovie from './api.fetch';
+import renderCard from '../templates/card.hbs';
 
+//-----------------------------------------------------------
+const getMovies = new FetchMovie();
 //-----------------------------------------------------------
 
 refs.buttonHeaderHome.classList.add('nav-btn--underline');
 
 //-----------------------------------------------------------
 
-refs.buttonHeaderHome.addEventListener('click', onOpenHomePage);
 refs.buttonHeaderLibrary.addEventListener('click', onOpenLibraryPage);
 
 //-----------------------------------------------------------
@@ -54,3 +57,22 @@ function onOpenWatchedFilms() {
 
   console.log('Рендер просмотренных фильмов');
 }
+
+//-----------------------------------------------------------
+
+// Display the main page
+function toMainPage() {
+  onOpenHomePage();
+  getMovies.fetchPopularFilms().then(film => {
+    const movieList = refs.collection;
+    movieList.innerHTML = renderCard(film.results);
+  });
+}
+
+// Logo click event
+function onHandleClick() {
+  toMainPage();
+}
+
+refs.logoBtn.addEventListener('click', onHandleClick);
+refs.buttonHeaderHome.addEventListener('click', onHandleClick);

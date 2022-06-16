@@ -9,6 +9,7 @@ export default class FetchMovie {
     this.page = 1;
     this.URL = 'https://api.themoviedb.org/3/';
     this.key = '0eaaf2516690b5ff52877c678f040000';
+    this.id = '';
   }
 
   get pageNum() {
@@ -36,6 +37,26 @@ export default class FetchMovie {
     try {
       const searchGenres = await fetch(
         `${this.URL}/genre/movie/list?api_key=${this.key}`
+      );
+      return await searchGenres.json();
+      
+  //Получение фильма по id
+  async fetchFilmsById() {
+    try {
+      const searchFilms = await fetch(
+        `${this.URL}/movie/${this.id}?api_key=${this.key}`
+      );
+      return await searchFilms.json();
+    } catch (error) {
+      error;
+    }
+  }
+
+  // Получение жанров
+  async fetchGenres() {
+    try {
+      const searchGenres = await fetch(
+        `${this.URL}genre/movie/list?api_ley=${this.key}&language=en-US`
       );
       return await searchGenres.json();
     } catch (error) {
@@ -89,5 +110,13 @@ export default class FetchMovie {
 
   set query(newQuery) {
     this.searchQuery = newQuery;
+  }
+
+  get idFilm() {
+    return this.id;
+  }
+
+  set idFilm(newid) {
+    this.id = newid;
   }
 }
