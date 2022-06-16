@@ -17,4 +17,6 @@ export const refs = {
   myLibraryList: document.querySelector('.library__list'),
   //contaoner
   collection: document.querySelector('.gallery-container_grid'),
+  // loader
+  loader: document.querySelector('.loader'),
 };

@@ -1,9 +1,17 @@
-window.onload = function () {
-  setTimeout(() => {
-    const loader = document.querySelector('.loader');
+import { refs } from './refs';
 
-    if (!loader.classList.contains('done')) {
-      loader.classList.add('done');
-    }
-  }, 1000);
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    refs.loader.classList.add('done');
+  }, 300);
+});
+
+const showSpiner = () => {
+  refs.loader.classList.remove('done');
 };
+
+const hideSpiner = () => {
+  refs.loader.classList.add('done');
+};
+
+export { showSpiner, hideSpiner };
