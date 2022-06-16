@@ -55,7 +55,8 @@ function modalCloseClickBackdrop(e) {
 const id = 'film';
 
 function onAddToWatched() {
-  const storageState = JSON.parse(localStorage.getItem(keys.STORAGE_KEY1)) || [];
+  const storageState =
+    JSON.parse(localStorage.getItem(keys.STORAGE_KEY1)) || [];
 
   if (storageState?.includes(id)) {
     const filterSroregeState = storageState.filter(el => el !== id);
@@ -72,7 +73,8 @@ function onAddToWatched() {
 }
 
 function onAddToQueue() {
-  const storageState = JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
+  const storageState =
+    JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
 
   if (storageState?.includes(id)) {
     const filterSroregeState = storageState.filter(el => el !== id);
