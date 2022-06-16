@@ -14,7 +14,6 @@ refs.buttonHeaderHome.classList.add('nav-btn--underline');
 
 //-----------------------------------------------------------
 
-refs.buttonHeaderHome.addEventListener('click', onOpenHomePage);
 refs.buttonHeaderLibrary.addEventListener('click', onOpenLibraryPage);
 
 //-----------------------------------------------------------
@@ -86,3 +85,4 @@ function onHandleClick() {
 }
 
 refs.logoBtn.addEventListener('click', onHandleClick);
+refs.buttonHeaderHome.addEventListener('click', onHandleClick);

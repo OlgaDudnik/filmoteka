@@ -1,14 +1,13 @@
-import { STORAGE_KEY1 } from './modal';
-import { STORAGE_KEY2 } from './modal';
+import { keys } from './storage_key';
 import FetchMovie from './api.fetch';
-import renderCard from '../templates/card.hbs';
+import renderCard from '../templates/card-by-id.hbs';
 import { refs } from './refs';
 //-----------------------------------------------------------
 
 class MyLibrary {
-  constructor(watchedKey, queueKey) {
-    this.watchedKey = watchedKey;
-    this.queueKey = queueKey;
+  constructor() {
+    this.watchedKey = keys.STORAGE_KEY1;
+    this.queueKey = keys.STORAGE_KEY2;
   }
 
   getWatchedFilmsId() {
@@ -46,34 +45,19 @@ class MyLibrary {
 
 //-----------------------------------------------------------
 
-export async function renderMyLibraryList() {
-  const myLibrary = new MyLibrary(STORAGE_KEY1, STORAGE_KEY2);
+export function renderMyLibraryList() {
+  const myLibrary = new MyLibrary();
   const fechLibraryMovie = new FetchMovie();
 
   if (myLibrary.getMyLibraryId().length) {
     const query = [343611, 973608, 136418];
-    try {
-      fechLibraryMovie.idFilm = query[2];
-      const { poster_path, title, genres, release_date } =
-        await fechLibraryMovie.fetchFilmsById();
-      refs.myLibraryList.insertAdjacentHTML(
-        'beforeend',
-        renderCard({ poster_path, title, genres, release_date })
-      );
 
-      //   query.map(film => {
-      //     fechLibraryMovie.idFilm = film;
-      //     return ({ poster_path, title, genres, release_date } =
-      //       await fechLibraryMovie.fetchFilmsForId());
-
-      //     //console.log({ poster_path, title, genres, release_date })
-      //   });
-      //   refs.myLibraryList.insertAdjacentHTML('beforeend', renderCard(query));
-
-      console.log('отрисовываем все фильмы библиотеки');
-    } catch (error) {
-      console.log(error.message);
-    }
+    query.map(id => {
+      fechLibraryMovie.idFilm = id;
+      fechLibraryMovie.fetchFilmsById().then(film => {
+        refs.myLibraryList.insertAdjacentHTML('beforeend', renderCard(film));
+      });
+    });
   } else {
     refs.myLibraryContainer.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
 

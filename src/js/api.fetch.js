@@ -31,11 +31,20 @@ export default class FetchMovie {
       error;
     }
   }
+
+  // Получение жанров
+  async fetchGenres() {
+    try {
+      const searchGenres = await fetch(
+        `${this.URL}/genre/movie/list?api_key=${this.key}`
+      );
+      return await searchGenres.json();
+      
   //Получение фильма по id
   async fetchFilmsById() {
     try {
       const searchFilms = await fetch(
-        `https://api.themoviedb.org/3/movie/${this.id}?api_key=${this.key}&page=${this.page}`
+        `${this.URL}/movie/${this.id}?api_key=${this.key}`
       );
       return await searchFilms.json();
     } catch (error) {
