@@ -2,7 +2,7 @@ import { keys } from './storage_key';
 import FetchMovie from './api.fetch';
 import renderCard from '../templates/card-by-id.hbs';
 import { refs } from './refs';
-import { Block } from 'notiflix';
+//import { Block } from 'notiflix';
 //-----------------------------------------------------------
 
 const fechLibraryMovie = new FetchMovie();
@@ -11,8 +11,10 @@ const fechLibraryMovie = new FetchMovie();
 
 export default class MyLibrary {
   constructor() {
-    this.watchedKey = keys.STORAGE_KEY1;
-    this.queueKey = keys.STORAGE_KEY2;
+    this.watchedKey = [343611, 343611, 136418];
+    this.queueKey = [343611, 973608, 136418, 973608];
+    //this.watchedKey = keys.STORAGE_KEY1;
+    //this.queueKey = keys.STORAGE_KEY2;
     this.message = 'Your library is empty!!!';
     this.interval = 0;
   }
@@ -35,25 +37,38 @@ export default class MyLibrary {
     }
   }
 
-  getMyLibraryId() {
-    const myLibrary = [];
-    const watchedFilms = this.getWatchedFilmsId();
-    const queueFilms = this.getQueueFilmsId();
-
-    if (watchedFilms) {
-      myLibrary.push(watchedFilms);
-    }
-    if (queueFilms) {
-      myLibrary.push(queueFilms);
-    }
-    return myLibrary;
+  renderQueryFilms() {
+    //const queryId = this.getQueueFilmsId();
+    const queryId = this.queueKey;
+    this.render(queryId);
   }
 
-  renderLibrary() {
+  getLibraryId() {
+    const myLibraryId = [];
+    //const watchedFilmsId = this.getWatchedFilmsId();
+    //const queueFilmsId = this.getQueueFilmsId();
+    const watchedFilmsId = this.watchedKey;
+    const queueFilmsId = this.queueKey;
+
+    if (watchedFilmsId) {
+      myLibraryId.push(...watchedFilmsId);
+    }
+    if (queueFilmsId) {
+      myLibraryId.push(...queueFilmsId);
+    }
+    return myLibraryId;
+  }
+
+  renderMyLibrary() {
+    const myLibraryId = this.getLibraryId();
+
+    this.render(myLibraryId);
+  }
+
+  render(ids) {
     refs.collection.innerHTML = '';
-    if (this.getMyLibraryId().length) {
-      const query = [343611, 973608, 136418];
-      query.map(id => {
+    if (ids.length) {
+      ids.map(id => {
         fechLibraryMovie.idFilm = id;
         fechLibraryMovie.fetchFilmsById().then(film => {
           refs.collection.insertAdjacentHTML('beforeend', renderCard(film));
