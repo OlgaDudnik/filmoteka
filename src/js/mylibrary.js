@@ -28,6 +28,12 @@ export default class MyLibrary {
     }
   }
 
+  renderWatchedFilm() {
+    //const queryId = this.getWatchedFilmsId();
+    const queryId = this.watchedKey;
+    this.render(queryId);
+  }
+
   getQueueFilmsId() {
     try {
       const queueFilms = localStorage.getItem(this.queueKey);
@@ -49,6 +55,8 @@ export default class MyLibrary {
     //const queueFilmsId = this.getQueueFilmsId();
     const watchedFilmsId = this.watchedKey;
     const queueFilmsId = this.queueKey;
+    console.log(watchedFilmsId);
+    console.log(queueFilmsId);
 
     if (watchedFilmsId) {
       myLibraryId.push(...watchedFilmsId);
@@ -66,6 +74,7 @@ export default class MyLibrary {
   }
 
   render(ids) {
+    console.log(ids);
     refs.collection.innerHTML = '';
     if (ids.length) {
       ids.map(id => {
