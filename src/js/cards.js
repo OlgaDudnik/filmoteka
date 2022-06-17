@@ -1,11 +1,12 @@
 import FetchMovie from './api.fetch';
 import articlesTpl from '../templates/card.hbs';
-
-const refs = {
-  cardColection: document.querySelector('.card__colection'),
-};
+import { refs } from './refs';
+// const refs = {
+//     cardColection: document.querySelector('.card__colection'),
+// };
 
 const fetchMovie = new FetchMovie();
+
 
 loadPopularMovies();
 
@@ -47,8 +48,22 @@ function createMovies(returnedFetchMovies, returnedFetchGenres) {
 
     return movie;
   });
+
+function render() {
+    fetchMovie
+        .fetchPopularFilms()
+        .then(data => {
+            return data.results;
+        })
+        .then(appendArticlesMarkup);
+
 }
 
 function parseMarkup(films) {
   refs.cardColection.insertAdjacentHTML('beforeend', articlesTpl(films));
 }
+
+function appendArticlesMarkup(results) {
+    refs.collection.insertAdjacentHTML('beforeend', articlesTpl(results));
+}
+

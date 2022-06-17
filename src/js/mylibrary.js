@@ -4,10 +4,16 @@ import renderCard from '../templates/card-by-id.hbs';
 import { refs } from './refs';
 //-----------------------------------------------------------
 
-class MyLibrary {
+const fechLibraryMovie = new FetchMovie();
+
+//-----------------------------------------------------------
+
+export default class MyLibrary {
   constructor() {
     this.watchedKey = keys.STORAGE_KEY1;
     this.queueKey = keys.STORAGE_KEY2;
+    this.message = 'Your library is empty!!!';
+    this.interval = 0;
   }
 
   getWatchedFilmsId() {
@@ -41,35 +47,36 @@ class MyLibrary {
     }
     return myLibrary;
   }
-}
 
-//-----------------------------------------------------------
+  renderLibrary() {
+    if (this.getMyLibraryId().length) {
+      const query = [343611, 973608, 136418];
 
-export function renderMyLibraryList() {
-  const myLibrary = new MyLibrary();
-  const fechLibraryMovie = new FetchMovie();
-
-  if (myLibrary.getMyLibraryId().length) {
-    const query = [343611, 973608, 136418];
-
-    query.map(id => {
-      fechLibraryMovie.idFilm = id;
-      fechLibraryMovie.fetchFilmsById().then(film => {
-        refs.myLibraryList.insertAdjacentHTML('beforeend', renderCard(film));
+      query.map(id => {
+        refs.listCollection.innerHTML = '';
+        fechLibraryMovie.idFilm = id;
+        fechLibraryMovie.fetchFilmsById().then(film => {
+          refs.listCollection.insertAdjacentHTML('beforeend', renderCard(film));
+        });
       });
-    });
-  } else {
-    refs.myLibraryContainer.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
+    } else {
+      refs.collection.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
+      this.showMessage();
+    }
+  }
 
-    const message = 'Your library is empty!!!';
+  clearRenderLibrary() {
+    refs.myLibraryContainer.innerHTML = `<ul class="library__list" id="library"></ul>`;
+  }
 
-    const arrMessage = message.split('');
+  showMessage() {
+    const arrMessage = this.message.split('');
     let i = 0;
-    const intervalId = setInterval(showLetter, 150);
+    this.interval = setInterval(showLetter, 150);
 
     function showLetter() {
       if (i === arrMessage.length) {
-        clearInterval(intervalId);
+        clearInterval(this.interval);
         return;
       }
 
@@ -78,5 +85,8 @@ export function renderMyLibraryList() {
       ).textContent += arrMessage[i];
       i += 1;
     }
+  }
+  clearInterval() {
+    clearInterval(this.interval);
   }
 }
