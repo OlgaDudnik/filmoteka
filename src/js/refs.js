@@ -22,5 +22,4 @@ export const refs = {
 
   // loader
   loader: document.querySelector('.loader'),
-
-
+};
