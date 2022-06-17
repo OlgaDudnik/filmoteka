@@ -43,3 +43,16 @@
     margin-left: 15px;
   }
 }
+
+.modal__button{
+  transition: background-color 0.25s ease, color 0.25s ease,
+      box-shadow 0.25s ease, border-color 0.25s ease;
+      &:hover,
+        &:focus {
+          border-color: $accent-lighter-color;
+          color: $primaryLightColor;
+          background-color: $accent-lighter-color;
+          box-shadow: 0px 8px 43px $btn-hover-color,
+            inset 0px 0px 6px 6px rgba(0, 0, 0, 0.1);
+        }
+}
