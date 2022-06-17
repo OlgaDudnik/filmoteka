@@ -8,8 +8,6 @@ export const refs = {
   buttonHeaderHome: document.querySelector('#home'),
   buttonHeaderLibrary: document.querySelector('#library'),
   headerForm: document.querySelector('.header-form'),
-  watchedBtn: document.querySelector('#watched'),
-  queueBtn: document.querySelector('#queue'),
   //pagination
   paginationContainer: document.querySelector('.pagination__list'),
   //library
@@ -17,7 +15,13 @@ export const refs = {
   myLibraryList: document.querySelector('.library__list'),
   //container
   collection: document.querySelector('.gallery-container_grid'),
+
   listCollection: document.querySelector('.gallery-container_grid'),
+
+  //modal
+  modalEventListener: document.querySelector('.modalEventListener'),
+  backdrop: document.querySelector('.backdrop'),
+
   // loader
   loader: document.querySelector('.loader'),
 };
