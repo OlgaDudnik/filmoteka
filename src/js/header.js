@@ -21,12 +21,12 @@ refs.buttonHeaderLibrary.addEventListener('click', onOpenLibraryPage);
 
 //-----------------------------------------------------------
 function onOpenHomePage() {
-  refs.header.classList.remove('header-library');
-  refs.buttonHeaderHome.classList.add('nav-btn--underline');
-  refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
+    refs.header.classList.remove('header-library');
+    refs.buttonHeaderHome.classList.add('nav-btn--underline');
+    refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
 
-  refs.paginationContainer.classList.remove('is-hidden');
-  refs.headerForm.classList.remove('is-hidden');
+    refs.paginationContainer.classList.remove('is-hidden');
+    refs.headerForm.classList.remove('is-hidden');
 
   refs.headerForm.innerHTML = `<input
       type="text"
@@ -34,44 +34,44 @@ function onOpenHomePage() {
       name="searchQuery"
       placeholder="Search movie"
     />
-    <button type="submit" class="search-btn">
-      <svg class="icon-search" width="24" height="24">
-        <use href="/src/images/header-main/search.svg#icon-search"></use>
+    <button type='submit' class='search-btn'>
+      <svg class='icon-search' width='24' height='24'>
+        <use href='/src/images/header-main/search.svg#icon-search'></use>
       </svg>
     </button>`;
 
-  myLibrary.clearEmptyLibrary();
-  myLibrary.clearInterval();
+    myLibrary.clearEmptyLibrary();
+    myLibrary.clearInterval();
 }
 
 function onOpenLibraryPage() {
-  refs.header.classList.add('header-library');
-  refs.buttonHeaderLibrary.classList.add('nav-btn--underline');
-  refs.buttonHeaderHome.classList.remove('nav-btn--underline');
+    refs.header.classList.add('header-library');
+    refs.buttonHeaderLibrary.classList.add('nav-btn--underline');
+    refs.buttonHeaderHome.classList.remove('nav-btn--underline');
 
-  refs.headerForm.innerHTML = '';
-  markupButton('Watched', 'watched');
-  markupButton('queue', 'queue');
-  document
-    .querySelector('[data-action="queue"]')
-    .classList.add('button--rightLocation');
+    refs.headerForm.innerHTML = '';
+    markupButton('Watched', 'watched');
+    markupButton('queue', 'queue');
+    document
+        .querySelector('[data-action="queue"]')
+        .classList.add('button--rightLocation');
 
-  if (myLibrary.getLibraryId().length === 0) {
-    refs.headerForm.classList.add('is-hidden');
-    refs.paginationContainer.classList.add('is-hidden');
-  } else {
-    refs.headerForm.classList.remove('is-hidden');
-    refs.paginationContainer.classList.remove('is-hidden');
-  }
+    if (myLibrary.getLibraryId().length === 0) {
+        refs.headerForm.classList.add('is-hidden');
+        refs.paginationContainer.classList.add('is-hidden');
+    } else {
+        refs.headerForm.classList.remove('is-hidden');
+        refs.paginationContainer.classList.remove('is-hidden');
+    }
 
-  myLibrary.clearInterval();
-  myLibrary.renderMyLibrary();
+    myLibrary.clearInterval();
+    myLibrary.renderMyLibrary();
 
-  refs.buttonQueue = document.querySelector('[data-action="queue"]');
-  refs.buttonWatched = document.querySelector('[data-action="watched"]');
+    refs.buttonQueue = document.querySelector('[data-action="queue"]');
+    refs.buttonWatched = document.querySelector('[data-action="watched"]');
 
-  refs.buttonQueue.addEventListener('click', onOpenQueueFilms);
-  refs.buttonWatched.addEventListener('click', onOpenWatchedFilms);
+    refs.buttonQueue.addEventListener('click', onOpenQueueFilms);
+    refs.buttonWatched.addEventListener('click', onOpenWatchedFilms);
 }
 
 //-----------------------------------------------------------
@@ -83,30 +83,30 @@ function onOpenQueueFilms() {
 
   myLibrary.renderQueryFilms(); //Рендер фильмов, поставленных в очередь
 
-  console.log('Рендер фильмов, поставленных в очередь');
+    console.log('Рендер фильмов, поставленных в очередь');
 }
 
 function onOpenWatchedFilms() {
-  refs.buttonWatched.classList.add('button--active');
-  refs.buttonQueue.classList.remove('button--active');
+    refs.buttonWatched.classList.add('button--active');
+    refs.buttonQueue.classList.remove('button--active');
 
-  console.log('Рендер просмотренных фильмов');
+    console.log('Рендер просмотренных фильмов');
 }
 
 //-----------------------------------------------------------
 
 // Display the main page
 function toMainPage() {
-  onOpenHomePage();
-  getMovies.fetchPopularFilms().then(film => {
-    const movieList = refs.collection;
-    movieList.innerHTML = renderCard(film.results);
-  });
+    onOpenHomePage();
+    getMovies.fetchPopularFilms().then(film => {
+        const movieList = refs.collection;
+        movieList.innerHTML = renderCard(film.results);
+    });
 }
 
 // Logo click event
 function onHandleClick() {
-  toMainPage();
+    toMainPage();
 }
 
 refs.logoBtn.addEventListener('click', onHandleClick);

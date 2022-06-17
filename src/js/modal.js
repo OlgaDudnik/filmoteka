@@ -20,7 +20,7 @@ async function mountModal(id) {
   await fetchMovie
     .fetchFilmsById()
     .then(data => {
-      film = data.title;
+      film = data.id;
       refs.backdrop.innerHTML = card(data);
     })
     .catch(() => console.log('modal fetch error'));
