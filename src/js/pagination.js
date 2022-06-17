@@ -1,7 +1,4 @@
-
 import FetchMovie from './api.fetch';
-import { refs } from './refs';
-
 
 const FetchMovieInstance = new FetchMovie();
 const ENDPOINT = 'https://api.themoviedb.org/3/';
