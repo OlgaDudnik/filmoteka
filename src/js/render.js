@@ -1,5 +1,5 @@
 import FetchMovie from './api.fetch';
-import filmTpl from '../templates/card.hbs'
+import filmTpl from '../templates/card.hbs';
 import { refs } from './refs';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
@@ -16,7 +16,7 @@ function keyWordSearch(e) {
     newApiFetch.fetchFilms().then(film => {
 
         if (film.results.length === 0) {
-            Notify.warning("We're sorry, but you've reached the end of search results.");
+            Notify.warning('We\'re sorry, but you\'ve reached the end of search results.');
             return;
         }
         newApiFetch.saveLocaleStorage(film);
@@ -41,4 +41,4 @@ Notify.init({
     borderRadius: '10px',
     timeout: 2000,
     cssAnimationStyle: 'from-right',
-})
+});
