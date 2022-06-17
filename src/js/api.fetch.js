@@ -5,6 +5,7 @@ import { showSpiner, hideSpiner } from './loader';
 const LOCALSTORAGE_KEY = 'current-film';
 
 export default class FetchMovie {
+
     constructor() {
         this.searchQuery = '';
         this.page = 1;
@@ -27,7 +28,7 @@ export default class FetchMovie {
             showSpiner();
 
             const searchFilms = await fetch(
-                `${this.URL}search/movie?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false&query=${this.searchQuery}`
+                `${this.URL}search/movie?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false&query=${this.searchQuery}`,
             );
 
             hideSpiner();
@@ -38,11 +39,24 @@ export default class FetchMovie {
         }
     }
 
+
+    // Получение актеров
+    async fetchPeople() {
+        try {
+            const searchPeople = await fetch(
+                `${this.URL}search/person?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`,
+            );
+            return await searchPeople.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     //Получение фильма по id
     async fetchFilmsById() {
         try {
             const searchFilms = await fetch(
-                `https://api.themoviedb.org/3/movie/${this.id}?api_key=${this.key}&page=${this.page}`
+                `https://api.themoviedb.org/3/movie/${this.id}?api_key=${this.key}&page=${this.page}`,
             );
             return await searchFilms.json();
         } catch (error) {
@@ -54,7 +68,7 @@ export default class FetchMovie {
     async fetchGenres() {
         try {
             const searchGenres = await fetch(
-                `${this.URL}genre/movie/list?api_ley=${this.key}&language=en-US`
+                `${this.URL}genre/movie/list?api_key=${this.key}&language=en-US`,
             );
             return await searchGenres.json();
         } catch (error) {
@@ -67,7 +81,7 @@ export default class FetchMovie {
     async fetchPopularFilms() {
         try {
             const searchFilms = await fetch(
-                `${this.URL}movie/popular?api_key=${this.key}&language=en-US&page=${this.page}`
+                `${this.URL}movie/popular?api_key=${this.key}&language=en-US&page=${this.page}`,
             );
             return await searchFilms.json();
         } catch (error) {
@@ -76,64 +90,48 @@ export default class FetchMovie {
     }
 
     // Получение фильмов по рейтингу
-
     async fetchTopRatedFilms() {
         try {
             const searchFilms = await fetch(
-                `${this.URL}movie/top_rated?api_key=${this.key}&language=en-US&page=${this.page}`
+                `${this.URL}movie/top_rated?api_key=${this.key}&language=en-US&page=${this.page}`,
             );
             return await searchFilms.json();
         } catch (error) {
-            error;
-        }
-    }
-
-    // Получение трейлеров
-
-    async fetchTrailers(id) {
-        try {
-            const searchTrailer = await fetch(
-                `${this.URL}movie/${id}/videos?api_key=${this.key}&language=en-US`
-            );
-            return await searchTrailer.json();
-        } catch (error) {
-            error;
-        }
-    }
-
-    // Получение актеров
-
-    async fetchPeople() {
-        try {
-            const searchPeople = await fetch(
-                `${this.URL}search/person?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`
-            );
-            return await searchPeople.json();
-        } catch (error) {
-            error;
+            console.log(error);
         }
     }
 
     // Получение телепередач
-
     async fetchTelecast() {
         try {
             const searchTelecast = await fetch(
-                `${this.URL}search/tv?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`
+                `${this.URL}search/tv?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`,
             );
             return await searchTelecast.json();
         } catch (error) {
-            error;
+            console.log(error);
         }
     }
 
     renderMovieList() {
         const movieList = refs.collection;
         const parsedStorage = JSON.parse(
-            localStorage.getItem(LOCALSTORAGE_KEY)
-        ).results;
+            localStorage.getItem(LOCALSTORAGE_KEY),
+        ).result;
 
         movieList.innerHTML = renderCard(parsedStorage);
+    }
+
+    // Получение трейлеров
+    async fetchTrailers(id) {
+        try {
+            const searchTrailer = await fetch(
+                `${this.URL}movie/${id}/videos?api_key=${this.key}&language=en-US`,
+            );
+            return await searchTrailer.json();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     saveLocaleStorage(films) {
@@ -143,6 +141,7 @@ export default class FetchMovie {
     getLocaleStorage() {
         return JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
     }
+
 
     incrementPage() {
         this.page += 1;
