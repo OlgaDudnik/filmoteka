@@ -13,8 +13,10 @@ export const refs = {
   //library
   myLibraryContainer: document.querySelector('.library .container'),
   myLibraryList: document.querySelector('.library__list'),
-  //contaoner
+  //container
   collection: document.querySelector('.gallery-container_grid'),
+
+  listCollection: document.querySelector('.gallery-container_grid'),
 
   //modal
   modalEventListener: document.querySelector('.modalEventListener'),

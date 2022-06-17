@@ -53,15 +53,14 @@ export default class MyLibrary {
       const query = [343611, 973608, 136418];
 
       query.map(id => {
+        refs.listCollection.innerHTML = '';
         fechLibraryMovie.idFilm = id;
         fechLibraryMovie.fetchFilmsById().then(film => {
-          document
-            .querySelector('.library__list')
-            .insertAdjacentHTML('beforeend', renderCard(film));
+          refs.listCollection.insertAdjacentHTML('beforeend', renderCard(film));
         });
       });
     } else {
-      refs.myLibraryContainer.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
+      refs.collection.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
       this.showMessage();
     }
   }
@@ -89,6 +88,5 @@ export default class MyLibrary {
   }
   clearInterval() {
     clearInterval(this.interval);
-    console.log(this.interval);
   }
 }
