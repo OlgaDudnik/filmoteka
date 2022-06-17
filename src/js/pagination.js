@@ -1,9 +1,7 @@
+
 import FetchMovie from './api.fetch';
 import { refs } from './refs';
 
-
-// 0eaaf2516690b5ff52877c678f040000
-// const IMAGE_PATH_ENDPOINT = 'https://image.tmdb.org/t/p/w500';
 
 const FetchMovieInstance = new FetchMovie();
 const ENDPOINT = 'https://api.themoviedb.org/3/';
@@ -67,6 +65,7 @@ function renderPagination(totalPages, page) {
     if (isNeedToAddDotsAfter) {
         liItems += `<li><span class='pagination__button__dots'>...</span></li>`;
         liItems += `<li><span data-action='change' data-page='${totalPages}' class='pagination__button__link'>${totalPages}</span></li>`;
+
     }
 
     liItems += `<li><span data-action='right' class='pagination__arrow--right ${rightDisabledClass}'>${forwardArrow}</span></li>`;
@@ -100,22 +99,4 @@ list.addEventListener('click', (e) => {
 });
 
 renderPagination(totalPages, page);
-
-
-// fetchPagination();
-
-// делает неактивными кнопки-стрелки на первой и последней  странице
-// function disableArrowBtn(totalPages) {
-//   if (currentPage === 1) {
-//     arrowLeft.classList.add('disabled-arrow');
-//   } else {
-//     arrowLeft.classList.remove('disabled-arrow');
-//   }
-//
-//   if (currentPage === totalPages) {
-//     arrowRight.classList.add('disabled-arrow');
-//   } else {
-//     arrowRight.classList.remove('disabled-arrow');
-//   }
-// }
 

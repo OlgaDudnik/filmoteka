@@ -1,17 +1,22 @@
-import { STORAGE_KEY1 } from './modal';
-import { STORAGE_KEY2 } from './modal';
+import { keys } from './storage_key';
 import FetchMovie from './api.fetch';
+import renderCard from '../templates/card-by-id.hbs';
 import { refs } from './refs';
+//import { Block } from 'notiflix';
 //-----------------------------------------------------------
 
 const fechLibraryMovie = new FetchMovie();
 
 //-----------------------------------------------------------
 
-class MyLibrary {
-  constructor(watchedKey, queueKey) {
-    this.watchedKey = watchedKey;
-    this.queueKey = queueKey;
+export default class MyLibrary {
+  constructor() {
+    this.watchedKey = [343611, 343611, 136418];
+    this.queueKey = [343611, 973608, 136418, 973608];
+    //this.watchedKey = keys.STORAGE_KEY1;
+    //this.queueKey = keys.STORAGE_KEY2;
+    this.message = 'Your library is empty!!!';
+    this.interval = 0;
   }
 
   getWatchedFilmsId() {
@@ -32,49 +37,75 @@ class MyLibrary {
     }
   }
 
-  getMyLibraryId() {
-    const myLibrary = [];
-    const watchedFilms = this.getWatchedFilmsId();
-    const queueFilms = this.getQueueFilmsId();
-
-    if (watchedFilms) {
-      myLibrary.push(watchedFilms);
-    }
-    if (queueFilms) {
-      myLibrary.push(queueFilms);
-    }
-    console.log(myLibrary);
-    return myLibrary;
+  renderQueryFilms() {
+    //const queryId = this.getQueueFilmsId();
+    const queryId = this.queueKey;
+    this.render(queryId);
   }
-}
 
-//-----------------------------------------------------------
+  getLibraryId() {
+    const myLibraryId = [];
+    //const watchedFilmsId = this.getWatchedFilmsId();
+    //const queueFilmsId = this.getQueueFilmsId();
+    const watchedFilmsId = this.watchedKey;
+    const queueFilmsId = this.queueKey;
 
-export function renderMyLibraryList() {
-  const myLibrary = new MyLibrary(STORAGE_KEY1, STORAGE_KEY2);
+    if (watchedFilmsId) {
+      myLibraryId.push(...watchedFilmsId);
+    }
+    if (queueFilmsId) {
+      myLibraryId.push(...queueFilmsId);
+    }
+    return myLibraryId;
+  }
 
-  if (myLibrary.getMyLibraryId().length) {
-    fechLibraryMovie.query = myLibrary.getMyLibraryId()[0];
-    fechLibraryMovie.fetchFilms();
-    console.log(fechLibraryMovie.fetchFilms());
-    console.log('отрисовываем все фильмы библиотеки');
-  } else {
-    refs.myLibraryContainer.innerHTML = `<span class='user-message'></span>`;
+  renderMyLibrary() {
+    const myLibraryId = this.getLibraryId();
 
-    const message = 'Your library is empty!!!';
+    this.render(myLibraryId);
+  }
 
-    const arrMessage = message.split('');
+  render(ids) {
+    refs.collection.innerHTML = '';
+    if (ids.length) {
+      ids.map(id => {
+        fechLibraryMovie.idFilm = id;
+        fechLibraryMovie.fetchFilmsById().then(film => {
+          refs.collection.insertAdjacentHTML('beforeend', renderCard(film));
+        });
+      });
+    } else {
+      refs.collection.insertAdjacentHTML(
+        'beforeend',
+        `<li class="empty-library"><span class='user-message'></span></li>`
+      );
+      refs.collection.style.display = 'block';
+      this.showMessage();
+    }
+  }
+
+  clearEmptyLibrary() {
+    refs.collection.style.display = 'grid';
+  }
+
+  showMessage() {
+    const arrMessage = this.message.split('');
     let i = 0;
-    const intervalId = setInterval(showLetter, 150);
+    this.interval = setInterval(showLetter, 150);
 
     function showLetter() {
       if (i === arrMessage.length) {
-        clearInterval(intervalId);
+        clearInterval(this.interval);
         return;
       }
 
-      refs.myLibraryContainer.firstChild.textContent += arrMessage[i];
+      refs.collection.querySelector(
+        '.empty-library .user-message'
+      ).textContent += arrMessage[i];
       i += 1;
     }
+  }
+  clearInterval() {
+    clearInterval(this.interval);
   }
 }

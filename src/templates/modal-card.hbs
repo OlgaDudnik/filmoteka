@@ -1,0 +1,36 @@
+
+  <div class="modal">
+    <button class="modal__button-close">&#215</button>
+    <div class="modal__container">
+      <img src="https://image.tmdb.org/t/p/w500{{poster_path}}" alt="movie banner" class="modal__img"></img>
+    </div>
+    <div class="modal__container">
+      <h2 class="modal__title">{{title}}</h2>
+      <div class="modal__list-container">
+        <ul class="modal__list">
+          <li class="modal__item">Vote / Votes</li>
+          <li class="modal__item">Popularity</li>
+          <li class="modal__item">Original Title</li>
+          <li class="modal__item">Genre</li>
+        </ul>
+        <ul class="modal__list">
+          <li class="modal__item-desc">
+            <span class="modal__item-desc--color">{{vote_average}}</span> /
+            <span>&nbsp10</span>
+          </li>
+          <li class="modal__item-desc">{{vote_count}}</li>
+          <li class="modal__item-desc">{{original_title}}</li>
+          <li class="modal__item-desc">{{genres.name}}</li>
+        </ul>
+      </div>
+
+      <h3 class="modal__title-description">About</h3>
+      <p class="modal__description">
+        {{overview}}
+      </p>
+      <div class="modal__button-container">
+        <button class="modal__button" id="watched">add to Watched</button>
+        <button class="modal__button" id="queue">add to queue</button>
+      </div>
+    </div>
+  </div>
