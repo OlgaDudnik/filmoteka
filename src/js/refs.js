@@ -16,8 +16,6 @@ export const refs = {
   //container
   collection: document.querySelector('.gallery-container_grid'),
 
-  listCollection: document.querySelector('.gallery-container_grid'),
-
   //modal
   modalEventListener: document.querySelector('.modalEventListener'),
   backdrop: document.querySelector('.backdrop'),

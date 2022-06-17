@@ -40,7 +40,7 @@ function onOpenHomePage() {
       </svg>
     </button>`;
 
-  myLibrary.clearRenderLibrary();
+  myLibrary.clearEmptyLibrary();
   myLibrary.clearInterval();
 }
 
@@ -66,7 +66,6 @@ function onOpenLibraryPage() {
 
   myLibrary.clearInterval();
   myLibrary.renderLibrary();
-  //refs.collection.innerHTML = ``;
 
   refs.buttonQueue = document.querySelector('[data-action="queue"]');
   refs.buttonWatched = document.querySelector('[data-action="watched"]');
@@ -78,22 +77,21 @@ function onOpenLibraryPage() {
 //-----------------------------------------------------------
 
 function onOpenQueueFilms() {
-
   // const cardCollection = document.querySelector('.library__list');
   const cardCollection = document.querySelector('.card__colection');
   refs.buttonQueue.classList.add('button--active');
   refs.buttonWatched.classList.remove('button--active');
-  
+
   const queueData = JSON.parse(localStorage.getItem(keys.STORAGE_KEY2));
   if (!queueData) {
     queueData = [];
-  };
- 
-  refs.myLibraryList.innerHTML = "";
-  cardCollection.innerHTML = "";
+  }
+
+  refs.myLibraryList.innerHTML = '';
+  cardCollection.innerHTML = '';
   renderAddedMoviesMarkup(queueData);
   console.log('Рендер фильмов, поставленных в очередь');
-};
+}
 
 function onOpenWatchedFilms() {
   refs.buttonWatched.classList.add('button--active');
@@ -121,10 +119,9 @@ function onHandleClick() {
 refs.logoBtn.addEventListener('click', onHandleClick);
 refs.buttonHeaderHome.addEventListener('click', onHandleClick);
 
-
 // -------Render MarkUp For Added Movies
 
-function renderAddedMoviesMarkup( results ) {
+function renderAddedMoviesMarkup(results) {
   const cardCollection = document.querySelector('.library__list');
   const markup = results
     .map(({ id, poster_path, vote_average, title, release_date }) => {
@@ -138,8 +135,8 @@ function renderAddedMoviesMarkup( results ) {
       <span></span> | <span>${release_date}</span><span class="card__rating">${vote_average}</span>
    </p>
 </li>
-`
+`;
     })
     .join('');
-cardCollection.insertAdjacentHTML('beforeend', markup); 
+  cardCollection.insertAdjacentHTML('beforeend', markup);
 }
