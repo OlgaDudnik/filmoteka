@@ -2,6 +2,7 @@ import { keys } from './storage_key';
 import FetchMovie from './api.fetch';
 import renderCard from '../templates/card-by-id.hbs';
 import { refs } from './refs';
+import { Block } from 'notiflix';
 //-----------------------------------------------------------
 
 const fechLibraryMovie = new FetchMovie();
@@ -49,24 +50,27 @@ export default class MyLibrary {
   }
 
   renderLibrary() {
+    refs.collection.innerHTML = '';
     if (this.getMyLibraryId().length) {
       const query = [343611, 973608, 136418];
-
       query.map(id => {
-        refs.listCollection.innerHTML = '';
         fechLibraryMovie.idFilm = id;
         fechLibraryMovie.fetchFilmsById().then(film => {
-          refs.listCollection.insertAdjacentHTML('beforeend', renderCard(film));
+          refs.collection.insertAdjacentHTML('beforeend', renderCard(film));
         });
       });
     } else {
-      refs.collection.innerHTML = `<div class="empty-library"><span class='user-message'></span><div>`;
+      refs.collection.insertAdjacentHTML(
+        'beforeend',
+        `<li class="empty-library"><span class='user-message'></span></li>`
+      );
+      refs.collection.style.display = 'block';
       this.showMessage();
     }
   }
 
-  clearRenderLibrary() {
-    refs.myLibraryContainer.innerHTML = `<ul class="library__list" id="library"></ul>`;
+  clearEmptyLibrary() {
+    refs.collection.style.display = 'grid';
   }
 
   showMessage() {
@@ -80,7 +84,7 @@ export default class MyLibrary {
         return;
       }
 
-      refs.myLibraryContainer.querySelector(
+      refs.collection.querySelector(
         '.empty-library .user-message'
       ).textContent += arrMessage[i];
       i += 1;
