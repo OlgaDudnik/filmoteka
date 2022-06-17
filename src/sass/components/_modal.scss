@@ -23,27 +23,25 @@
 }
 
 .modal {
-  position: relative;
   display: flex;
+  position: relative;
+  width: auto;
+  height: auto;
   padding-left: 16px;
   padding-right: 16px;
   padding-top: 40px;
   padding-bottom: 40px;
 
   background-color: $bg-first-color;
-  max-width: 814px;
-  margin-top: 10%;
-  margin-left: auto;
-  margin-right: auto;
+
+  margin-top: 151px;
 
   @media screen and (max-width: 1024px) {
-    max-width: 704px;
-    margin-top: 10%;
+    margin-top: 219px;
     padding-left: 36px;
     padding-right: 36px;
   }
   @media screen and (max-width: 768px) {
-    max-width: 280px;
     display: block;
     margin-top: auto;
     padding-left: 20px;
@@ -53,13 +51,13 @@
 
   &__container {
     display: block;
-    max-width: 390px;
+    width: 390px;
 
     @media screen and (max-width: 1024px) {
-      max-width: 264px;
+      width: 264px;
     }
     @media screen and (max-width: 768px) {
-      max-width: 240px;
+      width: 240px;
     }
   }
   &__container:last-child {
@@ -107,6 +105,9 @@
     display: flex;
     margin-bottom: 20px;
   }
+  &__list {
+    display: block;
+  }
 
   &__list:not(:last-child) {
     margin-right: 85px;
@@ -127,10 +128,12 @@
   &__item:not(:last-child) {
     margin-bottom: 8px;
   }
+  &__item-desc:not(:last-child) {
+    margin-bottom: 8px;
+  }
 
   &__item-desc {
     display: flex;
-    margin-bottom: 8px;
 
     font-family: $main-font;
     font-weight: 500;
@@ -139,7 +142,7 @@
 
     color: $text-black-color;
   }
-  &__item-desc--color {
+  &__item-desc--orange {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -149,6 +152,13 @@
     color: $primaryLightColor;
     background-color: $accentColor;
   }
+  &__item-desc--grey {
+    display: block;
+    color: $characteristicsColor;
+
+    margin-right: 7px;
+  }
+
   &__title-description {
     margin-bottom: 8px;
     font-family: $main-font;

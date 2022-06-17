@@ -1,4 +1,3 @@
-
   <div class="modal">
     <button class="modal__button-close">&#215</button>
     <div class="modal__container">
@@ -15,15 +14,15 @@
         </ul>
         <ul class="modal__list">
           <li class="modal__item-desc">
-            <span class="modal__item-desc--color">{{vote_average}}</span> /
-            <span>&nbsp10</span>
+            <span class="modal__item-desc--orange">{{vote_average}}</span>
+            <span class="modal__item-desc--grey">/</span>
+            <span>{{vote_count}}</span>
           </li>
-          <li class="modal__item-desc">{{vote_count}}</li>
+          <li class="modal__item-desc">{{popularity}}</li>
           <li class="modal__item-desc">{{original_title}}</li>
-          <li class="modal__item-desc">{{genres.name}}</li>
+          <li class="modal__item-desc">{{#each genres}} {{name}} {{/each}}</li>
         </ul>
       </div>
-
       <h3 class="modal__title-description">About</h3>
       <p class="modal__description">
         {{overview}}
