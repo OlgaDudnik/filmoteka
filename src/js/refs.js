@@ -11,8 +11,8 @@ export const refs = {
   //pagination
   paginationContainer: document.querySelector('.pagination__list'),
   //library
-  myLibraryContainer: document.querySelector('.library .container'),
-  myLibraryList: document.querySelector('.library__list'),
+  //myLibraryContainer: document.querySelector('.library .container'),
+  //myLibraryList: document.querySelector('.library__list'),
   //container
   collection: document.querySelector('.gallery-container_grid'),
 

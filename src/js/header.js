@@ -56,7 +56,7 @@ function onOpenLibraryPage() {
     .querySelector('[data-action="queue"]')
     .classList.add('button--rightLocation');
 
-  if (myLibrary.getMyLibraryId().length === 0) {
+  if (myLibrary.getLibraryId().length === 0) {
     refs.headerForm.classList.add('is-hidden');
     refs.paginationContainer.classList.add('is-hidden');
   } else {
@@ -65,7 +65,7 @@ function onOpenLibraryPage() {
   }
 
   myLibrary.clearInterval();
-  myLibrary.renderLibrary();
+  myLibrary.renderMyLibrary();
 
   refs.buttonQueue = document.querySelector('[data-action="queue"]');
   refs.buttonWatched = document.querySelector('[data-action="watched"]');
@@ -82,14 +82,17 @@ function onOpenQueueFilms() {
   refs.buttonQueue.classList.add('button--active');
   refs.buttonWatched.classList.remove('button--active');
 
-  const queueData = JSON.parse(localStorage.getItem(keys.STORAGE_KEY2));
-  if (!queueData) {
-    queueData = [];
-  }
+  // const queueData = JSON.parse(localStorage.getItem(keys.STORAGE_KEY2));
+  // if (!queueData) {
+  //   queueData = [];
+  // }
 
-  refs.myLibraryList.innerHTML = '';
-  cardCollection.innerHTML = '';
-  renderAddedMoviesMarkup(queueData);
+  // refs.myLibraryList.innerHTML = '';
+  // cardCollection.innerHTML = '';
+  // renderAddedMoviesMarkup(queueData);
+
+  myLibrary.renderQueryFilms(); //Рендер фильмов, поставленных в очередь
+
   console.log('Рендер фильмов, поставленных в очередь');
 }
 
