@@ -171,6 +171,3 @@ export default class FetchMovie {
         this.id = newid;
     }
 }
-
-
-
