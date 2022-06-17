@@ -32,7 +32,7 @@ function onOpenHomePage() {
       type="text"
       class="header-search-input"
       name="searchQuery"
-      placeholder="   Search movie"
+      placeholder="Search movie"
     />
     <button type="submit" class="search-btn">
       <svg class="icon-search" width="24" height="24">
