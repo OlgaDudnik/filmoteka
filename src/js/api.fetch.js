@@ -22,6 +22,14 @@ export default class FetchMovie {
         this.page = newPage;
     }
 
+    get totalPagesNum() {
+        return this.totalPages;
+    }
+
+    set totalPagesNum(totalPages) {
+        this.totalPages = totalPages;
+    }
+
     // Получение фильмов
     async fetchFilms() {
         try {
@@ -33,7 +41,11 @@ export default class FetchMovie {
 
             hideSpiner();
 
-            return await searchFilms.json();
+            let result = await searchFilms.json();
+            this.pageNum = result.page;
+            this.totalPagesNum = result.total_pages;
+            this.renderPagination('fetchFilms');
+            return result;
         } catch (error) {
             console.log(error);
         }
@@ -46,7 +58,11 @@ export default class FetchMovie {
             const searchPeople = await fetch(
                 `${this.URL}search/person?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`,
             );
-            return await searchPeople.json();
+            let result = await searchPeople.json();
+            this.pageNum = result.page;
+            this.totalPagesNum = result.total_pages;
+            this.renderPagination('fetchPeople');
+            return result;
         } catch (error) {
             console.log(error);
         }
@@ -58,7 +74,11 @@ export default class FetchMovie {
             const searchFilms = await fetch(
                 `https://api.themoviedb.org/3/movie/${this.id}?api_key=${this.key}&page=${this.page}`,
             );
-            return await searchFilms.json();
+            let result = await searchFilms.json();
+            this.pageNum = result.page;
+            this.totalPagesNum = result.total_pages;
+            this.renderPagination('fetchFilmsById');
+            return result;
         } catch (error) {
             console.log(error);
         }
@@ -83,7 +103,11 @@ export default class FetchMovie {
             const searchFilms = await fetch(
                 `${this.URL}movie/popular?api_key=${this.key}&language=en-US&page=${this.page}`,
             );
-            return await searchFilms.json();
+            let result = await searchFilms.json();
+            this.pageNum = result.page;
+            this.totalPagesNum = result.total_pages;
+            this.renderPagination('fetchPopularFilms');
+            return result;
         } catch (error) {
             console.log(error);
         }
@@ -95,7 +119,11 @@ export default class FetchMovie {
             const searchFilms = await fetch(
                 `${this.URL}movie/top_rated?api_key=${this.key}&language=en-US&page=${this.page}`,
             );
-            return await searchFilms.json();
+            let result = await searchFilms.json();
+            this.pageNum = result.page;
+            this.totalPagesNum = result.total_pages;
+            this.renderPagination('fetchTopRatedFilms');
+            return result;
         } catch (error) {
             console.log(error);
         }
@@ -107,7 +135,11 @@ export default class FetchMovie {
             const searchTelecast = await fetch(
                 `${this.URL}search/tv?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`,
             );
-            return await searchTelecast.json();
+            let result = await searchTelecast.json();
+            this.pageNum = result.page;
+            this.totalPagesNum = result.total_pages;
+            this.renderPagination('fetchTelecast');
+            return result;
         } catch (error) {
             console.log(error);
         }
@@ -120,6 +152,65 @@ export default class FetchMovie {
         ).result;
 
         movieList.innerHTML = renderCard(parsedStorage);
+    }
+
+    renderPagination(functionName) {
+        refs.pagination.innerHTML = this.generatePaginationMarkup(functionName);
+    }
+
+    generatePaginationMarkup(functionName) {
+        const backArrow = `<svg class='icon icon-arrow-left' width='16' height='16' viewBox='0 0 16 16' fill='none'
+                     xmlns='http://www.w3.org/2000/svg'>
+                    <path d='M12.6666 8H3.33325' stroke-width='1.33333' stroke-linecap='round'
+                        stroke-linejoin='round' />
+                    <path d='M7.99992 12.6667L3.33325 8.00004L7.99992 3.33337' stroke-width='1.33333'
+                        stroke-linecap='round' stroke-linejoin='round' />
+                    </svg>`;
+        const forwardArrow = `<svg class='icon icon-arrow-right' width='16' height='16' viewBox='0 0 16 16' fill='none'
+                      xmlns='http://www.w3.org/2000/svg'>
+                      <path d='M3.33341 8H12.6667' stroke-width='1.33333' stroke-linecap='round'
+                        stroke-linejoin='round' />
+                      <path d='M8.00008 12.6667L12.6667 8.00004L8.00008 3.33337' stroke-width='1.33333'
+                        stroke-linecap='round' stroke-linejoin='round' />
+                      </svg>`;
+
+        let liItems = '';
+        let activeItem;
+        let beforePages = this.pageNum - 1;
+        let afterPages = this.pageNum + 1;
+        let leftDisabledClass = this.pageNum > 1 ? '' : 'disabled-arrow';
+        let rightDisabledClass = this.pageNum < this.totalPagesNum ? '' : 'disabled-arrow';
+        const isNeedToAddDotsBefore = this.pageNum > 10;
+        const isNeedToAddDotsAfter = this.pageNum > 10 && this.pageNum < this.totalPagesNum;
+
+        liItems += `<li><span onclick='${functionName}' data-action='left' class='pagination__arrow--left ${leftDisabledClass}'>${backArrow}</span></li>`;
+
+        if (isNeedToAddDotsBefore) {
+            liItems += `<li><span onclick='${functionName}' data-action='change' data-page='1' class='pagination__button__link'>1</span></li>`;
+            liItems += `<li><span class='pagination__button__dots'>...</span></li>`;
+        }
+
+        for (let pageLength = beforePages; pageLength <= afterPages; pageLength++) {
+            if (!pageLength || pageLength > this.totalPagesNum) {
+                continue;
+            }
+
+            if (this.pageNum === pageLength) {
+                activeItem = 'active';
+            } else {
+                activeItem = '';
+            }
+            liItems += `<li class='${activeItem}'><span onclick='${functionName}' data-action='change' data-page='${pageLength}' class='pagination__button__link'>${pageLength}</span></li>`;
+        }
+
+        if (isNeedToAddDotsAfter) {
+            liItems += `<li><span onclick='${functionName}' class='pagination__button__dots'>...</span></li>`;
+            liItems += `<li><span data-action='change' data-page='${this.totalPagesNum}' class='pagination__button__link'>${this.totalPagesNum}</span></li>`;
+        }
+
+        liItems += `<li><span onclick='${functionName}' data-action='right' class='pagination__arrow--right ${rightDisabledClass}'>${forwardArrow}</span></li>`;
+
+        return liItems;
     }
 
     // Получение трейлеров

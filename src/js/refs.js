@@ -21,4 +21,7 @@ export const refs = {
 
     // loader
     loader: document.querySelector('.loader'),
+
+    // Pagination
+    pagination: document.querySelector('ul.pagination__list'),
 };
