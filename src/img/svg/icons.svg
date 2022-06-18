@@ -1,0 +1,21 @@
+<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<symbol id="icon-triangle" viewBox="0 0 64 32">
+<path d="M0.050 0.040c0 0.020 7.19 7.225 15.975 16.010l15.975 15.97 15.975-15.97c8.785-8.785 15.975-15.99 15.975-16.010 0-0.025-14.375-0.040-31.95-0.040s-31.95 0.015-31.95 0.040z"></path>
+</symbol>
+<symbol id="icon-sort-amount-asc" viewBox="0 0 32 32">
+<path d="M10 24v-24h-4v24h-5l7 7 7-7h-5z"></path>
+<path d="M14 18h18v4h-18v-4z"></path>
+<path d="M14 12h14v4h-14v-4z"></path>
+<path d="M14 6h10v4h-10v-4z"></path>
+<path d="M14 0h6v4h-6v-4z"></path>
+</symbol>
+<symbol id="icon-sort-amount-desc" viewBox="0 0 32 32">
+<path d="M10 24v-24h-4v24h-5l7 7 7-7h-5z"></path>
+<path d="M14 0h18v4h-18v-4z"></path>
+<path d="M14 6h14v4h-14v-4z"></path>
+<path d="M14 12h10v4h-10v-4z"></path>
+<path d="M14 18h6v4h-6v-4z"></path>
+</symbol>
+</defs>
+</svg>

@@ -10,3 +10,4 @@ import './js/refs';
 import './js/mylibrary';
 import './js/render';
 import './js/sort-films'
+import './js/select';
