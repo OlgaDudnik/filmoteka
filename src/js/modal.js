@@ -1,4 +1,3 @@
-
 import card from '../templates/modal-card.hbs';
 import FetchMovie from './api.fetch';
 import { refs } from './refs';
@@ -22,10 +21,11 @@ async function mountModal(id) {
     .then(data => {
       film = data.id;
       refs.backdrop.innerHTML = card(data);
+      onOpenModal();
     })
-    .catch(() => console.log('modal fetch error'));
-
-  onOpenModal();
+    .catch(() => {
+      throw new Error('Modal fetch error!');
+    });
 }
 
 function onOpenModal() {
@@ -97,4 +97,3 @@ function onAddToQueue() {
   storageState.push(film);
   localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(storageState));
 }
-
