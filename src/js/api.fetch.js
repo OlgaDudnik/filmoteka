@@ -4,6 +4,16 @@ import { showSpiner, hideSpiner } from './loader';
 
 const LOCALSTORAGE_KEY = 'current-film';
 
+String.prototype.replaceArray = function(find, replace) {
+    let replaceString = this;
+    let regex;
+    for (let i = 0; i < find.length; i++) {
+        regex = new RegExp(find[i], 'g');
+        replaceString = replaceString.replace(regex, replace[i]);
+    }
+    return replaceString;
+};
+
 export default class FetchMovie {
 
     constructor() {
@@ -12,10 +22,19 @@ export default class FetchMovie {
         this.URL = 'https://api.themoviedb.org/3/';
         this.key = '0eaaf2516690b5ff52877c678f040000';
         this.id = '';
+        this.urlTemplates = {
+            searchFilms: 'search/movie?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false&query={QUERY}',
+            searchActors: 'search/person?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
+            getFilmById: 'movie/{ID}?api_key={API_KEY}',
+            getGenres: 'genre/movie/list?api_key={API_KEY}&language=en-US',
+            getPopularFilms: 'movie/popular?api_key={API_KEY}&language=en-US&page={PAGE}',
+            getTopRatedFilms: 'movie/top_rated?api_key={API_KEY}&language=en-US&page={PAGE}',
+            getTelecast: 'search/tv?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
+        };
     }
 
     get pageNum() {
-        return this.page;
+        return typeof this.page === 'undefined' ? 1 : this.page;
     }
 
     set pageNum(newPage) {
@@ -23,126 +42,78 @@ export default class FetchMovie {
     }
 
     get totalPagesNum() {
-        return this.totalPages;
+        return typeof this.totalPages === 'undefined' ? 0 : this.totalPages;
     }
 
     set totalPagesNum(totalPages) {
         this.totalPages = totalPages;
     }
 
-    // Получение фильмов
-    async fetchFilms() {
-        try {
-            showSpiner();
+    async sendQuery(action) {
+        showSpiner();
 
-            const searchFilms = await fetch(
-                `${this.URL}search/movie?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false&query=${this.searchQuery}`,
-            );
+        // first generate url based on required data
+        const url = this.urlTemplates[action].replaceArray(['{API_KEY}', '{PAGE}', '{QUERY}'], [this.key, this.pageNum, this.searchQuery]);
+
+        // second - fetch
+        try {
+            const responsePromise = await fetch(this.URL + url);
+            let result = await responsePromise.json();
+            if (result.hasOwnProperty('page')) {
+                this.pageNum = result.page;
+            }
+
+            if (result.hasOwnProperty('total_pages')) {
+                this.totalPagesNum = result.total_pages;
+            }
+
+            console.log(this.URL + url, this.pageNum, this.totalPagesNum);
+
+            this.renderPagination('test');
 
             hideSpiner();
 
-            let result = await searchFilms.json();
-            this.pageNum = result.page;
-            this.totalPagesNum = result.total_pages;
-            this.renderPagination('fetchFilms');
+            // third - return result
             return result;
         } catch (error) {
             console.log(error);
         }
     }
 
+    // Получение фильмов
+    async fetchFilms() {
+        return this.sendQuery('searchFilms');
+    }
 
     // Получение актеров
     async fetchPeople() {
-        try {
-            const searchPeople = await fetch(
-                `${this.URL}search/person?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`,
-            );
-            let result = await searchPeople.json();
-            this.pageNum = result.page;
-            this.totalPagesNum = result.total_pages;
-            this.renderPagination('fetchPeople');
-            return result;
-        } catch (error) {
-            console.log(error);
-        }
+        return this.sendQuery('searchActors');
     }
 
     //Получение фильма по id
     async fetchFilmsById() {
-        try {
-            const searchFilms = await fetch(
-                `https://api.themoviedb.org/3/movie/${this.id}?api_key=${this.key}`,
-            );
-            let result = await searchFilms.json();
-            this.pageNum = result.page;
-            this.totalPagesNum = result.total_pages;
-            this.renderPagination('fetchFilmsById');
-            return result;
-        } catch (error) {
-            console.log(error);
-        }
+        return this.sendQuery('getFilmById');
     }
 
     // Получение жанров
     async fetchGenres() {
-        try {
-            const searchGenres = await fetch(
-                `${this.URL}genre/movie/list?api_key=${this.key}&language=en-US`,
-            );
-            return await searchGenres.json();
-        } catch (error) {
-            console.log(error);
-        }
+        return this.sendQuery('getGenres');
     }
 
     // Получение популярных фильмов
 
     async fetchPopularFilms() {
-        try {
-            const searchFilms = await fetch(
-                `${this.URL}movie/popular?api_key=${this.key}&language=en-US&page=${this.page}`,
-            );
-            let result = await searchFilms.json();
-            this.pageNum = result.page;
-            this.totalPagesNum = result.total_pages;
-            this.renderPagination('fetchPopularFilms');
-            return result;
-        } catch (error) {
-            console.log(error);
-        }
+        return this.sendQuery('getPopularFilms');
     }
 
     // Получение фильмов по рейтингу
     async fetchTopRatedFilms() {
-        try {
-            const searchFilms = await fetch(
-                `${this.URL}movie/top_rated?api_key=${this.key}&language=en-US&page=${this.page}`,
-            );
-            let result = await searchFilms.json();
-            this.pageNum = result.page;
-            this.totalPagesNum = result.total_pages;
-            this.renderPagination('fetchTopRatedFilms');
-            return result;
-        } catch (error) {
-            console.log(error);
-        }
+        return this.sendQuery('getTopRatedFilms');
     }
 
     // Получение телепередач
     async fetchTelecast() {
-        try {
-            const searchTelecast = await fetch(
-                `${this.URL}search/tv?api_key=${this.key}&language=en-US&page=${this.page}&include_adult=false`,
-            );
-            let result = await searchTelecast.json();
-            this.pageNum = result.page;
-            this.totalPagesNum = result.total_pages;
-            this.renderPagination('fetchTelecast');
-            return result;
-        } catch (error) {
-            console.log(error);
-        }
+        return this.sendQuery('getTelecast');
     }
 
     renderMovieList() {
@@ -154,11 +125,11 @@ export default class FetchMovie {
         movieList.innerHTML = renderCard(parsedStorage);
     }
 
-    renderPagination(functionName) {
-        refs.pagination.innerHTML = this.generatePaginationMarkup(functionName);
+    renderPagination() {
+        refs.pagination.innerHTML = this.generatePaginationMarkup();
     }
 
-    generatePaginationMarkup(functionName) {
+    generatePaginationMarkup() {
         const backArrow = `<svg class='icon icon-arrow-left' width='16' height='16' viewBox='0 0 16 16' fill='none'
                      xmlns='http://www.w3.org/2000/svg'>
                     <path d='M12.6666 8H3.33325' stroke-width='1.33333' stroke-linecap='round'
@@ -183,10 +154,10 @@ export default class FetchMovie {
         const isNeedToAddDotsBefore = this.pageNum > 10;
         const isNeedToAddDotsAfter = this.pageNum > 10 && this.pageNum < this.totalPagesNum;
 
-        liItems += `<li><span onclick='${functionName}' data-action='left' class='pagination__arrow--left ${leftDisabledClass}'>${backArrow}</span></li>`;
+        liItems += `<li><span onclick='' data-action='left' class='pagination__arrow--left ${leftDisabledClass}'>${backArrow}</span></li>`;
 
         if (isNeedToAddDotsBefore) {
-            liItems += `<li><span onclick='${functionName}' data-action='change' data-page='1' class='pagination__button__link'>1</span></li>`;
+            liItems += `<li><span onclick='' data-action='change' data-page='1' class='pagination__button__link'>1</span></li>`;
             liItems += `<li><span class='pagination__button__dots'>...</span></li>`;
         }
 
@@ -194,23 +165,22 @@ export default class FetchMovie {
             if (!pageLength || pageLength > this.totalPagesNum) {
                 continue;
             }
-
-            if (this.pageNum === pageLength) {
-                activeItem = 'active';
-            } else {
-                activeItem = '';
-            }
-            liItems += `<li class='${activeItem}'><span onclick='${functionName}' data-action='change' data-page='${pageLength}' class='pagination__button__link'>${pageLength}</span></li>`;
+            activeItem = this.pageNum === pageLength ? 'active' : '';
+            liItems += `<li class='${activeItem}'><span onclick='' data-action='change' data-page='${pageLength}' class='pagination__button__link'>${pageLength}</span></li>`;
         }
 
         if (isNeedToAddDotsAfter) {
-            liItems += `<li><span onclick='${functionName}' class='pagination__button__dots'>...</span></li>`;
-            liItems += `<li><span data-action='change' data-page='${this.totalPagesNum}' class='pagination__button__link'>${this.totalPagesNum}</span></li>`;
+            liItems += `<li><span onclick='' class='pagination__button__dots'>...</span></li>`;
+            liItems += `<li><span data-action='' data-page='${this.totalPagesNum}' class='pagination__button__link'>${this.totalPagesNum}</span></li>`;
         }
 
-        liItems += `<li><span onclick='${functionName}' data-action='right' class='pagination__arrow--right ${rightDisabledClass}'>${forwardArrow}</span></li>`;
+        liItems += `<li><span onclick='Test.hello()' data-action='right' class='pagination__arrow--right ${rightDisabledClass}'>${forwardArrow}</span></li>`;
 
         return liItems;
+    }
+
+    static hello() {
+        console.log('Hello');
     }
 
     // Получение трейлеров
