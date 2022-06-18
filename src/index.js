@@ -11,3 +11,5 @@ import './js/mylibrary';
 import './js/render';
 import './js/sort-films'
 import './js/select';
+import './js/btn-scrollUp';
+
