@@ -38,12 +38,7 @@ function sort(noSortArr, sortParam) {
 select.addEventListener('click', onSelection);
 
 function onSelection(e) {
-    // console.log(e);
-    // selectElements.forEach((elem) => {
-    //     console.log(elem.dataset.value);
-    // })
     sortParam = e.target.dataset.value
-    console.log(e.target.dataset.value);
     if (sortParam !== undefined) {
         fetchMovie.fetchPopularFilms().then(({ results }) => {
             gallery.innerHTML = '';
