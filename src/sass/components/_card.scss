@@ -47,6 +47,10 @@
   background-image: url('/src/images/trailer-icon.svg');
   background-repeat: no-repeat;
   background-color: transparent;
+  transition: transform 200ms linear;
+  .card:hover & {
+    transform: scale(2);
+  }
 }
 
 .card img {
