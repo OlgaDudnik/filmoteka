@@ -1,8 +1,6 @@
 import FetchMovie from "./api.fetch";
 import articlesTpl from '../templates/card.hbs';
 
-
-const selectElements = document.querySelectorAll('.select > div')
 const select = document.querySelector('#content')
 
 const gallery = document.querySelector('.gallery-container_grid')
@@ -38,7 +36,7 @@ function sort(noSortArr, sortParam) {
 select.addEventListener('click', onSelection);
 
 function onSelection(e) {
-    sortParam = e.target.dataset.value
+    const sortParam = e.target.dataset.value
     if (sortParam !== undefined) {
         fetchMovie.fetchPopularFilms().then(({ results }) => {
             gallery.innerHTML = '';
