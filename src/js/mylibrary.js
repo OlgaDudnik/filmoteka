@@ -11,10 +11,10 @@ const fechLibraryMovie = new FetchMovie();
 
 export default class MyLibrary {
   constructor() {
-    this.watchedKey = [343611, 343611, 136418];
-    this.queueKey = [343611, 973608, 136418, 973608];
-    //this.watchedKey = keys.STORAGE_KEY1;
-    //this.queueKey = keys.STORAGE_KEY2;
+    //this.watchedKey = [343611, 343611, 136418];
+    //this.queueKey = [343611, 973608, 136418, 973608];
+    this.watchedKey = keys.STORAGE_KEY1;
+    this.queueKey = keys.STORAGE_KEY2;
     this.message = 'Your library is empty!!!';
     this.interval = 0;
   }
@@ -28,6 +28,13 @@ export default class MyLibrary {
     }
   }
 
+  renderWatchedFilm() {
+    const queryId = this.getWatchedFilmsId();
+    queryId.filter(id => id != null).sort((a, b) => a - b);
+    //const queryId = this.watchedKey;
+    this.render(queryId);
+  }
+
   getQueueFilmsId() {
     try {
       const queueFilms = localStorage.getItem(this.queueKey);
@@ -38,17 +45,18 @@ export default class MyLibrary {
   }
 
   renderQueryFilms() {
-    //const queryId = this.getQueueFilmsId();
-    const queryId = this.queueKey;
+    const queryId = this.getQueueFilmsId();
+    queryId.filter(id => id != null).sort((a, b) => a - b);
+    //const queryId = this.queueKey;
     this.render(queryId);
   }
 
   getLibraryId() {
     const myLibraryId = [];
-    //const watchedFilmsId = this.getWatchedFilmsId();
-    //const queueFilmsId = this.getQueueFilmsId();
-    const watchedFilmsId = this.watchedKey;
-    const queueFilmsId = this.queueKey;
+    const watchedFilmsId = this.getWatchedFilmsId();
+    const queueFilmsId = this.getQueueFilmsId();
+    //const watchedFilmsId = this.watchedKey;
+    //const queueFilmsId = this.queueKey;
 
     if (watchedFilmsId) {
       myLibraryId.push(...watchedFilmsId);
@@ -56,7 +64,10 @@ export default class MyLibrary {
     if (queueFilmsId) {
       myLibraryId.push(...queueFilmsId);
     }
-    return myLibraryId;
+    return myLibraryId
+      .filter((id, index) => myLibraryId.indexOf(id) === index)
+      .filter(id => id != null)
+      .sort((a, b) => a - b);
   }
 
   renderMyLibrary() {
