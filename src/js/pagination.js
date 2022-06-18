@@ -1,5 +1,15 @@
-/*
-list.addEventListener('click', (e) => {
+import FetchMovie from './api.fetch';
+import { refs } from './refs';
+import articlesTpl from '../templates/card.hbs';
+
+const FetchMovieInstance = new FetchMovie();
+
+refs.pagination.addEventListener('click', onPaginationClick);
+
+let page = 1;
+let totalPages = 1000;
+
+async function onPaginationClick(e) {
     let target = e.target;
     if (!['SPAN', 'svg', 'path'].includes(target.nodeName)) {
         return;
@@ -14,14 +24,24 @@ list.addEventListener('click', (e) => {
     }
 
     if (target.dataset.action === 'left') {
-        page -= 1;
-        renderPagination(totalPages, page);
+        FetchMovieInstance.pageNum -= 1;
+        const films = await FetchMovieInstance.fetchPopularFilms();
+        appendArticlesMarkup(films.results);
+        FetchMovieInstance.generatePaginationMarkup(page, totalPages);
     } else if (target.dataset.action === 'right') {
-        page += 1;
-        renderPagination(totalPages, page);
+        FetchMovieInstance.pageNum += 1;
+        const films = await FetchMovieInstance.fetchPopularFilms();
+        appendArticlesMarkup(films.results);
+        FetchMovieInstance.generatePaginationMarkup(page, totalPages);
     } else if (target.dataset.action === 'change') {
-        renderPagination(totalPages, +target.dataset.page);
+        FetchMovieInstance.pageNum = +target.dataset.page;
+        const films = await FetchMovieInstance.fetchPopularFilms();
+        appendArticlesMarkup(films.results);
+        FetchMovieInstance.generatePaginationMarkup(+target.dataset.page, totalPages);
     }
-});
- */
+}
+
+function appendArticlesMarkup(results) {
+    refs.collection.innerHTML = articlesTpl(results);
+}
 

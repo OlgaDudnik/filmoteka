@@ -34,6 +34,21 @@
   }
 }
 
+// кнопка для трейлера
+.card__btn {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  outline: none;
+  border: none;
+  padding: 0;
+  background-image: url('/src/images/trailer-icon.svg');
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
 .card img {
   border-radius: 5px;
   margin-bottom: 8px;
