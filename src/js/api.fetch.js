@@ -1,6 +1,7 @@
 import renderCard from '../templates/card.hbs';
 import { refs } from './refs.js';
 import { showSpiner, hideSpiner } from './loader';
+import generatePaginationMarkup from './pagination';
 
 const LOCALSTORAGE_KEY = 'current-film';
 
@@ -69,7 +70,7 @@ export default class FetchMovie {
 
             console.log(this.URL + url, this.pageNum, this.totalPagesNum);
 
-            this.renderPagination('test');
+            this.renderPagination();
 
             hideSpiner();
 
@@ -126,61 +127,7 @@ export default class FetchMovie {
     }
 
     renderPagination() {
-        refs.pagination.innerHTML = this.generatePaginationMarkup();
-    }
-
-    generatePaginationMarkup() {
-        const backArrow = `<svg class='icon icon-arrow-left' width='16' height='16' viewBox='0 0 16 16' fill='none'
-                     xmlns='http://www.w3.org/2000/svg'>
-                    <path d='M12.6666 8H3.33325' stroke-width='1.33333' stroke-linecap='round'
-                        stroke-linejoin='round' />
-                    <path d='M7.99992 12.6667L3.33325 8.00004L7.99992 3.33337' stroke-width='1.33333'
-                        stroke-linecap='round' stroke-linejoin='round' />
-                    </svg>`;
-        const forwardArrow = `<svg class='icon icon-arrow-right' width='16' height='16' viewBox='0 0 16 16' fill='none'
-                      xmlns='http://www.w3.org/2000/svg'>
-                      <path d='M3.33341 8H12.6667' stroke-width='1.33333' stroke-linecap='round'
-                        stroke-linejoin='round' />
-                      <path d='M8.00008 12.6667L12.6667 8.00004L8.00008 3.33337' stroke-width='1.33333'
-                        stroke-linecap='round' stroke-linejoin='round' />
-                      </svg>`;
-
-        let liItems = '';
-        let activeItem;
-        let beforePages = this.pageNum - 1;
-        let afterPages = this.pageNum + 1;
-        let leftDisabledClass = this.pageNum > 1 ? '' : 'disabled-arrow';
-        let rightDisabledClass = this.pageNum < this.totalPagesNum ? '' : 'disabled-arrow';
-        const isNeedToAddDotsBefore = this.pageNum > 10;
-        const isNeedToAddDotsAfter = this.pageNum > 10 && this.pageNum < this.totalPagesNum;
-
-        liItems += `<li><span onclick='' data-action='left' class='pagination__arrow--left ${leftDisabledClass}'>${backArrow}</span></li>`;
-
-        if (isNeedToAddDotsBefore) {
-            liItems += `<li><span onclick='' data-action='change' data-page='1' class='pagination__button__link'>1</span></li>`;
-            liItems += `<li><span class='pagination__button__dots'>...</span></li>`;
-        }
-
-        for (let pageLength = beforePages; pageLength <= afterPages; pageLength++) {
-            if (!pageLength || pageLength > this.totalPagesNum) {
-                continue;
-            }
-            activeItem = this.pageNum === pageLength ? 'active' : '';
-            liItems += `<li class='${activeItem}'><span onclick='' data-action='change' data-page='${pageLength}' class='pagination__button__link'>${pageLength}</span></li>`;
-        }
-
-        if (isNeedToAddDotsAfter) {
-            liItems += `<li><span onclick='' class='pagination__button__dots'>...</span></li>`;
-            liItems += `<li><span data-action='' data-page='${this.totalPagesNum}' class='pagination__button__link'>${this.totalPagesNum}</span></li>`;
-        }
-
-        liItems += `<li><span onclick='Test.hello()' data-action='right' class='pagination__arrow--right ${rightDisabledClass}'>${forwardArrow}</span></li>`;
-
-        return liItems;
-    }
-
-    static hello() {
-        console.log('Hello');
+        refs.pagination.innerHTML = generatePaginationMarkup(this.pageNum, this.totalPagesNum);
     }
 
     // Получение трейлеров
@@ -202,7 +149,6 @@ export default class FetchMovie {
     getLocaleStorage() {
         return JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
     }
-
 
     incrementPage() {
         this.page += 1;
