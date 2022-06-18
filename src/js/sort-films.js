@@ -2,7 +2,9 @@ import FetchMovie from "./api.fetch";
 import articlesTpl from '../templates/card.hbs';
 
 
-const select = document.querySelector('.select')
+const selectElements = document.querySelectorAll('.select > div')
+const select = document.querySelector('#content')
+
 const gallery = document.querySelector('.gallery-container_grid')
 
 const fetchMovie = new FetchMovie();
@@ -33,13 +35,14 @@ function sort(noSortArr, sortParam) {
         })
     }
 }
-select.addEventListener('change', onSelection);
+select.addEventListener('click', onSelection);
 
 function onSelection(e) {
-    sortParam = e.target.value
-
-    fetchMovie.fetchPopularFilms().then(({ results }) => {
-        gallery.innerHTML = '';
-        appendArticlesMarkup(sort(results, sortParam));
-    })
+    sortParam = e.target.dataset.value
+    if (sortParam !== undefined) {
+        fetchMovie.fetchPopularFilms().then(({ results }) => {
+            gallery.innerHTML = '';
+            appendArticlesMarkup(sort(results, sortParam));
+        })
+    }
 }
