@@ -1,5 +1,5 @@
 import { refs } from './refs';
-import { markupButton } from './button';
+import { renderButton } from './button';
 import MyLibrary from './mylibrary';
 import FetchMovie from './api.fetch';
 import renderCard from '../templates/card.hbs';
@@ -25,20 +25,9 @@ function onOpenHomePage() {
   refs.buttonHeaderHome.classList.add('nav-btn--underline');
   refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
 
-  refs.paginationContainer.classList.remove('is-hidden');
-  refs.headerForm.classList.remove('is-hidden');
-
-  refs.headerForm.innerHTML = `<input
-      type="text"
-      class="header-search-input"
-      name="searchQuery"
-      placeholder="Search movie"
-    />
-    <button type='submit' class='search-btn'>
-      <svg class='icon-search' width='24' height='24'>
-        <use href='/src/images/header-main/search.svg#icon-search'></use>
-      </svg>
-    </button>`;
+  refs.paginationContainer.classList.remove('visually-hidden');
+  refs.headerForm.classList.remove('visually-hidden');
+  refs.headerListButtons.classList.add('visually-hidden');
 
   myLibrary.clearEmptyLibrary();
   myLibrary.clearInterval();
@@ -49,19 +38,15 @@ function onOpenLibraryPage() {
   refs.buttonHeaderLibrary.classList.add('nav-btn--underline');
   refs.buttonHeaderHome.classList.remove('nav-btn--underline');
 
-  refs.headerForm.innerHTML = '';
-  markupButton('Watched', 'watched');
-  markupButton('queue', 'queue');
-  document
-    .querySelector('[data-action="queue"]')
-    .classList.add('button--rightLocation');
+  refs.headerForm.classList.add('visually-hidden');
+  refs.headerListButtons.classList.remove('visually-hidden');
+
+  refs.headerListButtons.innerHTML = '';
+  renderButton();
 
   if (myLibrary.getLibraryId().length === 0) {
-    refs.headerForm.classList.add('is-hidden');
-    refs.paginationContainer.classList.add('is-hidden');
-  } else {
-    refs.headerForm.classList.remove('is-hidden');
-    refs.paginationContainer.classList.remove('is-hidden');
+    refs.headerListButtons.classList.add('visually-hidden');
+    refs.paginationContainer.classList.add('visually-hidden');
   }
 
   myLibrary.clearInterval();

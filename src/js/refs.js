@@ -1,27 +1,27 @@
 export const refs = {
-    //headrer
-    header: document.querySelector('.header'),
-    logoBtn: document.querySelector('.logo'),
-    buttonQueue: '',
-    buttonWatched: '',
-    buttonHeaderHome: document.querySelector('#home'),
-    buttonHeaderLibrary: document.querySelector('#library'),
-    headerForm: document.querySelector('.header-form'),
-    //pagination
-    paginationContainer: document.querySelector('.pagination__list'),
-    //library
-    //myLibraryContainer: document.querySelector('.library .container'),
-    //myLibraryList: document.querySelector('.library__list'),
-    //container
-    collection: document.querySelector('.gallery-container_grid'),
+  //headrer
+  header: document.querySelector('.header'),
+  logoBtn: document.querySelector('.logo'),
+  buttonQueue: '',
+  buttonWatched: '',
+  buttonHeaderHome: document.querySelector('#home'),
+  buttonHeaderLibrary: document.querySelector('#library'),
+  headerForm: document.querySelector('.header-form'),
+  headerListButtons: document.querySelector('.header-list-buttons'),
 
-    //modal
-    modalEventListener: document.querySelector('.modalEventListener'),
-    backdrop: document.querySelector('.backdrop'),
+  //pagination
+  paginationContainer: document.querySelector('.pagination__list'),
 
-    // loader
-    loader: document.querySelector('.loader'),
+  //container
+  collection: document.querySelector('.gallery-container_grid'),
 
-    // Pagination
-    pagination: document.querySelector('ul.pagination__list'),
+  //modal
+  modalEventListener: document.querySelector('.modalEventListener'),
+  backdrop: document.querySelector('.backdrop'),
+
+  // loader
+  loader: document.querySelector('.loader'),
+
+  // Pagination
+  pagination: document.querySelector('ul.pagination__list'),
 };
