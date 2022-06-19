@@ -65,6 +65,7 @@ function onOpenQueueFilms() {
   refs.buttonQueue.classList.add('button--active');
   refs.buttonWatched.classList.remove('button--active');
 
+  myLibrary.clearInterval();
   myLibrary.renderQueryFilms(); //Рендер фильмов, поставленных в очередь
 }
 
@@ -72,6 +73,7 @@ function onOpenWatchedFilms() {
   refs.buttonWatched.classList.add('button--active');
   refs.buttonQueue.classList.remove('button--active');
 
+  myLibrary.clearInterval();
   myLibrary.renderWatchedFilm(); //Рендер просмотренных фильмов
 }
 

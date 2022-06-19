@@ -2,7 +2,7 @@ import { keys } from './storage_key';
 import FetchMovie from './api.fetch';
 import renderCard from '../templates/card-by-id.hbs';
 import { refs } from './refs';
-//import { Block } from 'notiflix';
+
 //-----------------------------------------------------------
 
 const fechLibraryMovie = new FetchMovie();
@@ -15,7 +15,8 @@ export default class MyLibrary {
     //this.queueKey = [343611, 973608, 136418, 973608];
     this.watchedKey = keys.STORAGE_KEY1;
     this.queueKey = keys.STORAGE_KEY2;
-    this.message = 'Your library is empty!!!';
+    this.idFilms = [];
+    this.message = '';
     this.interval = 0;
   }
 
@@ -29,10 +30,16 @@ export default class MyLibrary {
   }
 
   renderWatchedFilm() {
-    const queryId = this.getWatchedFilmsId();
-    queryId.filter(id => id != null).sort((a, b) => a - b);
+    if (this.getWatchedFilmsId().length != 0) {
+      this.idFilm = this.getWatchedFilmsId();
+      this.idFilm.filter(id => id !== null);
+      this.render();
+      return;
+    }
+    this.idFilms = [];
+    this.message = 'You have no movies watched !!!';
+    this.render();
     //const queryId = this.watchedKey;
-    this.render(queryId);
   }
 
   getQueueFilmsId() {
@@ -45,10 +52,16 @@ export default class MyLibrary {
   }
 
   renderQueryFilms() {
-    const queryId = this.getQueueFilmsId();
-    queryId.filter(id => id != null).sort((a, b) => a - b);
+    if (this.getQueueFilmsId().length != 0) {
+      this.idFilms = this.getQueueFilmsId();
+      this.idFilms.filter(id => id !== null);
+      this.render();
+      return;
+    }
+    this.idFilms = [];
+    this.message = 'There is no queue to watch movies !!!';
+    this.render();
     //const queryId = this.queueKey;
-    this.render(queryId);
   }
 
   getLibraryId() {
@@ -66,20 +79,24 @@ export default class MyLibrary {
     }
     return myLibraryId
       .filter((id, index) => myLibraryId.indexOf(id) === index)
-      .filter(id => id != null)
-      .sort((a, b) => a - b);
+      .filter(id => id != null);
   }
 
   renderMyLibrary() {
-    const myLibraryId = this.getLibraryId();
-
-    this.render(myLibraryId);
+    if (this.getLibraryId().length != 0) {
+      this.idFilms = this.getLibraryId();
+      this.render();
+      return;
+    }
+    this.idFilms = [];
+    this.message = 'Your library is empty!!!';
+    this.render();
   }
 
-  render(ids) {
+  render() {
     refs.collection.innerHTML = '';
-    if (ids.length) {
-      ids.map(id => {
+    if (this.idFilms.length) {
+      this.idFilms.map(id => {
         fechLibraryMovie.idFilm = id;
         fechLibraryMovie.fetchFilmsById().then(film => {
           refs.collection.insertAdjacentHTML('beforeend', renderCard(film));
