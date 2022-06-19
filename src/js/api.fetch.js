@@ -57,7 +57,7 @@ export default class FetchMovie {
         showSpiner();
 
         // first generate url based on required data
-        const url = this.urlTemplates[action].replaceArray(['{API_KEY}', '{PAGE}', '{QUERY}'], [this.key, this.pageNum, this.searchQuery]);
+        const url = this.urlTemplates[action].replaceArray(['{API_KEY}', '{PAGE}', '{QUERY}', '{ID}'], [this.key, this.pageNum, this.searchQuery, this.id]);
 
         // second - fetch
         try {
