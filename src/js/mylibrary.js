@@ -42,6 +42,13 @@ export default class MyLibrary {
     //const queryId = this.watchedKey;
   }
 
+  removeWatchedFilm() {
+    localStorage.removeItem(this.watchedKey);
+    this.idFilms = [];
+    this.message = 'You have no movies watched !!!';
+    this.render();
+  }
+
   getQueueFilmsId() {
     try {
       const queueFilms = localStorage.getItem(this.queueKey);
@@ -62,6 +69,13 @@ export default class MyLibrary {
     this.message = 'There is no queue to watch movies !!!';
     this.render();
     //const queryId = this.queueKey;
+  }
+
+  removeQueryFilms() {
+    localStorage.removeItem(this.queueKey);
+    this.idFilms = [];
+    this.message = 'You have no movies watched !!!';
+    this.render();
   }
 
   getLibraryId() {

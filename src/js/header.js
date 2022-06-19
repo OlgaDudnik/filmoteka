@@ -61,20 +61,30 @@ function onOpenLibraryPage() {
 
 //-----------------------------------------------------------
 
-function onOpenQueueFilms() {
+function onOpenQueueFilms(event) {
   refs.buttonQueue.classList.add('button--active');
   refs.buttonWatched.classList.remove('button--active');
 
   myLibrary.clearInterval();
   myLibrary.renderQueryFilms(); //Рендер фильмов, поставленных в очередь
+
+  if (event.target.tagName === 'SPAN') {
+    myLibrary.clearInterval();
+    myLibrary.removeQueryFilms();
+  }
 }
 
-function onOpenWatchedFilms() {
+function onOpenWatchedFilms(event) {
   refs.buttonWatched.classList.add('button--active');
   refs.buttonQueue.classList.remove('button--active');
 
   myLibrary.clearInterval();
   myLibrary.renderWatchedFilm(); //Рендер просмотренных фильмов
+
+  if (event.target.tagName === 'SPAN') {
+    myLibrary.clearInterval();
+    myLibrary.removeWatchedFilm();
+  }
 }
 
 //-----------------------------------------------------------
