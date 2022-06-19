@@ -30,7 +30,7 @@ export default class MyLibrary {
   }
 
   renderWatchedFilm() {
-    if (this.getWatchedFilmsId()) {
+    if (this.getWatchedFilmsId().length != 0) {
       this.idFilm = this.getWatchedFilmsId();
       this.idFilm.filter(id => id !== null);
       this.render();
@@ -52,7 +52,7 @@ export default class MyLibrary {
   }
 
   renderQueryFilms() {
-    if (this.getQueueFilmsId()) {
+    if (this.getQueueFilmsId().length != 0) {
       this.idFilms = this.getQueueFilmsId();
       this.idFilms.filter(id => id !== null);
       this.render();
@@ -83,7 +83,7 @@ export default class MyLibrary {
   }
 
   renderMyLibrary() {
-    if (this.getLibraryId()) {
+    if (this.getLibraryId().length != 0) {
       this.idFilms = this.getLibraryId();
       this.render();
       return;
