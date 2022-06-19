@@ -1,9 +1,20 @@
 import { refs } from './refs';
-export function markupButton(buttonText, dataAction) {
-  refs.headerForm.insertAdjacentHTML(
+import markupButton from '../templates/button.hbs';
+
+export function renderButton() {
+  const buttonsLibrary = [
+    {
+      dataAction: 'watched',
+      buttonText: 'watched',
+    },
+    {
+      dataAction: 'queue',
+      buttonText: 'queue',
+    },
+  ];
+
+  refs.headerListButtons.insertAdjacentHTML(
     'beforeend',
-    `
-    <button type="button" class="button" data-action="${dataAction}">${buttonText}</button>
-  `
+    markupButton(buttonsLibrary)
   );
 }
