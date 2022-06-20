@@ -98,6 +98,9 @@ function toMainPage() {
 
         // Don't touch it please, required for pagination
         localStorage.setItem('searchQuery', '');
+        if (localStorage.getItem('action') !== 'fetchPopularFilms') {
+            localStorage.setItem('isNeedResetPages', 'true');
+        }
         localStorage.setItem('action', 'fetchPopularFilms');
     });
 }

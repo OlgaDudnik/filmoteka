@@ -23,8 +23,13 @@ async function onPaginationClick(e) {
         return;
     }
 
+    if (localStorage.getItem('isNeedResetPages')) {
+        FetchMovieInstance.resetPage();
+        localStorage.removeItem('isNeedResetPages');
+    }
+
     if (target.dataset.action === 'left') {
-        FetchMovieInstance.pageNum -= 1;
+        FetchMovieInstance.decrementPage();
 
         if (localStorage.getItem('action') && localStorage.getItem('action') === 'searchFilms') {
             FetchMovieInstance.searchQuery = localStorage.getItem('searchQuery');
@@ -37,7 +42,7 @@ async function onPaginationClick(e) {
             FetchMovieInstance.generatePaginationMarkup(page, totalPages);
         }
     } else if (target.dataset.action === 'right') {
-        FetchMovieInstance.pageNum += 1;
+        FetchMovieInstance.incrementPage();
 
         if (localStorage.getItem('action') && localStorage.getItem('action') === 'searchFilms') {
             FetchMovieInstance.searchQuery = localStorage.getItem('searchQuery');

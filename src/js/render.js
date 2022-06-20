@@ -14,6 +14,9 @@ function keyWordSearch(e) {
     newApiFetch.query = (e.target.elements.searchQuery.value).trim();
 
     // Don't touch it please, required for pagination
+    if (localStorage.getItem('searchQuery') !== newApiFetch.query || localStorage.getItem('action') !== 'searchFilms') {
+        localStorage.setItem('isNeedResetPages', 'true');
+    }
     localStorage.setItem('searchQuery', newApiFetch.query);
     localStorage.setItem('action', 'searchFilms');
 
