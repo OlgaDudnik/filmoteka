@@ -13,6 +13,10 @@ function keyWordSearch(e) {
 
     newApiFetch.query = (e.target.elements.searchQuery.value).trim();
 
+    // Don't touch it please, required for pagination
+    localStorage.setItem('searchQuery', newApiFetch.query);
+    localStorage.setItem('action', 'searchFilms');
+
     newApiFetch.fetchFilms().then(film => {
 
         if (film.results.length === 0) {
@@ -31,7 +35,7 @@ function keyWordSearch(e) {
 function years() {
     newApiFetch.fetchYears().then(year => {
         newApiFetch.saveYearsToLocalStorage(year);
-    })
+    });
 }
 
 // Очистка инпута

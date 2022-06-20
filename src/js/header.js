@@ -21,86 +21,90 @@ refs.buttonHeaderLibrary.addEventListener('click', onOpenLibraryPage);
 
 //-----------------------------------------------------------
 function onOpenHomePage() {
-  refs.header.classList.remove('header-library');
-  refs.buttonHeaderHome.classList.add('nav-btn--underline');
-  refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
+    refs.header.classList.remove('header-library');
+    refs.buttonHeaderHome.classList.add('nav-btn--underline');
+    refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
 
-  refs.paginationContainer.classList.remove('visually-hidden');
-  refs.headerForm.classList.remove('visually-hidden');
-  refs.headerListButtons.classList.add('visually-hidden');
+    refs.paginationContainer.classList.remove('visually-hidden');
+    refs.headerForm.classList.remove('visually-hidden');
+    refs.headerListButtons.classList.add('visually-hidden');
 
-  myLibrary.clearEmptyLibrary();
-  myLibrary.clearInterval();
+    myLibrary.clearEmptyLibrary();
+    myLibrary.clearInterval();
 }
 
 function onOpenLibraryPage() {
-  refs.header.classList.add('header-library');
-  refs.buttonHeaderLibrary.classList.add('nav-btn--underline');
-  refs.buttonHeaderHome.classList.remove('nav-btn--underline');
+    refs.header.classList.add('header-library');
+    refs.buttonHeaderLibrary.classList.add('nav-btn--underline');
+    refs.buttonHeaderHome.classList.remove('nav-btn--underline');
 
-  refs.headerForm.classList.add('visually-hidden');
-  refs.headerListButtons.classList.remove('visually-hidden');
+    refs.headerForm.classList.add('visually-hidden');
+    refs.headerListButtons.classList.remove('visually-hidden');
 
-  refs.headerListButtons.innerHTML = '';
-  renderButton();
+    refs.headerListButtons.innerHTML = '';
+    renderButton();
 
-  if (myLibrary.getLibraryId().length === 0) {
-    refs.headerListButtons.classList.add('visually-hidden');
-    refs.paginationContainer.classList.add('visually-hidden');
-  }
+    if (myLibrary.getLibraryId().length === 0) {
+        refs.headerListButtons.classList.add('visually-hidden');
+        refs.paginationContainer.classList.add('visually-hidden');
+    }
 
-  myLibrary.clearInterval();
-  myLibrary.renderMyLibrary();
+    myLibrary.clearInterval();
+    myLibrary.renderMyLibrary();
 
-  refs.buttonQueue = document.querySelector('[data-action="queue"]');
-  refs.buttonWatched = document.querySelector('[data-action="watched"]');
+    refs.buttonQueue = document.querySelector('[data-action="queue"]');
+    refs.buttonWatched = document.querySelector('[data-action="watched"]');
 
-  refs.buttonQueue.addEventListener('click', onOpenQueueFilms);
-  refs.buttonWatched.addEventListener('click', onOpenWatchedFilms);
+    refs.buttonQueue.addEventListener('click', onOpenQueueFilms);
+    refs.buttonWatched.addEventListener('click', onOpenWatchedFilms);
 }
 
 //-----------------------------------------------------------
 
 function onOpenQueueFilms(event) {
-  refs.buttonQueue.classList.add('button--active');
-  refs.buttonWatched.classList.remove('button--active');
+    refs.buttonQueue.classList.add('button--active');
+    refs.buttonWatched.classList.remove('button--active');
 
-  myLibrary.clearInterval();
-  myLibrary.renderQueryFilms(); //Рендер фильмов, поставленных в очередь
-
-  if (event.target.tagName === 'SPAN') {
     myLibrary.clearInterval();
-    myLibrary.removeQueryFilms();
-  }
+    myLibrary.renderQueryFilms(); //Рендер фильмов, поставленных в очередь
+
+    if (event.target.tagName === 'SPAN') {
+        myLibrary.clearInterval();
+        myLibrary.removeQueryFilms();
+    }
 }
 
 function onOpenWatchedFilms(event) {
-  refs.buttonWatched.classList.add('button--active');
-  refs.buttonQueue.classList.remove('button--active');
+    refs.buttonWatched.classList.add('button--active');
+    refs.buttonQueue.classList.remove('button--active');
 
-  myLibrary.clearInterval();
-  myLibrary.renderWatchedFilm(); //Рендер просмотренных фильмов
-
-  if (event.target.tagName === 'SPAN') {
     myLibrary.clearInterval();
-    myLibrary.removeWatchedFilm();
-  }
+    myLibrary.renderWatchedFilm(); //Рендер просмотренных фильмов
+
+    if (event.target.tagName === 'SPAN') {
+        myLibrary.clearInterval();
+        myLibrary.removeWatchedFilm();
+    }
 }
 
 //-----------------------------------------------------------
 
 // Display the main page
 function toMainPage() {
-  onOpenHomePage();
-  getMovies.fetchPopularFilms().then(film => {
-    const movieList = refs.collection;
-    movieList.innerHTML = renderCard(film.results);
-  });
+    onOpenHomePage();
+    getMovies.fetchPopularFilms().then(film => {
+        const movieList = refs.collection;
+        movieList.innerHTML = renderCard(film.results);
+
+        // Don't touch it please, required for pagination
+        localStorage.setItem('searchQuery', '');
+        localStorage.setItem('action', 'fetchPopularFilms');
+    });
 }
 
 // Logo click event
 function onHandleClick() {
-  toMainPage();
+    toMainPage();
 }
 
 refs.logoBtn.addEventListener('click', onHandleClick);

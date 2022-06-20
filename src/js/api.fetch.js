@@ -63,7 +63,7 @@ export default class FetchMovie {
         const url = this.urlTemplates[action].replaceArray(['{API_KEY}', '{PAGE}', '{QUERY}', '{ID}', '{GENRE}', '{YEAR}'], [this.key, this.pageNum, this.searchQuery, this.id, this.genre, this.year]);
 
         // determine if we need use pagination in current process
-        const isNeedPagination = this.urlTemplates[action].includes('{PAGE}')
+        const isNeedPagination = this.urlTemplates[action].includes('{PAGE}');
 
         // second - fetch
         try {
@@ -87,7 +87,7 @@ export default class FetchMovie {
 
             hideSpiner();
 
-            localStorage.setItem('localData', JSON.stringify(result))
+            localStorage.setItem('localData', JSON.stringify(result));
 
             // third - return result
             return result;
@@ -117,7 +117,6 @@ export default class FetchMovie {
     }
 
     // Получение популярных фильмов
-
     async fetchPopularFilms() {
         return this.sendQuery('getPopularFilms');
     }
@@ -222,7 +221,7 @@ export default class FetchMovie {
 
     getFilterLocalStorage() {
         const data = JSON.parse(localStorage.getItem('localData'));
-        return data.results
+        return data.results;
     }
 
     getLocaleStorage() {
@@ -270,6 +269,6 @@ export default class FetchMovie {
     }
 
     set genreFilm(newGenre) {
-        this.genre = newGenre
+        this.genre = newGenre;
     }
 }
