@@ -209,7 +209,8 @@ export default class FetchMovie {
             const searchTrailer = await fetch(
                 `${this.URL}movie/${id}/videos?api_key=${this.key}&language=en-US`,
             );
-            return await searchTrailer.json();
+            const data = await searchTrailer.json();
+            return data;
         } catch (error) {
             console.log(error);
         }
