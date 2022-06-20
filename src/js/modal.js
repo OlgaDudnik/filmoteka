@@ -18,7 +18,6 @@ async function mountModal(id) {
   await fetchMovie
     .fetchFilmsById()
     .then(data => {
-      film = data.id;
       refs.backdrop.innerHTML = card(data);
       onOpenModal(id);
     })
