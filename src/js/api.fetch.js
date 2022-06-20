@@ -5,7 +5,7 @@ import { showSpiner, hideSpiner } from './loader';
 
 const LOCALSTORAGE_KEY = 'current-film';
 
-String.prototype.replaceArray = function(find, replace) {
+String.prototype.replaceArray = function (find, replace) {
     let replaceString = this;
     let regex;
     for (let i = 0; i < find.length; i++) {
@@ -23,15 +23,17 @@ export default class FetchMovie {
         this.URL = 'https://api.themoviedb.org/3/';
         this.key = '0eaaf2516690b5ff52877c678f040000';
         this.id = '';
+        this.year = '';
+        this.genre = '';
         this.urlTemplates = {
             searchFilms: 'search/movie?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false&query={QUERY}',
             searchActors: 'search/person?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
             getFilmById: 'movie/{ID}?api_key={API_KEY}',
-            getGenres: 'genre/movie/list?api_key={API_KEY}&language=en-US',
             getPopularFilms: 'movie/popular?api_key={API_KEY}&language=en-US&page={PAGE}',
             getTopRatedFilms: 'movie/top_rated?api_key={API_KEY}&language=en-US&page={PAGE}',
             getTelecast: 'search/tv?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
-            searchYears: 'discover/movie?api_key={API_KEY}&language=en-US&sort_by=primary_release_date.asc&include_adult=false&include_video=false&page={PAGE}&with_watch_monetization_types=flatrate',
+            getGenres: 'discover/movie?api_key={API_KEY}&language=en-US&include_adult=false&include_video=false&page=1&with_genres={GENRE}',
+            searchYears: 'discover/movie?api_key={API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte={YEAR}-01-01&primary_release_date.lte={YEAR}-12-31',
         };
     }
 
@@ -58,7 +60,7 @@ export default class FetchMovie {
         showSpiner();
 
         // first generate url based on required data
-        const url = this.urlTemplates[action].replaceArray(['{API_KEY}', '{PAGE}', '{QUERY}', '{ID}'], [this.key, this.pageNum, this.searchQuery, this.id]);
+        const url = this.urlTemplates[action].replaceArray(['{API_KEY}', '{PAGE}', '{QUERY}', '{ID}', '{GENRE}', '{YEAR}'], [this.key, this.pageNum, this.searchQuery, this.id, this.genre, this.year]);
 
         // second - fetch
         try {
@@ -71,14 +73,13 @@ export default class FetchMovie {
             if (result.hasOwnProperty('total_pages')) {
                 this.totalPagesNum = result.total_pages;
             }
-
+            localStorage.setItem('localData', JSON.stringify(result))
             console.log(this.URL + url, this.pageNum, this.totalPagesNum);
 
             this.renderPagination();
-
             hideSpiner();
-
             // third - return result
+            localStorage.setItem('localData', JSON.stringify(result))
             return result;
         } catch (error) {
             console.log(error);
@@ -100,15 +101,9 @@ export default class FetchMovie {
         return this.sendQuery('getFilmById');
     }
 
-    // Получение жанров
-    async fetchGenres() {
-        return this.sendQuery('getGenres');
-    }
-
     // Получение фильмов по году
     async fetchYears() {
         return this.sendQuery('searchYears');
-        localStorage.setItem("localData", JSON.stringify(this.sendQuery('searchYears')))
     }
 
     // Получение популярных фильмов
@@ -120,6 +115,11 @@ export default class FetchMovie {
     // Получение фильмов по рейтингу
     async fetchTopRatedFilms() {
         return this.sendQuery('getTopRatedFilms');
+    }
+
+    // Получение фильмов по жанру
+    async fetchGenreFilms() {
+        return this.sendQuery('getGenres');
     }
 
     // Получение телепередач
@@ -210,8 +210,9 @@ export default class FetchMovie {
         localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(films));
     }
 
-    saveYearsToLocalStorage(result) {
-        localStorage.setItem('localData', JSON.stringify(result));
+    getFilterLocalStorage() {
+        const data = JSON.parse(localStorage.getItem('localData'));
+        return data.results
     }
 
     getLocaleStorage() {
@@ -244,5 +245,21 @@ export default class FetchMovie {
 
     set idFilm(newid) {
         this.id = newid;
+    }
+
+    get yearFilm() {
+        return this.year;
+    }
+
+    set yearFilm(newyear) {
+        this.year = newyear;
+    }
+
+    get genreFilm() {
+        return this.genre;
+    }
+
+    set genreFilm(newGenre) {
+        this.genre = newGenre
     }
 }
