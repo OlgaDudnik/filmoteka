@@ -3,7 +3,6 @@ import FetchMovie from './api.fetch';
 import { refs } from './refs';
 import { keys } from './storage_key';
 
-let film = '';
 const fetchMovie = new FetchMovie();
 
 // modal close - open  ******************************
@@ -21,14 +20,14 @@ async function mountModal(id) {
     .then(data => {
       film = data.id;
       refs.backdrop.innerHTML = card(data);
-      onOpenModal();
+      onOpenModal(id);
     })
     .catch(() => {
       throw new Error('Modal fetch error!');
     });
 }
 
-function onOpenModal() {
+function onOpenModal(id) {
   refs.backdrop.classList.add('mount');
   refs.backdrop.addEventListener('click', modalCloseClickBackdrop);
   document.body.classList.add('overflow');
@@ -36,8 +35,12 @@ function onOpenModal() {
   document
     .querySelector('.modal__button-close')
     .addEventListener('click', onCloseModal);
-  document.querySelector('#watched').addEventListener('click', onAddToWatched);
-  document.querySelector('#queue').addEventListener('click', onAddToQueue);
+  document
+    .querySelector('#watched')
+    .addEventListener('click', () => onAddToWatched(id));
+  document
+    .querySelector('#queue')
+    .addEventListener('click', () => onAddToQueue(id));
 }
 
 function onCloseModal() {
@@ -58,42 +61,56 @@ function modalCloseClickBackdrop(e) {
   }
 }
 
-// localStorage *******************************
+// add id card in localStorage on button Watched vs Queue *******************************
 
-function onAddToWatched() {
-  const storageState =
+function onAddToWatched(id) {
+  const storageWatched =
     JSON.parse(localStorage.getItem(keys.STORAGE_KEY1)) || [];
-
-  if (storageState?.includes(film)) {
-    const filterSroregeState = storageState.filter(el => el !== film);
-
-    localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(filterSroregeState));
-    document
-      .querySelector('#watched')
-      .classList.remove('modal__button--active');
-    return;
-  }
-
-  document.querySelector('#watched').classList.add('modal__button--active');
-
-  storageState.push(film);
-  localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(storageState));
-}
-
-function onAddToQueue() {
-  const storageState =
+  const storageQueue =
     JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
 
-  if (storageState?.includes(film)) {
-    const filterSroregeState = storageState.filter(el => el !== film);
-
-    localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(filterSroregeState));
-    document.querySelector('#queue').classList.remove('modal__button--active');
+  if (storageWatched?.includes(id)) {
+    removeFilmIdWatchedLocSt(id, storageWatched);
     return;
   }
+  addFilmIdWatchedLocSt(id, storageWatched);
+  removeFilmIdQueueLocSt(id, storageQueue);
+}
 
+function onAddToQueue(id) {
+  const storageWatched =
+    JSON.parse(localStorage.getItem(keys.STORAGE_KEY1)) || [];
+  const storageQueue =
+    JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
+
+  if (storageQueue?.includes(id)) {
+    removeFilmIdQueueLocSt(id, storageQueue);
+    return;
+  }
+  addFilmIdQueueLocSt(id, storageQueue);
+  removeFilmIdWatchedLocSt(id, storageWatched);
+}
+
+function addFilmIdWatchedLocSt(id, storageWatched) {
+  document.querySelector('#watched').classList.add('modal__button--active');
+  storageWatched.push(id);
+  localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(storageWatched));
+}
+
+function removeFilmIdWatchedLocSt(id, storageWatched) {
+  const filterSroregeWatched = storageWatched.filter(el => el !== id);
+  localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(filterSroregeWatched));
+  document.querySelector('#watched').classList.remove('modal__button--active');
+}
+
+function addFilmIdQueueLocSt(id, storageQueue) {
   document.querySelector('#queue').classList.add('modal__button--active');
+  storageQueue.push(id);
+  localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(storageQueue));
+}
 
-  storageState.push(film);
-  localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(storageState));
+function removeFilmIdQueueLocSt(id, storageQueue) {
+  const filterSroregeQueue = storageQueue.filter(el => el !== id);
+  document.querySelector('#queue').classList.remove('modal__button--active');
+  localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(filterSroregeQueue));
 }
