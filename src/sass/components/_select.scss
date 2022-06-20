@@ -16,7 +16,7 @@ p {
   font-size: 14px;
 }
 
-#content {
+.filter {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -65,7 +65,7 @@ p {
 
 /* Dropdown styling */
 
-.structure {
+.filter__structure {
   position: absolute;
   z-index: 999;
   display: flex;
@@ -80,28 +80,17 @@ p {
   overflow-x: hidden;
 }
 
-.structure > div {
+.filter__structure > div {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 16px;
 }
 
-.structure > div:hover {
+.filter__structure > div:hover {
   background-color: var(--colorAccent);
   color: white;
   cursor: pointer;
-}
-
-.structure > div > h5 {
-  font-weight: 600;
-  margin-right: 4px;
-}
-
-.structure > div > p {
-  font-weight: 400;
-  font-size: 13px;
-  color: var(--colorPlaceholder);
 }
 
 .hide {

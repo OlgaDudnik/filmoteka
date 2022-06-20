@@ -1,18 +1,18 @@
-<div id='content'>
-    <div class="content__container" id="container">
+<div class="filter">
+    <div class="content__container" data-action="sort">
         <div class="input">
             <div class="input__placeholder">
-                <p class="placeholder">
+                <p class="placeholder" data-action="sort">
                     Open this select menu
                 </p>
-                <span class="input__open" id="Shape">
-                    <svg width="16px" height="7px">
-                        <use href="./img/svg/icons.svg#icon-triangle"></use>
+                <span class="input__open" data-action="sort">
+                    <svg width="16px" height="7px" data-action="sort">
+                        <use href="./img/svg/icons.svg#icon-triangle" data-action="sort"></use>
                     </svg>
                 </span>
             </div>
         </div>
-        <div class="structure hide select">
+        <div class="filter__structure hide" data-action="sort">
             <div id="raiting_up" data-value="raiting_up">
                 Raiting &#9650
             </div>
@@ -24,6 +24,53 @@
             </div>
             <div id="popularity_down" data-value="popularity_down">
                 Popularity &#9660
+            </div>
+        </div>
+    </div>
+    <div class="content__container" data-action="genre">
+        <div class="input">
+            <div class="input__placeholder">
+                <p class="placeholder" data-action="genre">
+                    Open this select menu
+                </p>
+                <span class="input__open" data-action="genre">
+                    <svg width="16px" height="7px" data-action="genre">
+                        <use href="./img/svg/icons.svg#icon-triangle" data-action="genre"></use>
+                    </svg>
+                </span>
+            </div>
+        </div>
+        <div class="filter__structure filter__structure--genre hide" data-action="genre">
+        </div>
+    </div>
+    <div class="content__container" data-action="years">
+        <div class="input">
+            <div class="input__placeholder">
+                <p class="placeholder" data-action="years">
+                    Open this select menu
+                </p>
+                <span class="input__open" data-action="years">
+                    <svg width="16px" height="7px" data-action="years">
+                        <use href="./img/svg/icons.svg#icon-triangle" data-action="years"></use>
+                    </svg>
+                </span>
+            </div>
+        </div>
+        <div class="filter__structure filter__structure--years hide" data-action="years">
+            <div id="2022" data-value="2022">
+                2022
+            </div>
+            <div id="2021" data-value="2021">
+                2021
+            </div>
+            <div id="2020" data-value="2020">
+                2020
+            </div>
+            <div id="2019" data-value="2019">
+                2019
+            </div>
+            <div id="2018" data-value="2018">
+                2018
             </div>
         </div>
     </div>

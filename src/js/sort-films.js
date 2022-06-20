@@ -1,8 +1,7 @@
 import FetchMovie from "./api.fetch";
 import articlesTpl from '../templates/card.hbs';
 
-const select = document.querySelector('#content')
-
+const select = document.querySelector('.filter')
 const gallery = document.querySelector('.gallery-container_grid')
 
 const fetchMovie = new FetchMovie();
@@ -27,20 +26,35 @@ function sort(noSortArr, sortParam) {
 
     if (sortParam === 'popularity_up') {
         return noSortArr.sort((a, b) => b.popularity - a.popularity);
-    } else {
-        fetchMovie.fetchPopularFilms().then(({ results }) => {
-            appendArticlesMarkup(results)
-        })
     }
 }
 select.addEventListener('click', onSelection);
 
 function onSelection(e) {
+
     const sortParam = e.target.dataset.value
+    const dataAction = e.target.parentNode.dataset.action
+
+    if (dataAction === 'genre') {
+        fetchMovie.genreFilm = e.target.id;
+        if (e.target.id) {
+            fetchMovie.fetchGenreFilms().then((result) => {
+                gallery.innerHTML = '';
+                appendArticlesMarkup(fetchMovie.getFilterLocalStorage());
+            })
+        }
+    }
+    if (dataAction === 'years') {
+        fetchMovie.yearFilm = e.target.id;
+        if (e.target.id) {
+            fetchMovie.fetchYears().then((result) => {
+                gallery.innerHTML = '';
+                appendArticlesMarkup(fetchMovie.getFilterLocalStorage());
+            })
+        }
+    }
     if (sortParam !== undefined) {
-        fetchMovie.fetchPopularFilms().then(({ results }) => {
-            gallery.innerHTML = '';
-            appendArticlesMarkup(sort(results, sortParam));
-        })
+        gallery.innerHTML = '';
+        appendArticlesMarkup((sort(fetchMovie.getFilterLocalStorage(), sortParam)))
     }
 }
