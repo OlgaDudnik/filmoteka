@@ -5,7 +5,7 @@ import { showSpiner, hideSpiner } from './loader';
 
 const LOCALSTORAGE_KEY = 'current-film';
 
-String.prototype.replaceArray = function (find, replace) {
+String.prototype.replaceArray = function(find, replace) {
     let replaceString = this;
     let regex;
     for (let i = 0; i < find.length; i++) {
@@ -62,24 +62,34 @@ export default class FetchMovie {
         // first generate url based on required data
         const url = this.urlTemplates[action].replaceArray(['{API_KEY}', '{PAGE}', '{QUERY}', '{ID}', '{GENRE}', '{YEAR}'], [this.key, this.pageNum, this.searchQuery, this.id, this.genre, this.year]);
 
+        // determine if we need use pagination in current process
+        const isNeedPagination = this.urlTemplates[action].includes('{PAGE}')
+
         // second - fetch
         try {
             const responsePromise = await fetch(this.URL + url);
             let result = await responsePromise.json();
-            if (result.hasOwnProperty('page')) {
-                this.pageNum = result.page;
+
+            if (isNeedPagination) {
+                if (result.hasOwnProperty('page')) {
+                    this.pageNum = result.page;
+                }
+
+                if (result.hasOwnProperty('total_pages')) {
+                    this.totalPagesNum = result.total_pages;
+                }
+
+                this.renderPagination();
             }
 
-            if (result.hasOwnProperty('total_pages')) {
-                this.totalPagesNum = result.total_pages;
-            }
-            localStorage.setItem('localData', JSON.stringify(result))
+            // DEBUG DATA
             console.log(this.URL + url, this.pageNum, this.totalPagesNum);
 
-            this.renderPagination();
             hideSpiner();
-            // third - return result
+
             localStorage.setItem('localData', JSON.stringify(result))
+
+            // third - return result
             return result;
         } catch (error) {
             console.log(error);
