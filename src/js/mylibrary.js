@@ -30,7 +30,7 @@ export default class MyLibrary {
   }
 
   renderWatchedFilm() {
-    if (this.getWatchedFilmsId().length != 0) {
+    if (this.getWatchedFilmsId()) {
       this.idFilm = this.getWatchedFilmsId();
       this.idFilm.filter(id => id !== null);
       this.render();
@@ -40,6 +40,13 @@ export default class MyLibrary {
     this.message = 'You have no movies watched !!!';
     this.render();
     //const queryId = this.watchedKey;
+  }
+
+  removeWatchedFilm() {
+    localStorage.removeItem(this.watchedKey);
+    this.idFilms = [];
+    this.message = 'You have no movies watched !!!';
+    this.render();
   }
 
   getQueueFilmsId() {
@@ -52,7 +59,7 @@ export default class MyLibrary {
   }
 
   renderQueryFilms() {
-    if (this.getQueueFilmsId().length != 0) {
+    if (this.getQueueFilmsId()) {
       this.idFilms = this.getQueueFilmsId();
       this.idFilms.filter(id => id !== null);
       this.render();
@@ -62,6 +69,13 @@ export default class MyLibrary {
     this.message = 'There is no queue to watch movies !!!';
     this.render();
     //const queryId = this.queueKey;
+  }
+
+  removeQueryFilms() {
+    localStorage.removeItem(this.queueKey);
+    this.idFilms = [];
+    this.message = 'You have no movies watched !!!';
+    this.render();
   }
 
   getLibraryId() {
