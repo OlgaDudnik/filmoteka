@@ -31,6 +31,7 @@ export default class FetchMovie {
             getPopularFilms: 'movie/popular?api_key={API_KEY}&language=en-US&page={PAGE}',
             getTopRatedFilms: 'movie/top_rated?api_key={API_KEY}&language=en-US&page={PAGE}',
             getTelecast: 'search/tv?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
+            searchYears: 'discover/movie?api_key={API_KEY}&language=en-US&sort_by=primary_release_date.asc&include_adult=false&include_video=false&page={PAGE}&with_watch_monetization_types=flatrate',
         };
     }
 
@@ -102,6 +103,12 @@ export default class FetchMovie {
     // Получение жанров
     async fetchGenres() {
         return this.sendQuery('getGenres');
+    }
+
+    // Получение фильмов по году
+    async fetchYears() {
+        return this.sendQuery('searchYears');
+        localStorage.setItem("localData", JSON.stringify(this.sendQuery('searchYears')))
     }
 
     // Получение популярных фильмов
@@ -201,6 +208,10 @@ export default class FetchMovie {
 
     saveLocaleStorage(films) {
         localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(films));
+    }
+
+    saveYearsToLocalStorage(result) {
+        localStorage.setItem('localData', JSON.stringify(result));
     }
 
     getLocaleStorage() {

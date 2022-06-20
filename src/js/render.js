@@ -28,6 +28,12 @@ function keyWordSearch(e) {
     clearInput();
 }
 
+function years() {
+    newApiFetch.fetchYears().then(year => {
+        newApiFetch.saveYearsToLocalStorage(year);
+    })
+}
+
 // Очистка инпута
 
 function clearInput() {
