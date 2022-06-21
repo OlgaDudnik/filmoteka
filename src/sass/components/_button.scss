@@ -70,9 +70,42 @@
   background-image: url('/src/images/header-library/clean-icon.png');
   background-repeat: no-repeat;
   background-size: cover;
-  transition: transform 200ms linear;
-  &:hover,
-  &:focus {
-    transform: scale(1.2);
+  //transition: transform 200ms linear;
+  // &:hover,
+  // &:focus {
+  //   transform: scale(1.2);
+  // }
+}
+.button-animate:hover,
+.button-animate:focus {
+  .button-clean {
+    animation: move 1.5s infinite linear;
+    &:hover,
+    &:focus {
+      animation-iteration-count: 0;
+      animation: grow 1s infinite linear;
+    }
+  }
+  @keyframes grow {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes move {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(-90deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
   }
 }
