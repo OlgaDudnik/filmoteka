@@ -27,7 +27,7 @@ function onOpenHomePage() {
   refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
 
   //show filter
-  refs.filterBtn.classList.remove('visually-hidden');
+  refs.filterBtn.classList.remove('is-hidden');
   refs.filter.classList.remove('visually-hidden');
 
   //show pagination
@@ -50,7 +50,7 @@ function onOpenLibraryPage() {
   refs.collection.style.gridTemplateColumns = '';
 
   //hide filter
-  refs.filterBtn.classList.add('visually-hidden');
+  refs.filterBtn.classList.add('is-hidden');
   refs.filter.classList.add('visually-hidden');
 
   refs.headerListButtons.innerHTML = '';
