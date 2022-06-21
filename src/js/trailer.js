@@ -1,11 +1,20 @@
+import card from '../templates/modal-card.hbs';
 import FetchApi from './api.fetch';
 import * as basicLightbox from 'basiclightbox';
-
+import { refs } from './refs';
 const newApiFetch = new FetchApi();
 
-export async function onTrailer(e) {
-    newApiFetch
-        .fetchTrailers(Number(e.target.dataset.id))
+refs.collection.addEventListener('click', e => {
+    if (e.target.nodeName === 'BUTTON') {
+        const { id } = e.target.dataset;
+        onTrailer(id)
+    }
+})
+
+async function onTrailer(id) {
+    newApiFetch.idFilm = id;
+    await newApiFetch
+        .fetchTrailers()
         .then(data => {
             trailerRender(data);
         })
@@ -40,6 +49,22 @@ function trailerRender(data) {
         }
     }
     trailerBtn.addEventListener('click', () => {
+        // onAddToWatched(data)
         instance.show();
     });
 }
+
+// function onAddToWatched(data) {
+//     const storageWatched =
+//         JSON.parse(localStorage.getItem('storage')) || [];
+
+//     const arreyWatched = [];
+//     storageWatched.map(el => arreyWatched.push(el.id));
+
+//     addFilmIdWatchedLocSt(data, storageWatched);
+// }
+
+// function addFilmIdWatchedLocSt(data, storageWatched) {
+//     storageWatched.push(data);
+//     localStorage.setItem('storage', JSON.stringify(storageWatched));
+// }
