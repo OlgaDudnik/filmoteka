@@ -37,20 +37,10 @@
   cursor: pointer;
   transform: scale(1);
   transition: transform 200ms linear;
-
-  &:hover,
-  &:focus {
-    transform: scale(1.05);
-  }
 }
 
 .logo-icon {
-  // transition: transform 0.6s ease;
-  // &:hover {
-  //   transform: rotate(180deg) scale(120%);
-  // }
-
-  // !=================== анимация лого
+  // animation logo
   animation: scale-logo 2000ms infinite linear;
 
   @keyframes scale-logo {
@@ -66,7 +56,6 @@
       transform: scale(0.75) rotate(360deg);
     }
   }
-  // !==========================================
 
   @media screen and (min-width: 768px) {
     margin-right: 5px;
@@ -159,7 +148,7 @@
   right: 5px;
 }
 
-// !======= filter
+//  filter
 .filter__link {
   display: flex;
   margin-top: auto;
@@ -176,6 +165,7 @@
   height: 40px;
   font-family: inherit;
   border-radius: 10px;
+  outline: none;
   background-color: rgba(0, 0, 0, 0.56);
 
   @media screen and (min-width: 767px) and (max-width: 1023px) {
@@ -196,8 +186,6 @@
   font-size: 14px;
   color: $primaryLightColor;
 }
-
-// !=====
 
 // header fo library page
 .header-library {
