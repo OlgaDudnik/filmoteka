@@ -58,11 +58,11 @@ function onOpenLibraryPage() {
   refs.filterBtn.classList.add('is-hidden');
   refs.filter.classList.add('visually-hidden');
 
+  //hide pagination
+  refs.pagination.classList.add('visually-hidden');
+
   refs.headerListButtons.innerHTML = '';
   renderButton();
-
-  //show pagination
-  refs.pagination.classList.remove('visually-hidden');
 
   if (myLibrary.getLibrary().length === 0) {
     //height header
@@ -71,8 +71,6 @@ function onOpenLibraryPage() {
     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
     //hide button library
     refs.headerListButtons.classList.add('visually-hidden');
-    //hide pagination
-    refs.pagination.classList.add('visually-hidden');
   }
 
   //render all library films
@@ -99,13 +97,8 @@ function onOpenWatchedFilms(event) {
   myLibrary.clearInterval();
   myLibrary.renderWatchedFilm();
 
-  //show pagination
-  refs.pagination.classList.remove('visually-hidden');
-
   if (myLibrary.getWatchedFilms().length === 0) {
     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
-    //hide pagination
-    refs.pagination.classList.add('visually-hidden');
   }
 
   //delete watched films
@@ -113,8 +106,6 @@ function onOpenWatchedFilms(event) {
     myLibrary.clearInterval();
     myLibrary.removeWatchedFilm();
     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
-    //hide pagination
-    refs.pagination.classList.add('visually-hidden');
   }
 }
 
@@ -128,12 +119,8 @@ function onOpenQueueFilms(event) {
   myLibrary.clearInterval();
   myLibrary.renderQueryFilms();
 
-  //show pagination
-  refs.pagination.classList.remove('visually-hidden');
   if (myLibrary.getQueueFilms().length === 0) {
     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
-    //hide pagination
-    refs.pagination.classList.add('visually-hidden');
   }
 
   //delete queue films
@@ -141,8 +128,6 @@ function onOpenQueueFilms(event) {
     myLibrary.clearInterval();
     myLibrary.removeQueryFilms();
     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
-    //hide pagination
-    refs.pagination.classList.add('visually-hidden');
   }
 }
 
