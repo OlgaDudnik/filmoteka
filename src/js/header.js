@@ -26,6 +26,9 @@ function onOpenHomePage() {
   refs.buttonHeaderHome.classList.add('nav-btn--underline');
   refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
 
+  //height header
+  refs.header.style.paddingBottom = '0px';
+
   //show filter
   refs.filterBtn.classList.remove('is-hidden');
   refs.filter.classList.remove('visually-hidden');
@@ -43,6 +46,8 @@ function onOpenLibraryPage() {
   refs.header.classList.add('header-library');
   refs.buttonHeaderLibrary.classList.add('nav-btn--underline');
   refs.buttonHeaderHome.classList.remove('nav-btn--underline');
+  //height header
+  refs.header.style.paddingBottom = '0px';
 
   refs.headerForm.classList.add('visually-hidden');
   refs.headerListButtons.classList.remove('visually-hidden');
@@ -60,6 +65,9 @@ function onOpenLibraryPage() {
   refs.pagination.classList.remove('visually-hidden');
 
   if (myLibrary.getLibrary().length === 0) {
+    //height header
+    refs.header.style.paddingBottom = '44px';
+
     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
     //hide button library
     refs.headerListButtons.classList.add('visually-hidden');
