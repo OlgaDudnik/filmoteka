@@ -3,29 +3,43 @@ import * as basicLightbox from 'basiclightbox';
 
 const newApiFetch = new FetchApi();
 
-const trailer = document.querySelector('.card__btn');
-
-
-if (trailer) {
-    trailer.addEventListener('click', trailerFn);
+export async function onTrailer(e) {
+    newApiFetch
+        .fetchTrailers(Number(e.target.dataset.id))
+        .then(data => {
+            trailerRender(data);
+        })
+        .catch(error => {
+            error;
+        });
 }
-let trailerKey;
 
-function trailerFn(e) {
-    if (e.target.nodeName !== 'BUTTON') {
-        return;
+function trailerRender(data) {
+    const trailerBtn = document.querySelector('.card__btn');
+    const instance = basicLightbox.create(
+        `<div class="modal-trailer__backdrop">
+          <iframe class="iframe" width="640" height="480" frameborder="0" allowfullscreen allow='autoplay'
+            src="https://www.youtube.com/embed/${data.results[0].key}?autoplay=1" >
+          </iframe>
+    </div>`, {
+            onShow: instance => {
+                instance.element().onclick = instance.close;
+                document.addEventListener('keydown', onEscClose);
+            },
+        }, {
+            onClose: instance => {
+                document.removeEventListener('keydown', onEscClose);
+                console.log(instance);
+            },
+        },
+    );
+
+    function onEscClose(event) {
+        if (event.code === 'Escape') {
+            instance.close();
+        }
     }
-    newApiFetch.fetchTrailers().then(t => {
-        trailerKey = t.results[0].key;
-
-        const instance = basicLightbox.create(`
-    <iframe src="https://www.youtube.com/embed/${trailerKey}" width="1200" height="800"></iframe>
-`);
-
+    trailerBtn.addEventListener('click', () => {
         instance.show();
-
-    }).catch(error => {
-        error;
     });
-
 }
