@@ -9,8 +9,6 @@ export const refs = {
     headerForm: document.querySelector('.header-form'),
     headerListButtons: document.querySelector('.header-list-buttons'),
 
-
-    backdropTrailer: document.querySelector('.modal-trailer__backdrop'),
     //pagination
     paginationContainer: document.querySelector('.pagination__list'),
 
