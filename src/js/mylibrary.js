@@ -106,6 +106,7 @@ export default class MyLibrary {
   render() {
     if (this.films.length) {
       refs.collection.innerHTML = renderCard(this.films);
+      this.doLabeOnFilm();
     } else {
       refs.collection.innerHTML =
         '<li class="empty-library"><span class="user-message"></span></li>';
@@ -132,5 +133,38 @@ export default class MyLibrary {
   }
   clearInterval() {
     clearInterval(this.interval);
+  }
+
+  doLabeOnFilm() {
+    const cards = refs.collection.children;
+    const cardsId = [];
+
+    for (let i = 0; i < cards.length; i += 1) {
+      cardsId.push(Number(cards[i].getAttribute('data-action')));
+    }
+
+    // labe for films in Wathed
+    this.getWatchedFilms().map(watchFilm => {
+      cardsId.map(cardId => {
+        if (cardId === watchFilm.id) {
+          refs.collection
+            .querySelector(`.card[data-action="${cardId}"]`)
+            .querySelector('.card-inLibrary')
+            .classList.add('card-inWatch');
+        }
+      });
+    });
+
+    //labe for film in Queue
+    this.getQueueFilms().map(queueFilm => {
+      cardsId.map(cardId => {
+        if (cardId === queueFilm.id) {
+          refs.collection
+            .querySelector(`.card[data-action="${cardId}"]`)
+            .querySelector('.card-inLibrary')
+            .classList.add('card-inQueue');
+        }
+      });
+    });
   }
 }
