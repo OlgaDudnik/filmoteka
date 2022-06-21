@@ -9,9 +9,6 @@ export const refs = {
   headerForm: document.querySelector('.header-form'),
   headerListButtons: document.querySelector('.header-list-buttons'),
 
-  //pagination
-  paginationContainer: document.querySelector('.pagination__list'),
-
   //container
   collection: document.querySelector('.gallery-container_grid'),
 
@@ -24,4 +21,8 @@ export const refs = {
 
   // Pagination
   pagination: document.querySelector('ul.pagination__list'),
+
+  //filter
+  filterBtn: document.querySelector('.filter-btn'),
+  filter: document.querySelector('.filter'),
 };
