@@ -23,19 +23,20 @@ export default class MyLibrary {
   getWatchedFilms() {
     try {
       const watchedFilms = localStorage.getItem(this.watchedKey);
-      return watchedFilms === null ? undefined : JSON.parse(watchedFilms);
+      return watchedFilms === null ? [] : JSON.parse(watchedFilms);
     } catch (error) {
       console.error('Get state error: ', error.message);
     }
   }
 
   renderWatchedFilm() {
-    if (this.getWatchedFilms()) {
+    if (this.getWatchedFilms().length !== 0) {
       this.films = this.getWatchedFilms();
       this.render();
       this.idFilms = [];
       return;
     }
+    this.films = [];
     this.message = 'You have no movies watched !!!';
     this.render();
   }
@@ -50,20 +51,20 @@ export default class MyLibrary {
   getQueueFilms() {
     try {
       const queueFilms = localStorage.getItem(this.queueKey);
-      return queueFilms === null ? undefined : JSON.parse(queueFilms);
+      return queueFilms === null ? [] : JSON.parse(queueFilms);
     } catch (error) {
       console.error('Get state error: ', error.message);
     }
   }
 
   renderQueryFilms() {
-    if (this.getQueueFilms()) {
+    if (this.getQueueFilms().length !== 0) {
       this.films = this.getQueueFilms();
       this.render();
       this.films = [];
       return;
     }
-
+    this.films = [];
     this.message = 'There is no queue to watch movies !!!';
     this.render();
   }

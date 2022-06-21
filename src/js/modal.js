@@ -20,6 +20,7 @@ async function mountModal(id) {
     .then(data => {
       refs.backdrop.innerHTML = card(data);
       onOpenModal(data);
+      examinationLocalStorage(id);
     })
     .catch(() => {
       throw new Error('Modal fetch error!');
@@ -77,8 +78,6 @@ function onAddToWatched(data) {
   }
   addFilmIdWatchedLocSt(data, storageWatched);
   removeFilmIdQueueLocSt(data, storageQueue);
-
-  //this
 }
 
 function onAddToQueue(data) {
@@ -128,4 +127,27 @@ function removeFilmIdQueueLocSt(data, storageQueue) {
   document.querySelector('#queue').classList.remove('modal__button--active');
   document.querySelector('#queue-add').classList.remove('visibility');
   document.querySelector('#queue-delete').classList.add('visibility');
+}
+
+function examinationLocalStorage(id) {
+  const storageWatched =
+    JSON.parse(localStorage.getItem(keys.STORAGE_KEY1)) || [];
+  const storageQueue =
+    JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
+
+  storageWatched.map(el => {
+    if (el.id == id) {
+      document.querySelector('#watched').classList.add('modal__button--active');
+      document.querySelector('#watched-add').classList.add('visibility');
+      document.querySelector('#watched-delete').classList.remove('visibility');
+    }
+  });
+
+  storageQueue.map(el => {
+    if (el.id == id) {
+      document.querySelector('#queue').classList.add('modal__button--active');
+      document.querySelector('#queue-add').classList.add('visibility');
+      document.querySelector('#queue-delete').classList.remove('visibility');
+    }
+  });
 }

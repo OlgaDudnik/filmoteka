@@ -28,8 +28,6 @@ function createMovies(returnedFetchMovies, genresAll) {
         .flat();
     }
 
-    console.log(returnedFetchMovies);
-
     if (movie.genre_ids.length > 3) {
       movie.genres = movie.genre_ids
         .map(id => genresAll.filter(el => el.id == id))

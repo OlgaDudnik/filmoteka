@@ -27,7 +27,7 @@ function onOpenHomePage() {
   refs.buttonHeaderLibrary.classList.remove('nav-btn--underline');
 
   //show filter
-  refs.filterBtn.classList.remove('visually-hidden');
+  refs.filterBtn.classList.remove('is-hidden');
   refs.filter.classList.remove('visually-hidden');
 
   //show pagination
@@ -50,7 +50,7 @@ function onOpenLibraryPage() {
   refs.collection.style.gridTemplateColumns = '';
 
   //hide filter
-  refs.filterBtn.classList.add('visually-hidden');
+  refs.filterBtn.classList.add('is-hidden');
   refs.filter.classList.add('visually-hidden');
 
   refs.headerListButtons.innerHTML = '';
@@ -59,7 +59,7 @@ function onOpenLibraryPage() {
   //show pagination
   refs.pagination.classList.remove('visually-hidden');
 
-  if (!myLibrary.getLibrary().length) {
+  if (myLibrary.getLibrary().length === 0) {
     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
     //hide button library
     refs.headerListButtons.classList.add('visually-hidden');
@@ -94,7 +94,7 @@ function onOpenWatchedFilms(event) {
   //show pagination
   refs.pagination.classList.remove('visually-hidden');
 
-  if (!myLibrary.getWatchedFilms().length) {
+  if (myLibrary.getWatchedFilms().length === 0) {
     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
     //hide pagination
     refs.pagination.classList.add('visually-hidden');
@@ -122,8 +122,7 @@ function onOpenQueueFilms(event) {
 
   //show pagination
   refs.pagination.classList.remove('visually-hidden');
-
-  if (!myLibrary.getQueueFilms().length) {
+  if (myLibrary.getQueueFilms().length === 0) {
     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
     //hide pagination
     refs.pagination.classList.add('visually-hidden');
