@@ -25,6 +25,11 @@ async function onPaginationClick(e) {
         return;
     }
 
+    if (localStorage.getItem('isNeedResetPages')) {
+        FetchMovieInstance.resetPage();
+        localStorage.removeItem('isNeedResetPages');
+    }
+
     if (target.dataset.action === 'left') {
         FetchMovieInstance.pageNum -= 1;
 
