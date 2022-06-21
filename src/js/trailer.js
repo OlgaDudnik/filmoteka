@@ -5,66 +5,43 @@ import { refs } from './refs';
 const newApiFetch = new FetchApi();
 
 refs.collection.addEventListener('click', e => {
-    if (e.target.nodeName === 'BUTTON') {
-        const { id } = e.target.dataset;
-        onTrailer(id)
+    e.preventDefault();
+    if (e.target.nodeName !== 'BUTTON') {
+        return
     }
+    newApiFetch.idFilm = e.target.dataset.btn;
+    onTrailer();
 })
 
-async function onTrailer(id) {
-    newApiFetch.idFilm = id;
+async function onTrailer() {
     await newApiFetch
         .fetchTrailers()
-        .then(data => {
-            trailerRender(data);
+        .then(({ results }) => {
+            trailerRender({ results });
+
         })
         .catch(error => {
             error;
         });
 }
 
-function trailerRender(data) {
+function trailerRender({ results }) {
     const trailerBtn = document.querySelector('.card__btn');
-    const instance = basicLightbox.create(
-        `<div class="modal-trailer__backdrop">
-          <iframe class="iframe" width="640" height="480" frameborder="0" allowfullscreen allow='autoplay'
-            src="https://www.youtube.com/embed/${data.results[0].key}?autoplay=1" >
-          </iframe>
-    </div>`, {
-            onShow: instance => {
-                instance.element().onclick = instance.close;
-                document.addEventListener('keydown', onEscClose);
-            },
-        }, {
-            onClose: instance => {
-                document.removeEventListener('keydown', onEscClose);
-                console.log(instance);
-            },
-        },
-    );
+    const instance = basicLightbox.create(`
+    <iframe class="iframe" src="https://www.youtube.com/embed/${results[0].key}" width="800" height="600"></iframe>
+`, {
+        closable: true,
+        onShow: (instance) => { window.addEventListener('keydown', onEscClose) },
+        onClose: (instance) => { window.removeEventListener('keydown', onEscClose) },
+    });
+
+    trailerBtn.addEventListener('click', instance.show());
 
     function onEscClose(event) {
         if (event.code === 'Escape') {
+            trailerBtn.removeEventListener('click', instance.close());
             instance.close();
         }
     }
-    trailerBtn.addEventListener('click', () => {
-        // onAddToWatched(data)
-        instance.show();
-    });
+
 }
-
-// function onAddToWatched(data) {
-//     const storageWatched =
-//         JSON.parse(localStorage.getItem('storage')) || [];
-
-//     const arreyWatched = [];
-//     storageWatched.map(el => arreyWatched.push(el.id));
-
-//     addFilmIdWatchedLocSt(data, storageWatched);
-// }
-
-// function addFilmIdWatchedLocSt(data, storageWatched) {
-//     storageWatched.push(data);
-//     localStorage.setItem('storage', JSON.stringify(storageWatched));
-// }
