@@ -77,6 +77,8 @@ function onAddToWatched(data) {
   }
   addFilmIdWatchedLocSt(data, storageWatched);
   removeFilmIdQueueLocSt(data, storageQueue);
+
+  //this
 }
 
 function onAddToQueue(data) {
