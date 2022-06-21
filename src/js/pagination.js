@@ -1,6 +1,7 @@
 import FetchMovie from './api.fetch';
 import { refs } from './refs';
 import articlesTpl from '../templates/card.hbs';
+import data from '../data-base/genres.json';
 
 const FetchMovieInstance = new FetchMovie();
 
@@ -36,6 +37,11 @@ async function onPaginationClick(e) {
             const films = await FetchMovieInstance.fetchFilms();
             appendArticlesMarkup(films.results);
             FetchMovieInstance.generatePaginationMarkup(page, totalPages);
+        } else if (localStorage.getItem('action') === 'fetchGenreFilms') {
+            FetchMovieInstance.genreFilm = localStorage.getItem('genreFilm');
+            const films = await FetchMovieInstance.fetchGenreFilms();
+            appendArticlesMarkup(films.results);
+            FetchMovieInstance.generatePaginationMarkup(page, totalPages);
         } else {
             const films = await FetchMovieInstance.fetchPopularFilms();
             appendArticlesMarkup(films.results);
@@ -47,6 +53,11 @@ async function onPaginationClick(e) {
         if (localStorage.getItem('action') && localStorage.getItem('action') === 'searchFilms') {
             FetchMovieInstance.searchQuery = localStorage.getItem('searchQuery');
             const films = await FetchMovieInstance.fetchFilms();
+            appendArticlesMarkup(films.results);
+            FetchMovieInstance.generatePaginationMarkup(page, totalPages);
+        } else if (localStorage.getItem('action') === 'fetchGenreFilms') {
+            FetchMovieInstance.genreFilm = localStorage.getItem('genreFilm');
+            const films = await FetchMovieInstance.fetchGenreFilms();
             appendArticlesMarkup(films.results);
             FetchMovieInstance.generatePaginationMarkup(page, totalPages);
         } else {
@@ -65,6 +76,11 @@ async function onPaginationClick(e) {
                 +target.dataset.page,
                 totalPages,
             );
+        } else if (localStorage.getItem('action') === 'fetchGenreFilms') {
+            FetchMovieInstance.genreFilm = localStorage.getItem('genreFilm');
+            const films = await FetchMovieInstance.fetchGenreFilms();
+            appendArticlesMarkup(films.results);
+            FetchMovieInstance.generatePaginationMarkup(page, totalPages);
         } else {
             const films = await FetchMovieInstance.fetchPopularFilms();
             appendArticlesMarkup(films.results);
@@ -84,4 +100,46 @@ function scroll() {
 
 function appendArticlesMarkup(results) {
     refs.collection.innerHTML = articlesTpl(results);
+}
+
+//----------------------------------------------------------------------------------------------------------------
+const fetchMovie = new FetchMovie();
+
+async function loadPopularMovies() {
+    const fetchPopMovies = await fetchMovie.fetchPopularFilms();
+    const { results } = fetchPopMovies;
+    const movies = createMovies(results, data);
+    parseMarkup(movies);
+
+    return movies;
+}
+
+function createMovies(returnedFetchMovies, genresAll) {
+    return returnedFetchMovies.map(movie => {
+        movie.release_date = movie.release_date
+            ? movie.release_date.split('-')[0]
+            : 'n/a';
+
+        if (movie.genre_ids.length > 0 && movie.genre_ids.length <= 3) {
+            movie.genres = movie.genre_ids
+                .map(id => genresAll.filter(el => el.id == id))
+                .flat();
+        }
+
+        console.log(returnedFetchMovies);
+
+        if (movie.genre_ids.length > 3) {
+            movie.genres = movie.genre_ids
+                .map(id => genresAll.filter(el => el.id == id))
+                .slice(0, 2)
+                .flat()
+                .concat({ name: 'Other' });
+        }
+
+        if (movie.genre_ids.length === 0) {
+            movie.genres = [{ name: 'n/a' }];
+        }
+
+        return movie;
+    });
 }

@@ -32,7 +32,7 @@ export default class FetchMovie {
             getPopularFilms: 'movie/popular?api_key={API_KEY}&language=en-US&page={PAGE}',
             getTopRatedFilms: 'movie/top_rated?api_key={API_KEY}&language=en-US&page={PAGE}',
             getTelecast: 'search/tv?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
-            getGenres: 'discover/movie?api_key={API_KEY}&language=en-US&include_adult=false&include_video=false&page=1&with_genres={GENRE}',
+            getGenres: 'discover/movie?api_key={API_KEY}&language=en-US&include_adult=false&include_video=false&page=1&with_genres={GENRE}&page={PAGE}',
             getTrailer: 'movie/{ID}/videos?api_key={API_KEY}&language=en-US',
             searchYears: 'discover/movie?api_key={API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte={YEAR}-01-01&primary_release_date.lte={YEAR}-12-31',
         };
