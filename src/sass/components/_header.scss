@@ -12,6 +12,7 @@
 }
 
 .header-container {
+  position: relative;
   padding: 44px 20px 72px;
   display: flex;
   flex-direction: column;
@@ -158,12 +159,52 @@
   right: 5px;
 }
 
+// !======= filter
+.filter__link {
+  display: flex;
+  margin-top: auto;
+  color: $primaryLightColor;
+}
+
+.filter-btn {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 40px;
+  font-family: inherit;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.56);
+
+  @media screen and (min-width: 767px) and (max-width: 1023px) {
+    left: 40px;
+  }
+  @media screen and (min-width: 1024px) {
+    left: 93px;
+  }
+}
+
+.filter-icon {
+  fill: $accentColor;
+}
+
+.filter-btn__text {
+  display: flex;
+  margin-left: 10px;
+  font-size: 14px;
+  color: $primaryLightColor;
+}
+
+// !=====
+
 // header fo library page
 .header-library {
   .header-container {
     padding-bottom: 68px;
     @media screen and (min-width: 768px) {
-      padding-bottom: 56px;
+      padding-bottom: 57px;
     }
   }
 

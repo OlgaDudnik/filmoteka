@@ -3,6 +3,7 @@ import { refs } from './refs';
 import articlesTpl from '../templates/card.hbs';
 import createMovies from './cards';
 import data from '../data-base/genres.json';
+
 const FetchMovieInstance = new FetchMovie();
 
 refs.pagination.addEventListener('click', onPaginationClick);

@@ -1,6 +1,6 @@
 import { keys } from './storage_key';
 import FetchMovie from './api.fetch';
-import renderCard from '../templates/card-by-id.hbs';
+import renderCard from '../templates/card.hbs';
 import { refs } from './refs';
 
 //-----------------------------------------------------------
@@ -15,119 +15,103 @@ export default class MyLibrary {
     //this.queueKey = [343611, 973608, 136418, 973608];
     this.watchedKey = keys.STORAGE_KEY1;
     this.queueKey = keys.STORAGE_KEY2;
-    this.idFilms = [];
+    this.films = [];
     this.message = '';
     this.interval = 0;
   }
 
-  getWatchedFilmsId() {
+  getWatchedFilms() {
     try {
       const watchedFilms = localStorage.getItem(this.watchedKey);
-      return watchedFilms === null ? undefined : JSON.parse(watchedFilms);
+      return watchedFilms === null ? [] : JSON.parse(watchedFilms);
     } catch (error) {
       console.error('Get state error: ', error.message);
     }
   }
 
   renderWatchedFilm() {
-    if (this.getWatchedFilmsId()) {
-      this.idFilm = this.getWatchedFilmsId();
-      this.idFilm.filter(id => id !== null);
+    if (this.getWatchedFilms().length !== 0) {
+      this.films = this.getWatchedFilms();
       this.render();
+      this.idFilms = [];
       return;
     }
-    this.idFilms = [];
+    this.films = [];
     this.message = 'You have no movies watched !!!';
     this.render();
-    //const queryId = this.watchedKey;
   }
 
   removeWatchedFilm() {
     localStorage.removeItem(this.watchedKey);
-    this.idFilms = [];
+    this.films = [];
     this.message = 'You have no movies watched !!!';
     this.render();
   }
 
-  getQueueFilmsId() {
+  getQueueFilms() {
     try {
       const queueFilms = localStorage.getItem(this.queueKey);
-      return queueFilms === null ? undefined : JSON.parse(queueFilms);
+      return queueFilms === null ? [] : JSON.parse(queueFilms);
     } catch (error) {
       console.error('Get state error: ', error.message);
     }
   }
 
   renderQueryFilms() {
-    if (this.getQueueFilmsId()) {
-      this.idFilms = this.getQueueFilmsId();
-      this.idFilms.filter(id => id !== null);
+    if (this.getQueueFilms().length !== 0) {
+      this.films = this.getQueueFilms();
       this.render();
+      this.films = [];
       return;
     }
-    this.idFilms = [];
+    this.films = [];
     this.message = 'There is no queue to watch movies !!!';
     this.render();
-    //const queryId = this.queueKey;
   }
 
   removeQueryFilms() {
     localStorage.removeItem(this.queueKey);
-    this.idFilms = [];
+    this.films = [];
     this.message = 'You have no movies watched !!!';
     this.render();
   }
 
-  getLibraryId() {
-    const myLibraryId = [];
-    const watchedFilmsId = this.getWatchedFilmsId();
-    const queueFilmsId = this.getQueueFilmsId();
-    //const watchedFilmsId = this.watchedKey;
-    //const queueFilmsId = this.queueKey;
+  getLibrary() {
+    const myLibrary = [];
+    const watchedFilms = this.getWatchedFilms();
+    const queueFilms = this.getQueueFilms();
 
-    if (watchedFilmsId) {
-      myLibraryId.push(...watchedFilmsId);
+    if (watchedFilms) {
+      myLibrary.push(...watchedFilms);
     }
-    if (queueFilmsId) {
-      myLibraryId.push(...queueFilmsId);
+    if (queueFilms) {
+      myLibrary.push(...queueFilms);
     }
-    return myLibraryId
-      .filter((id, index) => myLibraryId.indexOf(id) === index)
+    return myLibrary
+      .filter((id, index) => myLibrary.indexOf(id) === index)
       .filter(id => id != null);
   }
 
   renderMyLibrary() {
-    if (this.getLibraryId().length != 0) {
-      this.idFilms = this.getLibraryId();
+    if (this.getLibrary().length) {
+      this.films = this.getLibrary();
       this.render();
+      this.films = [];
       return;
     }
-    this.idFilms = [];
     this.message = 'Your library is empty!!!';
     this.render();
   }
 
   render() {
-    refs.collection.innerHTML = '';
-    if (this.idFilms.length) {
-      this.idFilms.map(id => {
-        fechLibraryMovie.idFilm = id;
-        fechLibraryMovie.fetchFilmsById().then(film => {
-          refs.collection.insertAdjacentHTML('beforeend', renderCard(film));
-        });
-      });
+    if (this.films.length) {
+      refs.collection.innerHTML = renderCard(this.films);
+      this.doLabeOnFilm();
     } else {
-      refs.collection.insertAdjacentHTML(
-        'beforeend',
-        `<li class="empty-library"><span class='user-message'></span></li>`
-      );
-      refs.collection.style.display = 'block';
+      refs.collection.innerHTML =
+        '<li class="empty-library"><span class="user-message"></span></li>';
       this.showMessage();
     }
-  }
-
-  clearEmptyLibrary() {
-    refs.collection.style.display = 'grid';
   }
 
   showMessage() {
@@ -149,5 +133,38 @@ export default class MyLibrary {
   }
   clearInterval() {
     clearInterval(this.interval);
+  }
+
+  doLabeOnFilm() {
+    const cards = refs.collection.children;
+    const cardsId = [];
+
+    for (let i = 0; i < cards.length; i += 1) {
+      cardsId.push(Number(cards[i].getAttribute('data-action')));
+    }
+
+    // labe for films in Wathed
+    this.getWatchedFilms().map(watchFilm => {
+      cardsId.map(cardId => {
+        if (cardId === watchFilm.id) {
+          refs.collection
+            .querySelector(`.card[data-action="${cardId}"]`)
+            .querySelector('.card-inLibrary')
+            .classList.add('card-inWatch');
+        }
+      });
+    });
+
+    //labe for film in Queue
+    this.getQueueFilms().map(queueFilm => {
+      cardsId.map(cardId => {
+        if (cardId === queueFilm.id) {
+          refs.collection
+            .querySelector(`.card[data-action="${cardId}"]`)
+            .querySelector('.card-inLibrary')
+            .classList.add('card-inQueue');
+        }
+      });
+    });
   }
 }

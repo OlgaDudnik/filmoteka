@@ -61,11 +61,15 @@
 //   }
 // }
 .button-clean {
+  display: block;
   position: absolute;
-  top: 25%;
+  top: 10px;
   right: 10px;
-  font-size: 17px;
-  transform: scale(1);
+  height: 20px;
+  width: 20px;
+  background-image: url('/src/images/header-library/clean-icon.png');
+  background-repeat: no-repeat;
+  background-size: cover;
   transition: transform 200ms linear;
   &:hover,
   &:focus {

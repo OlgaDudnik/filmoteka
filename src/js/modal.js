@@ -19,14 +19,15 @@ async function mountModal(id) {
     .fetchFilmsById()
     .then(data => {
       refs.backdrop.innerHTML = card(data);
-      onOpenModal(id);
+      onOpenModal(data);
+      examinationLocalStorage(id);
     })
     .catch(() => {
       throw new Error('Modal fetch error!');
     });
 }
 
-function onOpenModal(id) {
+function onOpenModal(data) {
   refs.backdrop.classList.add('mount');
   refs.backdrop.addEventListener('click', modalCloseClickBackdrop);
   document.body.classList.add('overflow');
@@ -36,10 +37,10 @@ function onOpenModal(id) {
     .addEventListener('click', onCloseModal);
   document
     .querySelector('#watched')
-    .addEventListener('click', () => onAddToWatched(id));
+    .addEventListener('click', () => onAddToWatched(data));
   document
     .querySelector('#queue')
-    .addEventListener('click', () => onAddToQueue(id));
+    .addEventListener('click', () => onAddToQueue(data));
 }
 
 function onCloseModal() {
@@ -62,54 +63,91 @@ function modalCloseClickBackdrop(e) {
 
 // add id card in localStorage on button Watched vs Queue *******************************
 
-function onAddToWatched(id) {
+function onAddToWatched(data) {
   const storageWatched =
     JSON.parse(localStorage.getItem(keys.STORAGE_KEY1)) || [];
   const storageQueue =
     JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
 
-  if (storageWatched?.includes(id)) {
-    removeFilmIdWatchedLocSt(id, storageWatched);
+  const arreyWatched = [];
+  storageWatched.map(el => arreyWatched.push(el.id));
+
+  if (arreyWatched.includes(data.id)) {
+    removeFilmIdWatchedLocSt(data, storageWatched);
     return;
   }
-  addFilmIdWatchedLocSt(id, storageWatched);
-  removeFilmIdQueueLocSt(id, storageQueue);
+  addFilmIdWatchedLocSt(data, storageWatched);
+  removeFilmIdQueueLocSt(data, storageQueue);
 }
 
-function onAddToQueue(id) {
+function onAddToQueue(data) {
   const storageWatched =
     JSON.parse(localStorage.getItem(keys.STORAGE_KEY1)) || [];
   const storageQueue =
     JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
 
-  if (storageQueue?.includes(id)) {
-    removeFilmIdQueueLocSt(id, storageQueue);
+  const arreyQueue = [];
+  storageQueue.map(el => arreyQueue.push(el.id));
+
+  if (arreyQueue.includes(data.id)) {
+    removeFilmIdQueueLocSt(data, storageQueue);
     return;
   }
-  addFilmIdQueueLocSt(id, storageQueue);
-  removeFilmIdWatchedLocSt(id, storageWatched);
+  addFilmIdQueueLocSt(data, storageQueue);
+  removeFilmIdWatchedLocSt(data, storageWatched);
 }
 
-function addFilmIdWatchedLocSt(id, storageWatched) {
-  document.querySelector('#watched').classList.add('modal__button--active');
-  storageWatched.push(id);
+function addFilmIdWatchedLocSt(data, storageWatched) {
+  storageWatched.push(data);
   localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(storageWatched));
+  document.querySelector('#watched').classList.add('modal__button--active');
+  document.querySelector('#watched-add').classList.add('visibility');
+  document.querySelector('#watched-delete').classList.remove('visibility');
 }
 
-function removeFilmIdWatchedLocSt(id, storageWatched) {
-  const filterSroregeWatched = storageWatched.filter(el => el !== id);
+function removeFilmIdWatchedLocSt(data, storageWatched) {
+  const filterSroregeWatched = storageWatched.filter(el => el.id !== data.id);
   localStorage.setItem(keys.STORAGE_KEY1, JSON.stringify(filterSroregeWatched));
   document.querySelector('#watched').classList.remove('modal__button--active');
+  document.querySelector('#watched-add').classList.remove('visibility');
+  document.querySelector('#watched-delete').classList.add('visibility');
 }
 
-function addFilmIdQueueLocSt(id, storageQueue) {
-  document.querySelector('#queue').classList.add('modal__button--active');
-  storageQueue.push(id);
+function addFilmIdQueueLocSt(data, storageQueue) {
+  storageQueue.push(data);
   localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(storageQueue));
+  document.querySelector('#queue').classList.add('modal__button--active');
+  document.querySelector('#queue-add').classList.add('visibility');
+  document.querySelector('#queue-delete').classList.remove('visibility');
 }
 
-function removeFilmIdQueueLocSt(id, storageQueue) {
-  const filterSroregeQueue = storageQueue.filter(el => el !== id);
-  document.querySelector('#queue').classList.remove('modal__button--active');
+function removeFilmIdQueueLocSt(data, storageQueue) {
+  const filterSroregeQueue = storageQueue.filter(el => el.id !== data.id);
   localStorage.setItem(keys.STORAGE_KEY2, JSON.stringify(filterSroregeQueue));
+  document.querySelector('#queue').classList.remove('modal__button--active');
+  document.querySelector('#queue-add').classList.remove('visibility');
+  document.querySelector('#queue-delete').classList.add('visibility');
+}
+
+function examinationLocalStorage(id) {
+  const storageWatched =
+    JSON.parse(localStorage.getItem(keys.STORAGE_KEY1)) || [];
+  const storageQueue =
+    JSON.parse(localStorage.getItem(keys.STORAGE_KEY2)) || [];
+
+  storageWatched.map(el => {
+    if (el.id == id) {
+      document.querySelector('#watched').classList.add('modal__button--active');
+      document.querySelector('#watched-add').classList.add('visibility');
+      document.querySelector('#watched-delete').classList.remove('visibility');
+    }
+  });
+
+  storageQueue.map(el => {
+    if (el.id == id) {
+      document.querySelector('#queue').classList.add('modal__button--active');
+      document.querySelector('#queue-add').classList.add('visibility');
+      document.querySelector('#queue-delete').classList.remove('visibility');
+    }
+  });
 }
