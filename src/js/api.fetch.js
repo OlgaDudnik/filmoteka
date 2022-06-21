@@ -33,6 +33,7 @@ export default class FetchMovie {
             getTopRatedFilms: 'movie/top_rated?api_key={API_KEY}&language=en-US&page={PAGE}',
             getTelecast: 'search/tv?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
             getGenres: 'discover/movie?api_key={API_KEY}&language=en-US&include_adult=false&include_video=false&page=1&with_genres={GENRE}',
+            getTrailer: 'movie/{ID}/videos?api_key={API_KEY}&language=en-US',
             searchYears: 'discover/movie?api_key={API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte={YEAR}-01-01&primary_release_date.lte={YEAR}-12-31',
         };
     }
@@ -136,6 +137,11 @@ export default class FetchMovie {
         return this.sendQuery('getTelecast');
     }
 
+    // Получение трейлеров
+    async fetchTrailers() {
+        return this.sendQuery('getTrailer');
+    }
+
     renderMovieList() {
         const movieList = refs.collection;
         const parsedStorage = JSON.parse(
@@ -201,19 +207,6 @@ export default class FetchMovie {
         liItems += `<li><span data-action='right' class='pagination__arrow--right ${rightDisabledClass}'>${forwardArrow}</span></li>`;
 
         return liItems;
-    }
-
-    // Получение трейлеров
-    async fetchTrailers(id) {
-        try {
-            const searchTrailer = await fetch(
-                `${this.URL}movie/${id}/videos?api_key=${this.key}&language=en-US`,
-            );
-            const data = await searchTrailer.json();
-            return data;
-        } catch (error) {
-            console.log(error);
-        }
     }
 
     saveLocaleStorage(films) {
