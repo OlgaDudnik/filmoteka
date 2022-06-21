@@ -191,15 +191,12 @@
 }
 
 .filter-btn__text {
+  display: flex;
   margin-left: 10px;
   font-size: 14px;
-
-  &:hover {
-    box-shadow: 0px 10px 13px -7px #000000,
-      0px 3px 21px 10px rgba(255, 107, 8, 0.5);
-    transition: box-shadow 0.2s;
-  }
+  color: $primaryLightColor;
 }
+
 // !=====
 
 // header fo library page
