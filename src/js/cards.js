@@ -16,7 +16,7 @@ async function loadPopularMovies() {
   return movies;
 }
 
-function createMovies(returnedFetchMovies, genresAll) {
+export default function createMovies(returnedFetchMovies, genresAll) {
   return returnedFetchMovies.map(movie => {
     movie.release_date = movie.release_date
       ? movie.release_date.split('-')[0]
