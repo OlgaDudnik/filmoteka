@@ -12,7 +12,10 @@ function keyWordSearch(e) {
     newApiFetch.resetPage();
 
     newApiFetch.query = (e.target.elements.searchQuery.value).trim();
-
+    if (newApiFetch.query === '') {
+        Notify.warning('We\'re sorry, but you\'ve reached the end of search results.');
+        return;
+    }
     // Don't touch it please, required for pagination
     if (localStorage.getItem('searchQuery') !== newApiFetch.query || localStorage.getItem('action') !== 'searchFilms') {
         localStorage.setItem('isNeedResetPages', 'true');
@@ -22,10 +25,7 @@ function keyWordSearch(e) {
 
     newApiFetch.fetchFilms().then(film => {
 
-        if (film.results.length === 0) {
-            Notify.warning('We\'re sorry, but you\'ve reached the end of search results.');
-            return;
-        }
+
         newApiFetch.saveLocaleStorage(film);
         newApiFetch.renderMovieList();
 
