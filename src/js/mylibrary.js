@@ -87,14 +87,20 @@ export default class MyLibrary {
     if (queueFilms) {
       myLibrary.push(...queueFilms);
     }
-    return myLibrary
+    myLibrary
       .filter((id, index) => myLibrary.indexOf(id) === index)
       .filter(id => id != null);
+    return myLibrary;
   }
 
   renderMyLibrary() {
     if (this.getLibrary().length) {
       this.films = this.getLibrary();
+
+      this.films.sort((a, b) => {
+        return a.original_title > b.original_title ? 1 : -1;
+      });
+
       this.render();
       this.films = [];
       return;
