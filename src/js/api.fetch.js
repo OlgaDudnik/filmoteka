@@ -94,9 +94,6 @@ export default class FetchMovie {
                 this.renderPagination();
             }
 
-            // DEBUG DATA
-            console.log(this.URL + url, this.pageNum, this.totalPagesNum);
-
             // hideSpiner();
             NProgress.done();
 
