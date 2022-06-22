@@ -109,3 +109,41 @@
     }
   }
 }
+//--------------swal(alert) window---------------------
+.swal-overlay--show-modal .swal-modal {
+  -webkit-animation: showSweetAlert 0.8s;
+  animation: showSweetAlert 0.8s;
+}
+.swal-icon--warning__body,
+.swal-icon--warning__dot {
+  background-color: $accent-lighter-color;
+}
+.swal-icon--warning.swal-icon--warning {
+  border-color: $accent-lighter-color;
+}
+.swal-title {
+  color: $text-black-color;
+}
+.swal-text {
+  color: $text-footer-color;
+}
+.swal-button--danger {
+  background: $accent-lighter-color;
+  &:hover {
+    border-color: $accent-lighter-color;
+    color: $primaryLightColor;
+    background-color: $accent-lighter-color !important;
+    box-shadow: 0px 0px 5px $btn-hover-color,
+      inset 0px 0px 6px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+.swal-button--cancel {
+  color: $text-footer-color;
+  &:hover {
+    border-color: $accent-lighter-color;
+    color: $primaryLightColor;
+    background-color: $accent-lighter-color !important;
+    box-shadow: 0px 0px 5px $btn-hover-color,
+      inset 0px 0px 6px 6px rgba(0, 0, 0, 0.1);
+  }
+}

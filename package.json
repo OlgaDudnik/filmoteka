@@ -21,7 +21,8 @@
     "basiclightbox": "^5.0.4",
     "handlebars": "^4.7.7",
     "modern-normalize": "^1.1.0",
-    "notiflix": "^3.2.5"
+    "notiflix": "^3.2.5",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.0",
