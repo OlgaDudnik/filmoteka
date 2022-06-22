@@ -90,6 +90,10 @@ function onOpenLibraryPage() {
 function onOpenWatchedFilms(event) {
   refs.buttonWatched.classList.toggle('button--active');
 
+  if (refs.buttonWatched.classList.contains('button--active')) {
+    refs.buttonQueue.classList.remove('button--active');
+  }
+
   if (!refs.buttonWatched.classList.contains('button--active')) {
     onOpenLibraryPage();
     return;
@@ -114,6 +118,9 @@ function onOpenWatchedFilms(event) {
 
 function onOpenQueueFilms(event) {
   refs.buttonQueue.classList.toggle('button--active');
+  if (refs.buttonQueue.classList.contains('button--active')) {
+    refs.buttonWatched.classList.remove('button--active');
+  }
 
   if (!refs.buttonQueue.classList.contains('button--active')) {
     onOpenLibraryPage();
