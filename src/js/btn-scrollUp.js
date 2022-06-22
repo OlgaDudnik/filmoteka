@@ -14,7 +14,5 @@ function scrollTop(e) {
 setInterval(function displayScrollTopBtn() {
   if (window.scrollY > 200) {
      scrollUpBtn.style.display = 'flex';
-  } else {
-    scrollUpBtn.style.display = 'none';
   }
 }, 300);
