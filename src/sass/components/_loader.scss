@@ -31,3 +31,13 @@
   opacity: 0;
   visibility: hidden;
 }
+
+// nprogres
+#nprogress .bar {
+  background: #ff6b08 !important;
+  height: 5px !important;
+}
+
+#nprogress .spinner-icon {
+  display: none !important;
+}
