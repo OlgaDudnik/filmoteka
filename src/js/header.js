@@ -3,8 +3,7 @@ import { renderButton } from './button';
 import MyLibrary from './mylibrary';
 import FetchMovie from './api.fetch';
 import renderCard from '../templates/card.hbs';
-import onAddToQueue from './modal';
-import { keys } from './storage_key';
+import swal from 'sweetalert';
 
 //-----------------------------------------------------------
 
@@ -90,6 +89,10 @@ function onOpenLibraryPage() {
 function onOpenWatchedFilms(event) {
   refs.buttonWatched.classList.toggle('button--active');
 
+  if (refs.buttonWatched.classList.contains('button--active')) {
+    refs.buttonQueue.classList.remove('button--active');
+  }
+
   if (!refs.buttonWatched.classList.contains('button--active')) {
     onOpenLibraryPage();
     return;
@@ -106,14 +109,37 @@ function onOpenWatchedFilms(event) {
 
   //delete watched films
   if (event.target.tagName === 'SPAN') {
-    myLibrary.clearInterval();
-    myLibrary.removeWatchedFilm();
-    refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
+    if (myLibrary.getWatchedFilms().length != 0) {
+      swal({
+        title: 'Do you want clean watched films?',
+        text: 'Once deleted, you will not be able to recover this informations!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then(willDelete => {
+        if (willDelete) {
+          myLibrary.clearInterval();
+          myLibrary.removeWatchedFilm();
+          refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
+        }
+      });
+    }
+    // if (myLibrary.getWatchedFilms().length != 0) {
+    //   let deleteWatched = confirm('Do you want clean watched films?');
+    //   if (deleteWatched === true) {
+    //     myLibrary.clearInterval();
+    //     myLibrary.removeWatchedFilm();
+    //     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
+    //   }
+    // }
   }
 }
 
 function onOpenQueueFilms(event) {
   refs.buttonQueue.classList.toggle('button--active');
+  if (refs.buttonQueue.classList.contains('button--active')) {
+    refs.buttonWatched.classList.remove('button--active');
+  }
 
   if (!refs.buttonQueue.classList.contains('button--active')) {
     onOpenLibraryPage();
@@ -131,9 +157,27 @@ function onOpenQueueFilms(event) {
 
   //delete queue films
   if (event.target.tagName === 'SPAN') {
-    myLibrary.clearInterval();
-    myLibrary.removeQueryFilms();
-    refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
+    swal({
+      title: 'Do you want clean queue?',
+      text: 'Once deleted, you will not be able to recover this informations!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then(willDelete => {
+      if (willDelete) {
+        myLibrary.clearInterval();
+        myLibrary.removeQueryFilms();
+        refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
+      }
+    });
+    // if (myLibrary.getQueueFilms().length != 0) {
+    //   let deleteQuestion = confirm('Do you want clean queue?');
+    //   if (deleteQuestion === true) {
+    //     myLibrary.clearInterval();
+    //     myLibrary.removeQueryFilms();
+    //     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
+    //   }
+    // }
   }
 }
 
