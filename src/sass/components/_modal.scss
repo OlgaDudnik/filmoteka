@@ -18,7 +18,7 @@
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 111;
   transform: scale(0);
-  transition: transform 250ms linear;
+  // transition: transform 250ms linear;
 }
 
 .mount {
@@ -26,6 +26,23 @@
 }
 
 .modal {
+  animation: open 2000ms;
+  @keyframes open {
+    0% {
+      transform: translateX(-1600px) skewX(20deg) scaleX(1.8);
+      opacity: 0;
+    }
+
+    50% {
+      transform: translateX(80px) skewX(15deg) scaleX(0.7);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(0px) skewX(0deg) scaleX(1);
+    }
+  }
+
   display: flex;
   position: relative;
   width: auto;
