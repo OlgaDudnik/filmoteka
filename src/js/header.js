@@ -4,7 +4,6 @@ import MyLibrary from './mylibrary';
 import FetchMovie from './api.fetch';
 import renderCard from '../templates/card.hbs';
 import onAddToQueue from './modal';
-import { keys } from './storage_key';
 
 //-----------------------------------------------------------
 
@@ -110,9 +109,14 @@ function onOpenWatchedFilms(event) {
 
   //delete watched films
   if (event.target.tagName === 'SPAN') {
-    myLibrary.clearInterval();
-    myLibrary.removeWatchedFilm();
-    refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
+    if (myLibrary.getWatchedFilms().length != 0) {
+      let deleteWatched = confirm('Do you want clean watched films?');
+      if (deleteWatched === true) {
+        myLibrary.clearInterval();
+        myLibrary.removeWatchedFilm();
+        refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
+      }
+    }
   }
 }
 
@@ -138,9 +142,14 @@ function onOpenQueueFilms(event) {
 
   //delete queue films
   if (event.target.tagName === 'SPAN') {
-    myLibrary.clearInterval();
-    myLibrary.removeQueryFilms();
-    refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
+    if (myLibrary.getQueueFilms().length != 0) {
+      let deleteQuestion = confirm('Do you want clean queue?');
+      if (deleteQuestion === true) {
+        myLibrary.clearInterval();
+        myLibrary.removeQueryFilms();
+        refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
+      }
+    }
   }
 }
 
