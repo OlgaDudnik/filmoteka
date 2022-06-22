@@ -30,11 +30,17 @@ function trailerRender({ results }) {
     <iframe class="iframe" src="https://www.youtube.com/embed/${results[0].key}" width="800" height="600" frameborder="0"></iframe>
 `, {
         closable: true,
-        onShow: () => { window.addEventListener('keydown', onEscClose) },
-        onClose: () => { window.removeEventListener('keydown', onEscClose) },
+        onShow: () => { window.addEventListener('click', onMouseClick) || window.addEventListener('keydown', onEscClose) },
+        onClose: () => { window.removeEventListener('click', onMouseClick) || window.removeEventListener('keydown', onEscClose) },
     });
 
     trailerBtn.addEventListener('click', instance.show());
+
+    function onMouseClick(e) {
+        if (e.target !== 'iframe') {
+            instance.close()
+        }
+    }
 
     function onEscClose(e) {
         if (e.code === 'Escape') {
