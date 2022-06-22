@@ -26,7 +26,7 @@
 }
 
 .modal {
-  animation: open 2000ms;
+  animation: open 700ms;
   @keyframes open {
     0% {
       transform: translateX(-1600px) skewX(20deg) scaleX(1.8);
