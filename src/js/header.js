@@ -88,9 +88,12 @@ function onOpenLibraryPage() {
 //-----------------------------------------------------------
 
 function onOpenWatchedFilms(event) {
-  //highlight button
-  refs.buttonWatched.classList.add('button--active');
-  refs.buttonQueue.classList.remove('button--active');
+  refs.buttonWatched.classList.toggle('button--active');
+
+  if (!refs.buttonWatched.classList.contains('button--active')) {
+    onOpenLibraryPage();
+    return;
+  }
 
   //render watched films
   refs.collection.style.gridTemplateColumns = '';
@@ -110,9 +113,12 @@ function onOpenWatchedFilms(event) {
 }
 
 function onOpenQueueFilms(event) {
-  //highlight button
-  refs.buttonQueue.classList.add('button--active');
-  refs.buttonWatched.classList.remove('button--active');
+  refs.buttonQueue.classList.toggle('button--active');
+
+  if (!refs.buttonQueue.classList.contains('button--active')) {
+    onOpenLibraryPage();
+    return;
+  }
 
   //render queue films
   refs.collection.style.gridTemplateColumns = '';
