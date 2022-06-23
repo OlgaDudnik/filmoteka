@@ -110,10 +110,12 @@ export default class MyLibrary {
   }
 
   render() {
+    this.clearInterval();
     if (this.films.length) {
       refs.collection.innerHTML = renderCard(this.films);
       this.doLabeOnFilm();
     } else {
+      refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
       refs.collection.innerHTML =
         '<li class="empty-library"><span class="user-message"></span></li>';
       this.showMessage();
