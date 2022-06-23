@@ -4,6 +4,8 @@ import MyLibrary from './mylibrary';
 import FetchMovie from './api.fetch';
 import renderCard from '../templates/card.hbs';
 import swal from 'sweetalert';
+import createMovies from './cards';
+import data from '../data-base/genres.json';
 
 //-----------------------------------------------------------
 
@@ -156,19 +158,20 @@ function onOpenQueueFilms(event) {
 //-----------------------------------------------------------
 
 // Display the main page
-function toMainPage() {
+async function toMainPage() {
   onOpenHomePage();
-  getMovies.fetchPopularFilms().then(film => {
-    const movieList = refs.collection;
-    movieList.innerHTML = renderCard(film.results);
 
-    // Don't touch it please, required for pagination
-    localStorage.setItem('searchQuery', '');
-    if (localStorage.getItem('action') !== 'fetchPopularFilms') {
-      localStorage.setItem('isNeedResetPages', 'true');
-    }
-    localStorage.setItem('action', 'fetchPopularFilms');
-  });
+  const fetchMovies = await getMovies.fetchPopularFilms();
+  const { results } = fetchMovies;
+  const movie = createMovies(results, data);
+  refs.collection.innerHTML = renderCard(movie);
+
+  // Don't touch it please, required for pagination
+  localStorage.setItem('searchQuery', '');
+  if (localStorage.getItem('action') !== 'fetchPopularFilms') {
+    localStorage.setItem('isNeedResetPages', 'true');
+  }
+  localStorage.setItem('action', 'fetchPopularFilms');
 }
 
 // Logo click event
