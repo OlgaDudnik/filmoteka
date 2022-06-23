@@ -1,10 +1,10 @@
-import card from '../templates/modal-card.hbs';
 import FetchApi from './api.fetch';
 import * as basicLightbox from 'basiclightbox';
 import { refs } from './refs';
 const newApiFetch = new FetchApi();
 
 refs.collection.addEventListener('click', e => {
+    e.preventDefault();
     if (e.target.nodeName !== 'BUTTON') {
         return
     }
@@ -30,16 +30,21 @@ function trailerRender({ results }) {
     <iframe class="iframe" src="https://www.youtube.com/embed/${results[0].key}" width="800" height="600" frameborder="0"></iframe>
 `, {
         closable: true,
-        onShow: (instance) => { document.addEventListener('keydown', onEscClose) },
-        onClose: (instance) => { document.removeEventListener('keydown', onEscClose) },
+        onShow: () => { window.addEventListener('click', onMouseClick) || window.addEventListener('keydown', onEscClose) },
+        onClose: () => { window.removeEventListener('click', onMouseClick) || window.removeEventListener('keydown', onEscClose) },
     });
 
     trailerBtn.addEventListener('click', instance.show());
 
-    function onEscClose(event) {
-        if (event.code === 'Escape') {
-            instance.close();
+    function onMouseClick(e) {
+        if (e.target !== 'iframe') {
+            instance.close()
         }
     }
 
+    function onEscClose(e) {
+        if (e.code === 'Escape') {
+            instance.close();
+        }
+    }
 }

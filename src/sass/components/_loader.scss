@@ -1,33 +1,43 @@
-.loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.25);
+// .loader {
+//   position: fixed;
+//   top: 50;
+//   left: 50;
+//   width: 100%;
+//   height: 100%;
+//   background-color: rgba(0, 0, 0, 0.25);
+// }
+
+// .loader__icon {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   z-index: 11;
+//   fill: $accentColor;
+
+//   animation: spin 2s infinite linear;
+// }
+
+// @keyframes spin {
+//   from {
+//     transform: translate(-50%, -50%) rotate(0deg);
+//   }
+//   to {
+//     transform: translate(-50%, -50%) rotate(360deg);
+//   }
+// }
+
+// .done {
+//   opacity: 0;
+//   visibility: hidden;
+// }
+
+// nprogres
+#nprogress .bar {
+  background: #ff6b08 !important;
+  height: 5px !important;
 }
 
-.loader__icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 11;
-  fill: $accentColor;
-
-  animation: spin 2s infinite linear;
-}
-
-@keyframes spin {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-.done {
-  opacity: 0;
-  visibility: hidden;
+#nprogress .spinner-icon {
+  display: none !important;
 }
