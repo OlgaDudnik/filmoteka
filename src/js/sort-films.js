@@ -1,5 +1,7 @@
 import FetchMovie from './api.fetch';
 import articlesTpl from '../templates/card.hbs';
+import createMovies from "./cards";
+import data from '../data-base/genres.json';
 
 const select = document.querySelector('.filter');
 const gallery = document.querySelector('.gallery-container_grid');
@@ -49,7 +51,7 @@ function onSelection(e) {
         if (e.target.id) {
             fetchMovie.fetchGenreFilms().then((result) => {
                 gallery.innerHTML = '';
-                appendArticlesMarkup(fetchMovie.getFilterLocalStorage());
+                appendArticlesMarkup(createMovies(fetchMovie.getFilterLocalStorage(), data));
             });
         }
     }
@@ -58,12 +60,12 @@ function onSelection(e) {
         if (e.target.id) {
             fetchMovie.fetchYears().then((result) => {
                 gallery.innerHTML = '';
-                appendArticlesMarkup(fetchMovie.getFilterLocalStorage());
+                appendArticlesMarkup(createMovies(fetchMovie.getFilterLocalStorage(), data));
             });
         }
     }
     if (sortParam !== undefined) {
         gallery.innerHTML = '';
-        appendArticlesMarkup((sort(fetchMovie.getFilterLocalStorage(), sortParam)));
+        appendArticlesMarkup((sort(createMovies(fetchMovie.getFilterLocalStorage(), data), sortParam)));
     }
 }
