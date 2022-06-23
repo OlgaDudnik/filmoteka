@@ -1,23 +1,23 @@
-.photo {
+.student__photo {
     width: 100%;
-    height: 150px;
-    object-fit: contain;
-    object-position: 50% 50%;
-    margin: 0;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50%;
 }
 
-.card__padding{
-    // padding-left: 10px;
-    // padding-top: 10px;
-    // padding-bottom: 10px;
+.student__photo--fit{
+        object-position: 50% 0%;
 }
 
+.student__photo--fit-minus{
+        object-position: 50% 70%;
+}
 
 .overflow {
     overflow: hidden;
-  }
-  
-  .backdrop__students {
+}
+
+.backdrop__students {
     overflow: auto;
     position: fixed;
     top: 0;
@@ -31,37 +31,48 @@
     z-index: 222;
     transform: scale(0);
     // transition: transform 250ms linear;
-  }
+}
   
   .mount {
     transform: scale(1);
   }
   
-  .modal__students {
+.modal__students {
     display: flex;
     position: absolute;
     padding: 30px;
-    width: 50%;
-    height: 70%;
+    width: 50vw;
+    max-height: 70%;
     background-color: $bg-first-color;
-
     @media screen and (max-width: 1024px) {
-padding: 20px;
+    padding: 20px;
     }
     @media screen and (max-width: 768px) {
-    display: block;
     padding: 10px;
+    width: 40vw;
     }
-  }
+    @media screen and (max-width: 480px) {
+        padding: 10px;
+        width: 60vw;
+        }
+}
 
 .students__container{
-    overflow-y: scroll;
     width: 100%;
     display: grid;
-    grid-template-columns:repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    row-gap: 20px;
-    column-gap: 20px;
+    grid-template-columns:repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 20px 20px;
+    overflow-y: scroll;
+    @media screen and (max-width: 1500px) {
+        grid-template-columns:repeat(3, 1fr);
+    }
+    @media screen and (max-width: 1024px) {
+        grid-template-columns:repeat(2, 1fr);
+    }
+    @media screen and (max-width: 768px) {
+        grid-template-columns:repeat(1, 1fr);
+    }
 }
 
 .students__card{
@@ -85,7 +96,7 @@ padding: 20px;
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
 
@@ -104,9 +115,7 @@ padding: 20px;
     width: 100%;
     height: 20%;
     opacity: 0.8;
-    // transform: translateY(100%);
     padding: 8px;
-    // transition: transform 250ms linear, opacity 250ms linear;
 }
 
 .student__title {
@@ -122,7 +131,10 @@ padding: 20px;
 }
 
 .students__card--back-side{
-    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    justify-content:center ;
+    text-align: left;
     padding: 15px;
     background-color: #808080;
     color: white;
@@ -131,4 +143,21 @@ padding: 20px;
 
 .students__card.active .students__card--thumb {
     transform: rotateY(180deg);
+}
+
+.students__card-text--back-side{
+font-family: inherit;
+font-size: 14px;
+}
+
+.students__card-title{
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: $accent-darker-color;
+}
+
+.students__card-text--bold{
+    font-weight: 600;
 }
