@@ -198,8 +198,8 @@ export default class FetchMovie {
         const pageJump = 50;
         const isNeedToAddFirstPage = page > 2;
         const isNeedLeftPageJump = (page + pageExtendsFrom) > pageJump;
-        const isNeedRightPageJump = (page - pageJump) < totalPages;
-        const isNeedToAddDotsAfter = page > pageExtendsFrom && page < totalPages - 1;
+        const isNeedRightPageJump = (page + pageJump) < totalPages;
+        const isNeedToAddDotsAfter = page > pageExtendsFrom && page < totalPages;
 
         liItems += `<li><span data-action='left' class='pagination__arrow--left ${leftDisabledClass}'>${backArrow}</span></li>`;
 
@@ -211,7 +211,6 @@ export default class FetchMovie {
             const leftPageJump = page - pageJump;
             liItems += `<li><span data-action='change' data-page='${leftPageJump}' class='pagination__button__link'>${leftPageJump}</span></li>`;
         }
-
 
         for (let pageLength = beforePages; pageLength <= afterPages; pageLength++) {
             if (!pageLength || pageLength > totalPages) {
@@ -228,8 +227,10 @@ export default class FetchMovie {
             }
         }
 
-        liItems += `<li><span class='pagination__button__dots'>...</span></li>`;
-        liItems += `<li><span data-action='change' data-page='${totalPages}' class='pagination__button__link'>${totalPages}</span></li>`;
+        if (page < totalPages) {
+            liItems += `<li><span class='pagination__button__dots'>...</span></li>`;
+            liItems += `<li><span data-action='change' data-page='${totalPages}' class='pagination__button__link'>${totalPages}</span></li>`;
+        }
 
         liItems += `<li><span data-action='right' class='pagination__arrow--right ${rightDisabledClass}'>${forwardArrow}</span></li>`;
 
