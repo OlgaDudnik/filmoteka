@@ -7,9 +7,8 @@
         backdrop: document.querySelector('.backdrop__students'),
     };
 
-    refs.openModalBtn.addEventListener('click', toggleModal);
-    refs.backdrop.addEventListener('click', modalCloseClickBackdrop);
-    // document.addEventListener('keydown', modalCloseEsc);
+    refs.openModalBtn.addEventListener('click', onOpenModal);
+
 
     refs.backSide.forEach((elem) => {
         elem.addEventListener('click', toggleBackSide);
@@ -18,26 +17,29 @@
         }
     })
 
-    // refs.closeModalBtn.addEventListener('click', toggleModal);
+    function onOpenModal(e) {
+        e.preventDefault()
+        refs.modal.classList.remove('is-hidden');
+        refs.modal.classList.add('mount');
+        refs.backdrop.addEventListener('click', modalCloseClickBackdrop);
+        document.addEventListener('keydown', modalCloseEsc);
+    }
 
     function modalCloseClickBackdrop(e) {
         if (e.target.nodeName === 'BACKDROP') {
-            refs.modal.classList.toggle('is-hidden');
-            refs.modal.classList.toggle('mount')
+            onCloseModal()
         }
-    }
-
-    function toggleModal(e) {
-        e.preventDefault()
-        refs.modal.classList.toggle('is-hidden');
-        refs.modal.classList.toggle('mount')
     }
 
     function modalCloseEsc(e) {
-        console.log(e);
         if (e.code === 'Escape') {
-            refs.modal.classList.add('is-hidden');
-            refs.modal.classList.remove('mount')
+            onCloseModal()
         }
+    }
+
+    function onCloseModal() {
+        refs.modal.classList.add('is-hidden');
+        refs.modal.classList.remove('mount')
+        document.removeEventListener('keydown', modalCloseEsc);
     }
 })();
