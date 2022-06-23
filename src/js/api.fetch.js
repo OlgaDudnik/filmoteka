@@ -1,4 +1,6 @@
 import renderCard from '../templates/card.hbs';
+import createMovies from './cards';
+import data from '../data-base/genres.json';
 import { refs } from './refs.js';
 import { showSpiner, hideSpiner } from './loader';
 //import generatePaginationMarkup from './pagination';
@@ -26,22 +28,15 @@ export default class FetchMovie {
         this.year = '';
         this.genre = '';
         this.urlTemplates = {
-            searchFilms:
-                'search/movie?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false&query={QUERY}',
-            searchActors:
-                'search/person?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
+            searchFilms: 'search/movie?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false&query={QUERY}',
+            searchActors: 'search/person?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
             getFilmById: 'movie/{ID}?api_key={API_KEY}',
-            getPopularFilms:
-                'movie/popular?api_key={API_KEY}&language=en-US&page={PAGE}',
-            getTopRatedFilms:
-                'movie/top_rated?api_key={API_KEY}&language=en-US&page={PAGE}',
-            getTelecast:
-                'search/tv?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
-            getGenres:
-                'discover/movie?api_key={API_KEY}&language=en-US&include_adult=false&include_video=false&page=1&with_genres={GENRE}&page={PAGE}',
+            getPopularFilms: 'movie/popular?api_key={API_KEY}&language=en-US&page={PAGE}',
+            getTopRatedFilms: 'movie/top_rated?api_key={API_KEY}&language=en-US&page={PAGE}',
+            getTelecast: 'search/tv?api_key={API_KEY}&language=en-US&page={PAGE}&include_adult=false',
+            getGenres: 'discover/movie?api_key={API_KEY}&language=en-US&include_adult=false&include_video=false&page=1&with_genres={GENRE}&page={PAGE}',
             getTrailer: 'movie/{ID}/videos?api_key={API_KEY}&language=en-US',
-            searchYears:
-                'discover/movie?api_key={API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte={YEAR}-01-01&primary_release_date.lte={YEAR}-12-31',
+            searchYears: 'discover/movie?api_key={API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte={YEAR}-01-01&primary_release_date.lte={YEAR}-12-31',
         };
     }
 
@@ -70,8 +65,7 @@ export default class FetchMovie {
 
         // first generate url based on required data
         const url = this.urlTemplates[action].replaceArray(
-            ['{API_KEY}', '{PAGE}', '{QUERY}', '{ID}', '{GENRE}', '{YEAR}'],
-            [this.key, this.pageNum, this.searchQuery, this.id, this.genre, this.year],
+            ['{API_KEY}', '{PAGE}', '{QUERY}', '{ID}', '{GENRE}', '{YEAR}'], [this.key, this.pageNum, this.searchQuery, this.id, this.genre, this.year],
         );
 
         // determine if we need use pagination in current process
@@ -151,11 +145,11 @@ export default class FetchMovie {
         return this.sendQuery('getTrailer');
     }
 
-    renderMovieList() {
+    async renderMovieList() {
+        const fetchFilms = await this.fetchFilms();
+        const { results } = fetchFilms;
         const movieList = refs.collection;
-        const parsedStorage = JSON.parse(
-            localStorage.getItem(LOCALSTORAGE_KEY),
-        ).results;
+        const parsedStorage = createMovies(results, data);
 
         movieList.innerHTML = renderCard(parsedStorage);
     }
