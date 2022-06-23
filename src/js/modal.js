@@ -2,8 +2,10 @@ import card from '../templates/modal-card.hbs';
 import FetchMovie from './api.fetch';
 import { refs } from './refs';
 import { keys } from './storage_key';
+import MyLibrary from './mylibrary';
 
 const fetchMovie = new FetchMovie();
+const myLibrary = new MyLibrary();
 
 // modal close - open  ******************************
 refs.modalEventListener.addEventListener('click', e => {
@@ -111,6 +113,17 @@ function removeFilmIdWatchedLocSt(data, storageWatched) {
   document.querySelector('#watched').classList.remove('modal__button--active');
   document.querySelector('#watched-add').classList.remove('visibility');
   document.querySelector('#watched-delete').classList.add('visibility');
+
+  //opdate page library
+  if (refs.header.classList.contains('header-library')) {
+    if (refs.buttonWatched.classList.contains('button--active')) {
+      myLibrary.renderWatchedFilm();
+    } else {
+      if (!refs.buttonQueue.classList.contains('button--active')) {
+        myLibrary.renderMyLibrary();
+      }
+    }
+  }
 }
 
 function addFilmIdQueueLocSt(data, storageQueue) {
@@ -127,6 +140,19 @@ function removeFilmIdQueueLocSt(data, storageQueue) {
   document.querySelector('#queue').classList.remove('modal__button--active');
   document.querySelector('#queue-add').classList.remove('visibility');
   document.querySelector('#queue-delete').classList.add('visibility');
+
+  //opdate page library
+  if (refs.header.classList.contains('header-library')) {
+    if (refs.buttonQueue.classList.contains('button--active')) {
+      myLibrary.renderQueryFilms();
+      myLibrary.clearInterval();
+    } else {
+      if (!refs.buttonWatched.classList.contains('button--active')) {
+        myLibrary.renderMyLibrary();
+        myLibrary.clearInterval();
+      }
+    }
+  }
 }
 
 function examinationLocalStorage(id) {

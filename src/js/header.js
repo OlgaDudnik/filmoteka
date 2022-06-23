@@ -20,6 +20,8 @@ refs.buttonHeaderLibrary.addEventListener('click', onOpenLibraryPage);
 
 //-----------------------------------------------------------
 function onOpenHomePage() {
+  myLibrary.clearInterval();
+
   refs.collection.style.gridTemplateColumns = '';
   refs.header.classList.remove('header-library');
   refs.buttonHeaderHome.classList.add('nav-btn--underline');
@@ -37,11 +39,10 @@ function onOpenHomePage() {
 
   refs.headerForm.classList.remove('visually-hidden');
   refs.headerListButtons.classList.add('visually-hidden');
-
-  myLibrary.clearInterval();
 }
 
 function onOpenLibraryPage() {
+  myLibrary.clearInterval();
   refs.header.classList.add('header-library');
   refs.buttonHeaderLibrary.classList.add('nav-btn--underline');
   refs.buttonHeaderHome.classList.remove('nav-btn--underline');
@@ -73,8 +74,6 @@ function onOpenLibraryPage() {
   }
 
   //render all library films
-
-  myLibrary.clearInterval();
   myLibrary.renderMyLibrary();
 
   refs.buttonQueue = document.querySelector('[data-action="queue"]');
@@ -87,6 +86,7 @@ function onOpenLibraryPage() {
 //-----------------------------------------------------------
 
 function onOpenWatchedFilms(event) {
+  myLibrary.clearInterval();
   refs.buttonWatched.classList.toggle('button--active');
 
   if (refs.buttonWatched.classList.contains('button--active')) {
@@ -100,12 +100,7 @@ function onOpenWatchedFilms(event) {
 
   //render watched films
   refs.collection.style.gridTemplateColumns = '';
-  myLibrary.clearInterval();
   myLibrary.renderWatchedFilm();
-
-  if (myLibrary.getWatchedFilms().length === 0) {
-    refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
-  }
 
   //delete watched films
   if (event.target.tagName === 'SPAN') {
@@ -118,25 +113,17 @@ function onOpenWatchedFilms(event) {
         dangerMode: true,
       }).then(willDelete => {
         if (willDelete) {
-          myLibrary.clearInterval();
           myLibrary.removeWatchedFilm();
-          refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
         }
       });
     }
-    // if (myLibrary.getWatchedFilms().length != 0) {
-    //   let deleteWatched = confirm('Do you want clean watched films?');
-    //   if (deleteWatched === true) {
-    //     myLibrary.clearInterval();
-    //     myLibrary.removeWatchedFilm();
-    //     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
-    //   }
-    // }
   }
 }
 
 function onOpenQueueFilms(event) {
+  myLibrary.clearInterval();
   refs.buttonQueue.classList.toggle('button--active');
+
   if (refs.buttonQueue.classList.contains('button--active')) {
     refs.buttonWatched.classList.remove('button--active');
   }
@@ -148,12 +135,7 @@ function onOpenQueueFilms(event) {
 
   //render queue films
   refs.collection.style.gridTemplateColumns = '';
-  myLibrary.clearInterval();
   myLibrary.renderQueryFilms();
-
-  if (myLibrary.getQueueFilms().length === 0) {
-    refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
-  }
 
   //delete queue films
   if (event.target.tagName === 'SPAN') {
@@ -165,19 +147,9 @@ function onOpenQueueFilms(event) {
       dangerMode: true,
     }).then(willDelete => {
       if (willDelete) {
-        myLibrary.clearInterval();
         myLibrary.removeQueryFilms();
-        refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
       }
     });
-    // if (myLibrary.getQueueFilms().length != 0) {
-    //   let deleteQuestion = confirm('Do you want clean queue?');
-    //   if (deleteQuestion === true) {
-    //     myLibrary.clearInterval();
-    //     myLibrary.removeQueryFilms();
-    //     refs.collection.style.gridTemplateColumns = 'repeat(1, 100%)';
-    //   }
-    // }
   }
 }
 
