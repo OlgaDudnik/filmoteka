@@ -121,6 +121,7 @@ function removeFilmIdWatchedLocSt(data, storageWatched) {
     } else {
       if (!refs.buttonQueue.classList.contains('button--active')) {
         myLibrary.renderMyLibrary();
+        //myLibrary.clearInterval();
       }
     }
   }
@@ -145,11 +146,9 @@ function removeFilmIdQueueLocSt(data, storageQueue) {
   if (refs.header.classList.contains('header-library')) {
     if (refs.buttonQueue.classList.contains('button--active')) {
       myLibrary.renderQueryFilms();
-      myLibrary.clearInterval();
     } else {
       if (!refs.buttonWatched.classList.contains('button--active')) {
         myLibrary.renderMyLibrary();
-        myLibrary.clearInterval();
       }
     }
   }

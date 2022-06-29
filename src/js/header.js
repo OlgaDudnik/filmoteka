@@ -22,8 +22,6 @@ refs.buttonHeaderLibrary.addEventListener('click', onOpenLibraryPage);
 
 //-----------------------------------------------------------
 function onOpenHomePage() {
-  myLibrary.clearInterval();
-
   refs.collection.style.gridTemplateColumns = '';
   refs.header.classList.remove('header-library');
   refs.buttonHeaderHome.classList.add('nav-btn--underline');
@@ -44,7 +42,6 @@ function onOpenHomePage() {
 }
 
 function onOpenLibraryPage() {
-  myLibrary.clearInterval();
   refs.header.classList.add('header-library');
   refs.buttonHeaderLibrary.classList.add('nav-btn--underline');
   refs.buttonHeaderHome.classList.remove('nav-btn--underline');
@@ -88,7 +85,6 @@ function onOpenLibraryPage() {
 //-----------------------------------------------------------
 
 function onOpenWatchedFilms(event) {
-  myLibrary.clearInterval();
   refs.buttonWatched.classList.toggle('button--active');
 
   if (refs.buttonWatched.classList.contains('button--active')) {
@@ -123,7 +119,6 @@ function onOpenWatchedFilms(event) {
 }
 
 function onOpenQueueFilms(event) {
-  myLibrary.clearInterval();
   refs.buttonQueue.classList.toggle('button--active');
 
   if (refs.buttonQueue.classList.contains('button--active')) {
@@ -141,17 +136,19 @@ function onOpenQueueFilms(event) {
 
   //delete queue films
   if (event.target.tagName === 'SPAN') {
-    swal({
-      title: 'Do you want clean queue?',
-      text: 'Once deleted, you will not be able to recover this informations!',
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true,
-    }).then(willDelete => {
-      if (willDelete) {
-        myLibrary.removeQueryFilms();
-      }
-    });
+    if (myLibrary.getWatchedFilms().length != 0) {
+      swal({
+        title: 'Do you want clean queue?',
+        text: 'Once deleted, you will not be able to recover this informations!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then(willDelete => {
+        if (willDelete) {
+          myLibrary.removeQueryFilms();
+        }
+      });
+    }
   }
 }
 
