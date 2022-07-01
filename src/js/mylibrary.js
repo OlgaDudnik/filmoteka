@@ -128,17 +128,18 @@ export default class MyLibrary {
     this.interval = setInterval(showLetter, 150);
 
     function showLetter() {
-      if (i === arrMessage.length) {
+      if (i === arrMessage.length || this.interval === 0) {
         clearInterval(this.interval);
         return;
       }
-
-      refs.collection.querySelector(
-        '.empty-library .user-message'
-      ).textContent += arrMessage[i];
-      i += 1;
+      if (refs.collection.querySelector('.user-message')) {
+        refs.collection.querySelector('.user-message').textContent +=
+          arrMessage[i];
+        i += 1;
+      }
     }
   }
+
   clearInterval() {
     clearInterval(this.interval);
   }
